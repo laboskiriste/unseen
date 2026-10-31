@@ -58,7 +58,7 @@ Remote code: **No.**
 - Collected data: **none** in every category.
 - Certifications: no selling or transfer of user data, no use unrelated to the single purpose, no creditworthiness use.
 - Firefox `data_collection_permissions`: `required: ["none"]` (already set in `dev/build-firefox.mjs`).
-- Privacy policy: [PRIVACY.md](../PRIVACY.md). Host it as a page (for example on the Guardian site) before submitting.
+- Privacy policy URL: https://laboskiriste.github.io/unseen/privacy/ (source: `docs/privacy/index.html`, same content as [PRIVACY.md](../PRIVACY.md)).
 
 ## Assets
 
@@ -67,4 +67,4 @@ Remote code: **No.**
 - Icon: `icons/icon128.png`
 - Packages: `npm run package` → `unseen-<version>-chrome.zip` / `-firefox.zip`. The Firefox build passes `web-ext lint` with 0 errors and 0 warnings.
 
-Before submitting: host the privacy policy as a page.
+Homepage URL for the listing: https://laboskiriste.github.io/unseen/

@@ -11,7 +11,7 @@ From the maker of [Extension Guardian](https://github.com/laboskiriste/extension
 - Popup: trackers blocked in the last 7 days, top tracking companies, trackers on the current page, and an on/off switch.
 - Badge with the number of trackers on the current Gmail tab.
 
-**Permissions:** `declarativeNetRequest`, `storage`, and a content script on `https://mail.google.com/*`. No host permissions, no network requests of its own. See [PRIVACY.md](PRIVACY.md).
+**Permissions:** `declarativeNetRequest`, `storage`, and a content script on `https://mail.google.com/*`. No host permissions, no network requests of its own. See [PRIVACY.md](PRIVACY.md) or the [hosted privacy policy](https://laboskiriste.github.io/unseen/privacy/).
 
 ## How it works
 
@@ -62,5 +62,4 @@ Checked by hand on real newsletters and notification emails in Gmail (October 20
 - Icons on inbox rows (before an email is opened)
 - Remote tracker-list updates through the Worker (the list is bundled for now)
 - Outlook.com, and link-click tracking cleanup (planned paid features)
-- Hosted privacy policy page (needed for store submission)
 - Firefox: check that a normal (non-temporary) install grants mail.google.com access
