@@ -7,7 +7,7 @@ const out = `${root}build/firefox/`;
 const manifest = JSON.parse(readFileSync(`${root}manifest.json`, 'utf8'));
 
 delete manifest.minimum_chrome_version;
-manifest.background = { scripts: ['src/background.js'] };
+manifest.background = { scripts: ['src/license.js', 'src/pro.js', 'src/background.js'] };
 manifest.browser_specific_settings = {
   gecko: {
     id: 'unseen@laboskiriste',

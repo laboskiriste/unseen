@@ -7,11 +7,12 @@ import { runInNewContext } from 'node:vm';
 const listeners = {};
 const on = (name) => ({ addListener: (fn) => { listeners[name] = fn; } });
 const tabs = [];
+const stored = {};
 const rulesets = [];
 const chrome = {
   runtime: { getURL: (p) => `chrome-extension://self/${p}`, onInstalled: on('installed'), onStartup: on('startup'), onMessage: on('message') },
   storage: {
-    local: { get: async () => ({}), set: async () => {} },
+    local: { get: async (k) => (k === 'pro' && stored.pro ? { pro: stored.pro } : {}), set: async (o) => Object.assign(stored, o) },
     session: { get: async () => ({}), set: async () => {}, remove: async () => {} },
     onChanged: on('changed'),
   },
@@ -19,7 +20,9 @@ const chrome = {
   action: { setBadgeText: async () => {}, setBadgeBackgroundColor: async () => {} },
   tabs: { create: ({ url }) => tabs.push(url), onRemoved: on('tabRemoved') },
 };
-runInNewContext(readFileSync(new URL('../src/background.js', import.meta.url), 'utf8'), { chrome, crypto, TextEncoder, console });
+const fetch = () => { throw new Error('no network expected'); };
+const code = ['license.js', 'pro.js', 'background.js'].map((f) => readFileSync(new URL(`../src/${f}`, import.meta.url), 'utf8')).join('\n');
+runInNewContext(code, { chrome, crypto, TextEncoder, console, fetch, AbortSignal });
 
 test('first install opens the welcome page and turns blocking on', async () => {
   listeners.installed({ reason: 'install' });
@@ -27,6 +30,7 @@ test('first install opens the welcome page and turns blocking on', async () => {
   assert.deepEqual(tabs, ['chrome-extension://self/src/welcome/welcome.html']);
   // The object comes from the VM's realm, so compare it as JSON.
   assert.equal(JSON.stringify(rulesets.at(-1)), JSON.stringify({ enableRulesetIds: ['gmail_proxy'] }));
+  assert.equal(typeof stored.pro?.trialStart, 'number', 'the Pro trial starts');
 });
 
 test('an update keeps the rules in sync but opens nothing', async () => {

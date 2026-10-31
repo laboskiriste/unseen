@@ -2,6 +2,10 @@
 // chrome.storage.local and never leave the browser. Tracker URLs are stored
 // only as short hashes, so the same email opened twice is counted once.
 
+// Chrome runs this as a service worker; Firefox loads the same files from
+// the manifest's background scripts list instead.
+if (typeof importScripts === 'function') importScripts('license.js', 'pro.js');
+
 const RULESET = 'gmail_proxy';
 const KEEP_DAYS = 30;
 const MAX_SEEN = 5000;
@@ -14,11 +18,21 @@ async function syncRuleset() {
   );
 }
 
+// Starts the Pro trial if needed and re-checks the license key when it is due.
+// The check only talks to the license provider when a key was entered.
+function syncPro() {
+  PRO.startTrial().then(() => PRO.refresh()).catch((e) => console.error('pro check failed', e));
+}
+
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   syncRuleset();
+  syncPro();
   if (reason === 'install') chrome.tabs.create({ url: chrome.runtime.getURL('src/welcome/welcome.html') });
 });
-chrome.runtime.onStartup.addListener(syncRuleset);
+chrome.runtime.onStartup.addListener(() => {
+  syncRuleset();
+  syncPro();
+});
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.enabled) syncRuleset();
 });
@@ -60,6 +74,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   chrome.action.setBadgeBackgroundColor({ tabId, color: '#2e7d32' });
   chrome.action.setBadgeText({ tabId, text: msg.trackers.length ? String(msg.trackers.length) : '' });
   if (msg.fresh?.length) addStats(msg.fresh);
+  PRO.refresh().catch((e) => console.error('pro check failed', e));
 });
 
 chrome.tabs.onRemoved.addListener((tabId) => chrome.storage.session.remove(`tab:${tabId}`));

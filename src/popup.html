@@ -27,12 +27,36 @@
     <ul id="page"><li class="muted">No trackers found yet.</li></ul>
   </section>
 
+  <section id="pro">
+    <h2>Unseen Pro</h2>
+    <p id="pro-status"></p>
+    <p id="pro-note" class="note" hidden></p>
+    <div id="pro-buy" class="buttons" hidden>
+      <a id="buy-lifetime" class="button" target="_blank" rel="noopener">Get Pro: $15 once</a>
+      <a id="buy-yearly" class="button secondary" target="_blank" rel="noopener">$8 per year</a>
+    </div>
+    <form id="pro-form" hidden>
+      <label for="pro-key">License key</label>
+      <div class="row">
+        <input id="pro-key" autocomplete="off" spellcheck="false" placeholder="UNSEEN-…">
+        <button id="pro-activate">Activate</button>
+      </div>
+      <p id="pro-error" class="error" hidden></p>
+    </form>
+    <p id="pro-owned" hidden>
+      Key <code id="pro-key-shown"></code>
+      <button id="pro-remove" class="link">Remove</button>
+    </p>
+  </section>
+
   <footer>
     <span id="total"></span>
     <span>Everything stays in your browser.</span>
     <span id="family"></span>
   </footer>
   <script src="family.js"></script>
+  <script src="license.js"></script>
+  <script src="pro.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
