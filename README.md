@@ -67,7 +67,7 @@ Free forever: blocking pixels, the note above each email, "Load images anyway", 
 2. Rules per sender: always allow images from your bank, always block one newsletter.
 3. Full history and export.
 
-Every new user gets 30 days of Pro free. After that, Pro costs €12 once or €6 per year, and the free features keep working. No account is needed.
+Every new user gets 30 days of Pro free. After that, Pro costs $15 once or $8 per year, and the free features keep working. No account is needed.
 
 Later, not yet decided whether free or Pro: Outlook.com.
 
