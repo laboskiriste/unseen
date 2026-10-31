@@ -8,6 +8,7 @@ const DAY = 864e5;
 const T0 = Date.parse('2026-11-01T00:00:00Z');
 const ORG = '823c8500-74cf-4283-bbf1-ffd30ed8611e';
 const API = 'https://api.polar.sh/v1/customer-portal/license-keys';
+const BENEFIT = '88642029-aeb9-4cdf-bbeb-4ef18c5a7ab7';
 
 let requests = [];
 let reply = () => ({ status: 500 });
@@ -30,7 +31,7 @@ function fakeStore(pro) {
     set: async (obj) => Object.assign(data, structuredClone(obj)),
   };
 }
-const granted = (extra = {}) => ({ status: 'granted', expires_at: null, customer: { email: 'buyer@example.com' }, ...extra });
+const granted = (extra = {}) => ({ status: 'granted', benefit_id: BENEFIT, expires_at: null, customer: { email: 'buyer@example.com' }, ...extra });
 
 test.beforeEach(() => {
   requests = [];
@@ -71,6 +72,10 @@ test('activation errors: unknown key, refused key, no internet', async () => {
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'refused');
   reply = () => ({ status: 200, data: { id: 'a', license_key: granted({ expires_at: '2020-01-01T00:00:00Z' }) } });
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'refused');
+  reply = (url) => (url.endsWith('/activate') ? { status: 200, data: { id: 'a', license_key: granted({ benefit_id: 'other' }) } } : { status: 204 });
+  requests = [];
+  assert.equal((await PRO.activate('GUARDIAN-X', { store })).reason, 'not-found', "another product's key");
+  assert.equal(requests[1].url, `${API}/deactivate`, 'and its activation is given back');
   reply = () => 'offline';
   await assert.rejects(PRO.activate('UNSEEN-X', { store }), LICENSE.OfflineError);
   reply = () => ({ status: 503 });
@@ -89,7 +94,7 @@ test('the key is re-checked only once a month', async () => {
   reply = () => ({ status: 200, data: granted({ activation: { id: 'act-1' } }) });
   await PRO.refresh({ store, now: T0 + 31 * DAY });
   assert.equal(requests[0].url, `${API}/validate`);
-  assert.deepEqual(requests[0].body, { key: 'UNSEEN-K', activation_id: 'act-1', organization_id: ORG });
+  assert.deepEqual(requests[0].body, { key: 'UNSEEN-K', activation_id: 'act-1', benefit_id: BENEFIT, organization_id: ORG });
   assert.equal(store.data.pro.okAt, T0 + 31 * DAY);
 });
 
