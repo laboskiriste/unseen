@@ -31,7 +31,6 @@
     <h2>Unseen Pro</h2>
     <p class="muted">Opens links in emails without their click trackers, when the real address is inside the link.</p>
     <p id="pro-status"></p>
-    <p id="pro-note" class="note" hidden></p>
     <div id="pro-buy" class="buttons" hidden>
       <a id="buy-lifetime" class="button" target="_blank" rel="noopener">Get Pro: $15 once</a>
       <a id="buy-yearly" class="button secondary" target="_blank" rel="noopener">$8 per year</a>
@@ -44,10 +43,14 @@
       </div>
       <p id="pro-error" class="error" hidden></p>
     </form>
-    <p id="pro-owned" hidden>
-      Key <code id="pro-key-shown"></code>
-      <button id="pro-remove" class="link">Remove</button>
-    </p>
+    <div id="pro-owned" hidden>
+      <p>
+        Key <code id="pro-key-shown"></code>
+        <button id="pro-recheck" class="link">Check again</button>
+        <button id="pro-remove" class="link">Remove</button>
+      </p>
+      <p id="pro-owned-error" class="error" hidden></p>
+    </div>
   </section>
 
   <footer>

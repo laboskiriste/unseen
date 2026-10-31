@@ -77,4 +77,21 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   PRO.refresh().catch((e) => console.error('pro check failed', e));
 });
 
+// License actions from the popup run here, so closing the popup halfway
+// through can't lose an activation. Replies { ok, reason? }.
+const PRO_ACTIONS = {
+  'pro-activate': (msg) => PRO.activate(msg.key),
+  'pro-remove': () => PRO.removeKey().then(() => ({ ok: true })),
+  'pro-recheck': () => PRO.recheck().then(() => ({ ok: true })),
+};
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  const action = PRO_ACTIONS[msg?.type];
+  // Only the extension's own pages, never a content script.
+  if (!action || sender.id !== chrome.runtime.id || !sender.url?.startsWith(chrome.runtime.getURL(''))) return;
+  action(msg)
+    .catch((e) => (e instanceof LICENSE.OfflineError ? { ok: false, reason: 'offline' } : { ok: false, reason: 'error' }))
+    .then(sendResponse);
+  return true;
+});
+
 chrome.tabs.onRemoved.addListener((tabId) => chrome.storage.session.remove(`tab:${tabId}`));

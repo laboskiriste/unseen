@@ -61,17 +61,19 @@ function renderFamily() {
   });
 }
 
-// The Pro section. Nothing here talks to the network except activating a key
-// the user typed and the monthly re-check (src/pro.js, src/license.js).
+// The Pro section. Key actions run in the background (src/background.js),
+// which is the only place that talks to the license server.
 const $ = (id) => document.getElementById(id);
 const KEY_ERRORS = {
   'not-found': "That key wasn't found. Check it and try again.",
   refused: "This key can't be used: it was refunded, has expired, or is already active in 3 browsers.",
   offline: "Couldn't reach the license server. Check your connection and try again.",
+  error: 'Something went wrong. Please try again.',
 };
 
 function proStatusText(s) {
   if (s.licensed) return 'Pro is active. Thank you for supporting Unseen!';
+  if (s.revoked) return 'Your license key is no longer valid (refunded, or the yearly plan ended), so Pro is off. Blocking trackers stays free.';
   if (s.hasKey) return "Your license key hasn't been checked for a while. Pro turns back on once you're online.";
   if (s.trialDaysLeft > 0) return `${s.trialDaysLeft} ${s.trialDaysLeft === 1 ? 'day' : 'days'} of Pro left in your free trial.`;
   return 'Your Pro trial ended. Blocking trackers stays free.';
@@ -81,49 +83,47 @@ async function renderPro() {
   const pro = await PRO.load(chrome.storage.local);
   const s = PRO.status(pro);
   $('pro-status').textContent = proStatusText(s);
-  $('pro-note').hidden = !s.revoked;
-  $('pro-note').textContent = 'Your license key is no longer valid (refunded, or the yearly plan ended), so Pro is off.';
   const { lifetime, yearly } = LICENSE.CHECKOUT;
   $('buy-lifetime').href = lifetime ?? '';
   $('buy-lifetime').hidden = !lifetime;
   $('buy-yearly').href = yearly ?? '';
   $('buy-yearly').hidden = !yearly;
-  $('pro-buy').hidden = s.hasKey || !(lifetime || yearly);
+  $('pro-buy').hidden = s.licensed || !(lifetime || yearly);
   $('pro-form').hidden = s.hasKey;
   $('pro-owned').hidden = !s.hasKey;
+  $('pro-recheck').hidden = !s.revoked;
   $('pro-key-shown').textContent = s.hasKey ? `…${pro.key.slice(-4)}` : '';
+}
+
+// Sends a key action to the background and shows any error under `where`.
+async function proAction(message, button, where) {
+  button.disabled = true;
+  where.hidden = true;
+  const res = await chrome.runtime.sendMessage(message).catch(() => ({ ok: false, reason: 'error' }));
+  button.disabled = false;
+  if (!res?.ok) {
+    where.textContent = KEY_ERRORS[res?.reason] ?? KEY_ERRORS.error;
+    where.hidden = false;
+  }
+  await renderPro();
+  return res?.ok;
 }
 
 $('pro-form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const button = $('pro-activate');
-  const error = $('pro-error');
-  button.disabled = true;
-  error.hidden = true;
-  try {
-    const res = await PRO.activate($('pro-key').value);
-    if (!res.ok) throw new Error(res.reason);
-    $('pro-key').value = '';
-  } catch (err) {
-    error.textContent = KEY_ERRORS[err instanceof LICENSE.OfflineError ? 'offline' : err.message] ?? KEY_ERRORS.offline;
-    error.hidden = false;
-  } finally {
-    button.disabled = false;
-  }
-  renderPro();
+  const key = $('pro-key').value.trim();
+  if (await proAction({ type: 'pro-activate', key }, $('pro-activate'), $('pro-error'))) $('pro-key').value = '';
 });
-
-$('pro-remove').addEventListener('click', async () => {
-  await PRO.removeKey();
-  renderPro();
-});
+$('pro-remove').addEventListener('click', () => proAction({ type: 'pro-remove' }, $('pro-remove'), $('pro-owned-error')));
+$('pro-recheck').addEventListener('click', () => proAction({ type: 'pro-recheck' }, $('pro-recheck'), $('pro-owned-error')));
 
 async function initPro() {
   await PRO.startTrial();
   await renderPro();
-  await PRO.refresh().catch(() => {});
-  renderPro();
 }
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && changes.pro) renderPro();
+});
 
 renderFamily();
 render();

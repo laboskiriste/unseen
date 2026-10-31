@@ -56,6 +56,13 @@ test('strip keeps everything else byte for byte', () => {
   assert.equal(LINKS.strip('https://a.com/p?utm_source=x'), 'https://a.com/p');
   assert.equal(LINKS.strip('https://a.com/p?ref=x&source=y&s=1'), 'https://a.com/p?ref=x&source=y&s=1', 'broad names stay');
   assert.equal(LINKS.strip('https://a.com/p?x=%E0%A4%A&_hsenc=1'), 'https://a.com/p?x=%E0%A4%A');
+  assert.equal(LINKS.strip('https://a.com/#/route?utm_source=x'), 'https://a.com/#/route?utm_source=x', "a router's hash stays");
+});
+
+test('tracking parameters are only removed after unwrapping a tracker', () => {
+  const plain = 'https://click.mailer.example/x?utm_source=news&sig=abc';
+  assert.equal(clean(plain), plain);
+  assert.equal(clean(`https://www.google.com/url?q=${encodeURIComponent(plain)}`), 'https://click.mailer.example/x?sig=abc');
 });
 
 test('links that cannot be cleaned are left exactly as they are', () => {
@@ -100,6 +107,7 @@ test('lookalike hosts are not trusted', () => {
     'https://www.google.com.evil.example/url?q=https%3A%2F%2Fexample.com',
     'https://l.facebook.com.evil.example/l.php?u=https%3A%2F%2Fexample.com',
     'https://evilsubstack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9leGFtcGxlLmNvbSJ9.s',
+    'https://bank.example.com/CL0/https:%2F%2Fevil.example%2F/1/abc-000000/x',
   ]) {
     assert.equal(clean(href), href, href);
   }

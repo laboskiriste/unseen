@@ -19,7 +19,8 @@ const LICENSE = (() => {
   };
 
   // Thrown for anything that isn't a clear answer about the key: no internet,
-  // a timeout, a server error. Callers keep the current state and retry later.
+  // a timeout, a server error, a Wi-Fi login page. Callers keep the current
+  // state and retry later.
   class OfflineError extends Error {}
 
   async function post(path, body) {
@@ -35,12 +36,19 @@ const LICENSE = (() => {
     } catch (e) {
       throw new OfflineError(e.message);
     }
+    if (res.redirected) throw new OfflineError(`${path}: redirected`);
     const data = res.status === 204 ? null : await res.json().catch(() => null);
+    // A 200 must be a real license reply; anything else came from somewhere
+    // between us and Polar.
+    if (res.status === 200 && !(data && typeof data === 'object' && 'benefit_id' in (data.license_key ?? data))) {
+      throw new OfflineError(`${path}: unexpected reply`);
+    }
     return { status: res.status, data };
   }
 
-  const usable = (k) =>
-    k?.status === 'granted' && k.benefit_id === BENEFIT_ID && (!k.expires_at || Date.parse(k.expires_at) > Date.now());
+  // Expiry is Polar's call (it answers 404 for an expired key), so the local
+  // clock never turns Pro off.
+  const usable = (k) => k?.status === 'granted' && k.benefit_id === BENEFIT_ID;
 
   // Returns { ok: true, activationId } or { ok: false, reason } where reason is
   // 'not-found' (no such key, or a key for another product) or 'refused'

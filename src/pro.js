@@ -2,7 +2,9 @@
 // chrome.storage.local under `pro`:
 //   { trialStart, key, activationId, okAt, triedAt, revoked }
 // okAt is the last time the provider confirmed the key, triedAt the last
-// attempt. Only Pro features check isPro; blocking never does.
+// attempt. A key the provider rejects is kept with revoked: true, so the user
+// can check it again or remove it. Only Pro features check isPro; blocking
+// never does.
 // Expects LICENSE (src/license.js) to be loaded first.
 
 const PRO = (() => {
@@ -26,14 +28,16 @@ const PRO = (() => {
   // Pure: what the stored state means at time `now`.
   function status(pro = {}, now = Date.now()) {
     const hasKey = Boolean(pro.key && pro.activationId);
-    const licensed = hasKey && now - (pro.okAt || 0) < (RECHECK_DAYS + GRACE_DAYS) * DAY;
-    const trialEnd = (pro.trialStart ?? now) + TRIAL_DAYS * DAY;
+    const licensed = hasKey && !pro.revoked && now - (pro.okAt || 0) < (RECHECK_DAYS + GRACE_DAYS) * DAY;
+    // No start date means the trial never started properly: no trial.
+    const trialEnd = pro.trialStart ? pro.trialStart + TRIAL_DAYS * DAY : 0;
     const trialDaysLeft = Math.max(0, Math.ceil((trialEnd - now) / DAY));
     return { isPro: licensed || trialDaysLeft > 0, licensed, hasKey, trialDaysLeft, revoked: Boolean(pro.revoked) };
   }
 
   const needsCheck = (pro, now) =>
     Boolean(pro.key && pro.activationId) &&
+    !pro.revoked &&
     now - (pro.okAt || 0) >= RECHECK_DAYS * DAY &&
     now - (pro.triedAt || 0) >= RETRY_DAYS * DAY;
 
@@ -58,35 +62,37 @@ const PRO = (() => {
     if (!key) return { ok: false, reason: 'not-found' };
     const res = await license.activate(key);
     if (!res.ok) return res;
-    const { trialStart } = await load(store);
+    const { trialStart = now } = await load(store);
     await store.set({ pro: { trialStart, key, activationId: res.activationId, okAt: now, triedAt: now } });
     return { ok: true };
   }
 
   async function removeKey(d) {
-    const { store, license } = deps(d);
+    const { store, license, now } = deps(d);
     const pro = await load(store);
     if (pro.key && pro.activationId) license.deactivate(pro.key, pro.activationId);
-    await store.set({ pro: { trialStart: pro.trialStart } });
+    await store.set({ pro: { trialStart: pro.trialStart ?? now } });
   }
 
   // Re-checks the key about once a month. Offline, the key keeps working for
-  // GRACE_DAYS after the check was due; a key the provider rejects is dropped.
-  async function check(d) {
+  // GRACE_DAYS after the check was due; a key the provider rejects turns Pro
+  // off. `force` checks now, for the popup's "Check again".
+  async function check(d, force = false) {
     const { store, license, now } = deps(d);
     const pro = await load(store);
-    if (!needsCheck(pro, now)) return;
+    if (force ? !(pro.key && pro.activationId) : !needsCheck(pro, now)) return;
     await store.set({ pro: { ...pro, triedAt: now } });
     let good;
     try {
       good = await license.validate(pro.key, pro.activationId);
     } catch (e) {
-      if (e instanceof license.OfflineError) return;
+      if (e instanceof license.OfflineError && !force) return;
       throw e;
     }
     const latest = await load(store);
-    if (latest.key !== pro.key) return;
-    await store.set({ pro: good ? { ...latest, okAt: now } : { trialStart: latest.trialStart, revoked: true } });
+    if (latest.key !== pro.key || latest.activationId !== pro.activationId) return;
+    const { revoked, ...rest } = latest;
+    await store.set({ pro: good ? { ...rest, okAt: now } : { ...rest, revoked: true } });
   }
 
   let running = null;
@@ -95,5 +101,8 @@ const PRO = (() => {
     return running;
   }
 
-  return { TRIAL_DAYS, load, status, startTrial, isPro, activate, removeKey, refresh };
+  // Throws LICENSE.OfflineError when the provider can't be reached.
+  const recheck = (d) => check(d, true);
+
+  return { TRIAL_DAYS, load, status, startTrial, isPro, activate, removeKey, refresh, recheck };
 })();

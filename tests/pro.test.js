@@ -16,7 +16,7 @@ async function fetch(url, opts) {
   requests.push({ url, body: JSON.parse(opts.body) });
   const r = reply(url);
   if (r === 'offline') throw new TypeError('Failed to fetch');
-  return { status: r.status, json: async () => r.data };
+  return { status: r.status, redirected: Boolean(r.redirected), json: async () => r.data };
 }
 
 const root = new URL('..', import.meta.url).pathname;
@@ -70,7 +70,7 @@ test('activation errors: unknown key, refused key, no internet', async () => {
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'not-found');
   reply = () => ({ status: 403, data: { error: 'NotPermitted' } });
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'refused');
-  reply = (url) => (url.endsWith('/activate') ? { status: 200, data: { id: 'a', license_key: granted({ expires_at: '2020-01-01T00:00:00Z' }) } } : { status: 204 });
+  reply = (url) => (url.endsWith('/activate') ? { status: 200, data: { id: 'a', license_key: granted({ status: 'revoked' }) } } : { status: 204 });
   requests = [];
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'refused');
   assert.equal(requests[1]?.url, `${API}/deactivate`, 'an unusable activation is given back');
@@ -128,7 +128,6 @@ test('a revoked key turns Pro off and is removed', async () => {
   const cases = [
     { status: 404, data: { error: 'ResourceNotFound' } },
     { status: 200, data: granted({ status: 'revoked', activation: { id: 'act-1' } }) },
-    { status: 200, data: granted({ expires_at: '2026-10-01T00:00:00Z', activation: { id: 'act-1' } }) },
     { status: 200, data: granted({ activation: { id: 'act-other' } }) },
     { status: 200, data: granted({ benefit_id: 'other', activation: { id: 'act-1' } }) },
   ];
@@ -136,11 +135,62 @@ test('a revoked key turns Pro off and is removed', async () => {
     reply = () => r;
     const store = fakeStore(licensed(T0));
     await PRO.refresh({ store, now: T0 + 31 * DAY });
-    assert.deepEqual(store.data.pro, { trialStart: T0, revoked: true }, JSON.stringify(r));
+    assert.equal(store.data.pro.revoked, true, JSON.stringify(r));
+    assert.equal(store.data.pro.key, 'UNSEEN-K', 'the key is kept so it can be checked again');
     const s = PRO.status(store.data.pro, T0 + 31 * DAY);
     assert.equal(s.isPro, false);
     assert.equal(s.revoked, true);
   }
+});
+
+test('a revoked key is not re-checked by itself, but can be checked again', async () => {
+  reply = () => ({ status: 404 });
+  const store = fakeStore(licensed(T0, { revoked: true }));
+  await PRO.refresh({ store, now: T0 + 90 * DAY });
+  assert.equal(requests.length, 0);
+  reply = () => ({ status: 200, data: granted({ activation: { id: 'act-1' } }) });
+  await PRO.recheck({ store, now: T0 + 90 * DAY });
+  assert.equal(store.data.pro.revoked, undefined);
+  assert.equal(await PRO.isPro({ store, now: T0 + 90 * DAY }), true);
+  reply = () => 'offline';
+  await assert.rejects(PRO.recheck({ store, now: T0 + 91 * DAY }), LICENSE.OfflineError);
+});
+
+test('a reply that is not from Polar is treated as offline, not as a rejection', async () => {
+  for (const r of [
+    { status: 200, data: null }, // a Wi-Fi login page in HTML
+    { status: 200, data: { hello: 'world' } },
+    { status: 200, data: granted({ activation: { id: 'act-1' } }), redirected: true },
+  ]) {
+    reply = () => r;
+    const store = fakeStore(licensed(T0));
+    await PRO.refresh({ store, now: T0 + 31 * DAY });
+    assert.equal(store.data.pro.revoked, undefined, JSON.stringify(r));
+    assert.equal(store.data.pro.okAt, T0);
+  }
+});
+
+test('the local clock never expires a key; Polar does', async () => {
+  reply = () => ({ status: 200, data: granted({ expires_at: '2020-01-01T00:00:00Z', activation: { id: 'act-1' } }) });
+  const store = fakeStore(licensed(T0));
+  await PRO.refresh({ store, now: T0 + 31 * DAY });
+  assert.equal(store.data.pro.okAt, T0 + 31 * DAY);
+});
+
+test('without a trial start date there is no trial', () => {
+  assert.equal(PRO.status({}, T0).isPro, false);
+  assert.equal(PRO.status({ key: 'k', activationId: 'a', okAt: T0 }, T0).isPro, true);
+});
+
+test('a check that raced a key change does not touch the new key', async () => {
+  const store = fakeStore(licensed(T0));
+  reply = () => {
+    store.data.pro = { ...licensed(T0 + 31 * DAY), activationId: 'act-2' };
+    return { status: 404 };
+  };
+  await PRO.refresh({ store, now: T0 + 31 * DAY });
+  assert.equal(store.data.pro.activationId, 'act-2');
+  assert.equal(store.data.pro.revoked, undefined);
 });
 
 test('removing the key frees the activation and keeps the trial date', async () => {

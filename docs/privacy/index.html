@@ -21,7 +21,7 @@
   <ul>
     <li>It runs only on <code>https://mail.google.com</code>. It has no access to any other website.</li>
     <li>In the emails you open, it looks at the addresses of images to tell tracking pixels from normal images. It doesn't read, store or send the text of your emails, your contacts or your email address.</li>
-    <li>With Unseen Pro, when you click a link in an email, it reads the link's address to find the real destination inside it. This happens in your browser; the click tracker is never contacted.</li>
+    <li>With Unseen Pro, when you click a link in an email, it reads the link's address to find the real destination inside it. This happens in your browser; the click tracker is never contacted. The link then opens directly at its real address in a new tab, skipping the tracker and Gmail's own redirect page. Links Unseen can't clean are left to Gmail as usual.</li>
   </ul>
 
   <h2>What it stores, and where</h2>
@@ -37,9 +37,9 @@
   <h2>Unseen Pro license keys</h2>
   <p>This is the only network request Unseen makes, and it happens only after you type a license key into the popup.</p>
   <ul>
-    <li><strong>What is sent:</strong> the license key, the activation id that Polar returned when the key was activated, Unseen's public organization and product ids, and the fixed label "Unseen". Nothing about your emails, your browsing, you or your device.</li>
+    <li><strong>What is sent:</strong> the license key, the activation id that Polar returned when the key was activated, Unseen's public Polar organization id, and either the fixed label "Unseen" (when activating) or the public id of the Unseen Pro product (when checking). Nothing about your emails, your browsing, you or your device.</li>
     <li><strong>To whom:</strong> Polar (<code>api.polar.sh</code>), the store that sells Unseen Pro. Polar sees the request's IP address, like any website you visit.</li>
-    <li><strong>When:</strong> once when you activate the key, about once a month after that to check it is still valid, and once if you remove the key.</li>
+    <li><strong>When:</strong> once when you activate the key, about once a month after that to check it is still valid, when you click "Check again", and once to free the activation if you remove the key or it can't be used.</li>
     <li><strong>What is kept:</strong> only the key, the activation id and the check dates, in your browser. Polar's replies include the buyer's details; Unseen does not keep them.</li>
   </ul>
   <p>When you buy Unseen Pro, you pay on Polar's checkout page. Polar is the seller and handles your email address and payment details under <a href="https://polar.sh/legal/privacy">its own privacy policy</a>. We see your purchase in Polar's dashboard, as any seller would. The "Get Pro" buttons are plain links: opening them sends nothing from the extension.</p>

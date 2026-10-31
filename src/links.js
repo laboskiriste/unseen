@@ -32,7 +32,10 @@ const LINKS = (() => {
   const UNWRAP = [
     ['Google', /^(www\.)?google\.[a-z]{2,3}(\.[a-z]{2})?$/, /^\/url$/, param('q', 'url')],
     ['Amazon SES', /\.awstrack\.me$/, /^\/L0\/([^/]+)\//, (u, m) => decodeURIComponent(m[1])],
-    ['Amazon SES', /./, /^\/CL0\/([^/]+)\/\d+\/[^/]+-000000\/[^/]+$/, (u, m) => decodeURIComponent(m[1])],
+    // SES on a sender's own tracking domain. Only known domains: on any host,
+    // a link that shows one site on hover could open another.
+    ['Amazon SES', /^click\.redditmail\.com$/, /^\/CL0\/([^/]+)\/\d+\/[^/]+-000000\/[^/]+$/,
+      (u, m) => decodeURIComponent(m[1])],
     ['Postmark', /^(click|track)\.pstmrk\.it$/, /^\/[23][mt]?(s?)\/([^/]+)\//,
       (u, m) => `${m[1] ? 'https' : 'http'}://${decodeURIComponent(m[2])}`],
     ['Kit', /^click\.convertkit-mail\d*\.com$/, /^\/[^/]+\/[^/]+\/([A-Za-z0-9+/=_-]+)\/?$/, (u, m) => b64(m[1])],
@@ -110,7 +113,9 @@ const LINKS = (() => {
   // Removes tracking parameters, keeping the rest of the query byte for byte.
   function strip(href) {
     const q = href.indexOf('?');
-    if (q === -1 || !parse(href)) return href;
+    const hash = href.indexOf('#');
+    // A '?' after '#' belongs to the page's own router; leave it alone.
+    if (q === -1 || (hash !== -1 && hash < q) || !parse(href)) return href;
     const h = href.indexOf('#', q);
     const query = href.slice(q + 1, h === -1 ? undefined : h);
     const kept = query.split('&').filter((pair) => {
@@ -128,7 +133,9 @@ const LINKS = (() => {
   }
 
   // { url, via }: the address to open and the trackers skipped on the way.
-  // url === href when there was nothing to clean.
+  // url === href when there was no tracker to skip. Tracking parameters are
+  // only removed from an address we unwrapped: a link we can't unwrap may
+  // sign its own query, and changing it could break the link.
   function clean(href) {
     let url = href;
     const via = [];
@@ -138,7 +145,7 @@ const LINKS = (() => {
       via.push(next.name);
       url = next.url;
     }
-    return { url: strip(url), via };
+    return { url: via.length ? strip(url) : href, via };
   }
 
   return { clean, unwrap, strip };

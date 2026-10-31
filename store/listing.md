@@ -33,7 +33,7 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 >
 > FREE AND PRO, SAID UP FRONT
 > • Free forever: tracker blocking, the note above each email, "Load images anyway" and the weekly count
-> • Unseen Pro: when you click a link in an email, Unseen opens the real address without the click tracker, where the address is inside the link (Google, Amazon SES, Postmark, Kit, Substack, Mandrill, Facebook, LinkedIn and more), and removes tracking tags such as utm_ from the address. The tracker is never contacted. Coming later: rules per sender, full history and export.
+> • Unseen Pro: when you click a link in an email, Unseen opens the real address without the click tracker, where the address is inside the link (Google, Amazon SES, Postmark, Kit, Substack, Mandrill, Facebook, LinkedIn and more), and removes tracking tags such as utm_ from that address. The tracker is never contacted. Coming later: rules per sender, full history and export.
 > • Every new user gets 30 days of Pro free. After that, Pro costs $15 once or $8 per year, and the free features keep working.
 > • Nothing that is free today will ever become paid
 >
@@ -57,7 +57,7 @@ Chrome Web Store: **Privacy & Security** (fallback: Productivity / Communication
 | `storage` | Saves the on/off setting, a local count of blocked trackers, the Pro trial start date and, if entered, the Pro license key. |
 | Content script on `https://mail.google.com/*` | Looks at image addresses in opened emails to tell tracking pixels from normal images, and shows the "trackers blocked" note. With Pro, opens clicked email links at their real address without the click tracker. |
 
-The license check calls `api.polar.sh` with `fetch`. Polar allows any origin (CORS), so no host permission is needed.
+The license check calls `api.polar.sh` with `fetch` from the background. Polar's customer-portal license endpoints answer `access-control-allow-origin: *` (checked 2026-11-01 with curl and with a live activation attempt from the Chrome extension), so no host permission is needed.
 
 Remote code: **No.**
 
