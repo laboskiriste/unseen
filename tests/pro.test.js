@@ -70,8 +70,10 @@ test('activation errors: unknown key, refused key, no internet', async () => {
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'not-found');
   reply = () => ({ status: 403, data: { error: 'NotPermitted' } });
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'refused');
-  reply = () => ({ status: 200, data: { id: 'a', license_key: granted({ expires_at: '2020-01-01T00:00:00Z' }) } });
+  reply = (url) => (url.endsWith('/activate') ? { status: 200, data: { id: 'a', license_key: granted({ expires_at: '2020-01-01T00:00:00Z' }) } } : { status: 204 });
+  requests = [];
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'refused');
+  assert.equal(requests[1]?.url, `${API}/deactivate`, 'an unusable activation is given back');
   reply = (url) => (url.endsWith('/activate') ? { status: 200, data: { id: 'a', license_key: granted({ benefit_id: 'other' }) } } : { status: 204 });
   requests = [];
   assert.equal((await PRO.activate('GUARDIAN-X', { store })).reason, 'not-found', "another product's key");
@@ -115,12 +117,20 @@ test('offline: 14 days of grace after the check is due, retried daily', async ()
   assert.equal(await PRO.isPro({ store, now: T0 + 50 * DAY }), true, 'back online turns Pro back on');
 });
 
+test('a valid reply without the activation keeps the key', async () => {
+  reply = () => ({ status: 200, data: granted({ activation: null }) });
+  const store = fakeStore(licensed(T0));
+  await PRO.refresh({ store, now: T0 + 31 * DAY });
+  assert.equal(store.data.pro.okAt, T0 + 31 * DAY);
+});
+
 test('a revoked key turns Pro off and is removed', async () => {
   const cases = [
     { status: 404, data: { error: 'ResourceNotFound' } },
     { status: 200, data: granted({ status: 'revoked', activation: { id: 'act-1' } }) },
     { status: 200, data: granted({ expires_at: '2026-10-01T00:00:00Z', activation: { id: 'act-1' } }) },
-    { status: 200, data: granted({ activation: null }) },
+    { status: 200, data: granted({ activation: { id: 'act-other' } }) },
+    { status: 200, data: granted({ benefit_id: 'other', activation: { id: 'act-1' } }) },
   ];
   for (const r of cases) {
     reply = () => r;

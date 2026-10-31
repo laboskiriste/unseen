@@ -47,14 +47,14 @@ const LICENSE = (() => {
   // (revoked, expired or out of activations).
   async function activate(key) {
     const { status, data } = await post('activate', { key, label: LABEL });
-    if (status === 200 && data?.id && usable(data.license_key)) return { ok: true, activationId: data.id };
-    if (status === 200 && data?.license_key?.benefit_id !== BENEFIT_ID) {
-      // Don't use up an activation of another product's key.
-      if (data?.id) await deactivate(key, data.id);
-      return { ok: false, reason: 'not-found' };
+    if (status === 200 && data?.id) {
+      if (usable(data.license_key)) return { ok: true, activationId: data.id };
+      // Give the activation back, so a key we can't use loses nothing.
+      await deactivate(key, data.id);
+      return { ok: false, reason: data.license_key?.benefit_id === BENEFIT_ID ? 'refused' : 'not-found' };
     }
     if (status === 404) return { ok: false, reason: 'not-found' };
-    if (status === 403 || status === 200) return { ok: false, reason: 'refused' };
+    if (status === 403) return { ok: false, reason: 'refused' };
     throw new OfflineError(`activate: HTTP ${status}`);
   }
 
@@ -62,7 +62,9 @@ const LICENSE = (() => {
   // (refunded, revoked, a yearly plan that lapsed, or this activation removed).
   async function validate(key, activationId) {
     const { status, data } = await post('validate', { key, activation_id: activationId, benefit_id: BENEFIT_ID });
-    if (status === 200) return usable(data) && data.activation?.id === activationId;
+    // Polar answers 404 when the activation doesn't belong to the key; the
+    // activation in the reply is optional, so only a different one counts.
+    if (status === 200) return usable(data) && (!data.activation || data.activation.id === activationId);
     if (status === 404) return false;
     throw new OfflineError(`validate: HTTP ${status}`);
   }
