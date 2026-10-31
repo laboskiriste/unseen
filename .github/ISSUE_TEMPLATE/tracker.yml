@@ -1,0 +1,29 @@
+name: Tracker not blocked, or image broken
+description: Unseen let a tracking pixel through, or blocked a normal image.
+labels: [tracker-list]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What happened?
+      options:
+        - A tracker was not blocked
+        - A normal image was blocked or broken
+    validations:
+      required: true
+  - type: input
+    id: sender
+    attributes:
+      label: Who sent the email?
+      description: The company or newsletter name is enough. Please don't paste the email itself.
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Image address (optional)
+      description: The domain of the image, if you know it, e.g. click.example.com. Remove anything that looks like your address or an ID.
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version

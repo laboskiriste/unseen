@@ -75,3 +75,38 @@ test('classify: normal images are allowed', () => {
     assert.deepEqual({ ...PGB.classify(img) }, { block: false, tracker: null }, img.src);
   }
 });
+
+test('originalUrl: only the part after #, or null', () => {
+  assert.equal(PGB.originalUrl(`${P}#https://x.com/a.png?b=1`), 'https://x.com/a.png?b=1');
+  assert.equal(PGB.originalUrl(P), null);
+});
+
+test('markAllIn marks several URLs and leaves marked ones alone', () => {
+  const two = `url(${P}#https://x.com/a.jpg), url(${P}?pgb_ok=1#https://x.com/b.jpg)`;
+  assert.equal(PGB.markAllIn(two), `url(${P}?pgb_ok=1#https://x.com/a.jpg), url(${P}?pgb_ok=1#https://x.com/b.jpg)`);
+  assert.equal(PGB.markAllIn('color: red'), 'color: red');
+});
+
+test('tracker names match regardless of case', () => {
+  assert.match(PGB.trackerName('HTTPS://US1.LIST-MANAGE.COM/TRACK/OPEN.PHP?U=1') || '', /mailchimp/i);
+});
+
+test('classify: hidden-image styles', () => {
+  const beacon = `${P}#https://news.example.com/o?id=9`;
+  for (const style of ['opacity:0', 'visibility: hidden', 'DISPLAY: NONE', 'max-height: 0px', 'width:1px;height:1px']) {
+    assert.equal(PGB.classify({ src: beacon, style }).block, true, style);
+  }
+  for (const style of ['opacity:0.5', 'height:20px', 'width: 100px']) {
+    assert.equal(PGB.classify({ src: beacon, style }).block, false, style);
+  }
+});
+
+test('classify: one tiny side is enough when only one size is given', () => {
+  assert.equal(PGB.classify({ src: `${P}#https://news.example.com/o?id=1`, width: '2' }).block, true);
+  assert.equal(PGB.classify({ src: `${P}#https://news.example.com/o?id=1`, height: '3' }).block, false);
+});
+
+test('classify: a tiny image without a readable original URL still counts as a pixel', () => {
+  assert.equal(PGB.classify({ src: P, width: '1', height: '1' }).tracker, 'Hidden pixel');
+  assert.equal(PGB.classify({ src: `${P}#not a url`, width: '1', height: '1' }).tracker, 'Hidden pixel');
+});

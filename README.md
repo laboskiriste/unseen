@@ -57,9 +57,18 @@ Checked by hand on real newsletters and notification emails in Gmail (October 20
 2. Pin the icon: click the puzzle piece in the toolbar, then the pin next to "Unseen: Email Tracker Blocker".
 3. Reload Gmail and open a few newsletters.
 
-## Not done yet
+## Roadmap
 
-- Icons on inbox rows (before an email is opened)
-- Remote tracker-list updates through the Worker (the list is bundled for now)
-- Outlook.com, and link-click tracking cleanup (planned paid features)
-- Firefox: check that a normal (non-temporary) install grants mail.google.com access
+Core blocking stays free forever: blocking pixels, the note above each email, "Load images anyway", and the weekly count.
+
+Planned, in this order. Some may become optional paid Pro features to fund the work:
+
+1. Clean tracking links: open the real address when you click a link in an email, without the click tracker.
+2. Rules per sender: always allow images from your bank, always block one newsletter.
+3. Full history and export.
+4. Outlook.com.
+
+Also planned:
+- Icons on inbox rows, before an email is opened.
+- Tracker-list updates without a new version of the extension.
+- A check that a normal Firefox install (not a temporary one) grants mail.google.com access.

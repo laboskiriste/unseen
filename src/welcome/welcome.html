@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Unseen</title>
+  <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../../icons/icon128.png" alt="" width="64" height="64">
+      <h1>Unseen is on</h1>
+    </header>
+
+    <section>
+      <h2>Read your email as usual</h2>
+      <p>Open Gmail in your browser. When an email hides a tracking pixel, Unseen blocks it and shows a small note above the email with the tracking company's name. Normal images load as before.</p>
+      <p>If Gmail was already open, reload it once so Unseen can start.</p>
+      <p><a class="button" href="https://mail.google.com/" target="_blank" rel="noopener">Open Gmail</a></p>
+    </section>
+
+    <section>
+      <h2>When you want the images</h2>
+      <p>Click <strong>Load images anyway</strong> in the note above an email to let that one email through. The switch in Unseen's toolbar menu turns blocking off everywhere.</p>
+    </section>
+
+    <section>
+      <h2>Your privacy</h2>
+      <p>Unseen runs only on mail.google.com and can't see any other site. It never reads, stores or sends your emails. It makes no network requests of its own: no servers, no analytics, no account. Blocking trackers stays free forever.</p>
+    </section>
+
+    <section id="family" hidden>
+      <h2>More from <span id="family-name"></span></h2>
+      <ul id="family-list" class="family"></ul>
+    </section>
+  </main>
+  <script src="../family.js"></script>
+  <script src="welcome.js"></script>
+</body>
+</html>

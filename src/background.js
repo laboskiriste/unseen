@@ -14,7 +14,10 @@ async function syncRuleset() {
   );
 }
 
-chrome.runtime.onInstalled.addListener(syncRuleset);
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  syncRuleset();
+  if (reason === 'install') chrome.tabs.create({ url: chrome.runtime.getURL('src/welcome/welcome.html') });
+});
 chrome.runtime.onStartup.addListener(syncRuleset);
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.enabled) syncRuleset();
