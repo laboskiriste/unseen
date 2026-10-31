@@ -59,14 +59,17 @@ Checked by hand on real newsletters and notification emails in Gmail (October 20
 
 ## Roadmap
 
-Core blocking stays free forever: blocking pixels, the note above each email, "Load images anyway", and the weekly count.
+Free forever: blocking pixels, the note above each email, "Load images anyway", and the weekly count. Nothing that is free today will ever become paid.
 
-Planned, in this order. Some may become optional paid Pro features to fund the work:
+**Unseen Pro**, planned in this order:
 
 1. Clean tracking links: open the real address when you click a link in an email, without the click tracker.
 2. Rules per sender: always allow images from your bank, always block one newsletter.
 3. Full history and export.
-4. Outlook.com.
+
+Every new user gets 30 days of Pro free. After that, Pro costs €12 once or €6 per year, and the free features keep working. No account is needed.
+
+Later, not yet decided whether free or Pro: Outlook.com.
 
 Also planned:
 - Icons on inbox rows, before an email is opened.
