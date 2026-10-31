@@ -142,8 +142,8 @@ test('removing the key frees the activation and keeps the trial date', async () 
   assert.deepEqual(store.data.pro, { trialStart: T0 });
 });
 
-test('checkout links are plain https links when set', () => {
+test('checkout links are plain Polar links', () => {
   for (const url of Object.values(LICENSE.CHECKOUT)) {
-    if (url !== null) assert.match(url, /^https:\/\//);
+    assert.match(url, /^https:\/\/buy\.polar\.sh\/polar_cl_\w+$/);
   }
 });

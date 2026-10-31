@@ -13,7 +13,10 @@ const LICENSE = (() => {
   const BENEFIT_ID = '88642029-aeb9-4cdf-bbeb-4ef18c5a7ab7';
   const LABEL = 'Unseen';
   // Polar checkout links. Plain links: opening them sends nothing from here.
-  const CHECKOUT = { lifetime: null, yearly: null };
+  const CHECKOUT = {
+    lifetime: 'https://buy.polar.sh/polar_cl_ufyOS7IHgqRtf7LB67tKPwA9nSgQzgIt6rY1o0lb8fX',
+    yearly: 'https://buy.polar.sh/polar_cl_hRnpqKQh10PuDIbMJ5GabP0wcbjDpD51qFPFW2KLuJz',
+  };
 
   // Thrown for anything that isn't a clear answer about the key: no internet,
   // a timeout, a server error. Callers keep the current state and retry later.
