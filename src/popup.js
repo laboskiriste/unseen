@@ -40,4 +40,26 @@ document.getElementById('enabled').addEventListener('change', async (e) => {
   note.hidden = false;
 });
 
+// One line pointing to the other Tinyward extensions. Plain links from
+// family.js: nothing is fetched or tracked.
+function renderFamily() {
+  const { family, extensions } = globalThis.TINYWARD;
+  const others = extensions.filter((e) => e.id !== 'unseen');
+  if (!others.length) return;
+  const firefox = typeof browser !== 'undefined' && typeof browser.runtime?.getBrowserInfo === 'function';
+  const el = document.getElementById('family');
+  el.append(`More from ${family}: `);
+  others.forEach((e, i) => {
+    if (i > 0) el.append(' · ');
+    const a = document.createElement('a');
+    a.href = (firefox ? e.firefox : e.chrome) ?? e.website;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.title = e.short;
+    a.textContent = e.name.split(':')[0];
+    el.append(a);
+  });
+}
+
+renderFamily();
 render();

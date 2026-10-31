@@ -1,6 +1,6 @@
-# Store listing draft (not submitted)
+# Store listing
 
-Draft text for the Chrome Web Store and Firefox Add-ons listings.
+Text for the Chrome Web Store and Firefox Add-ons listings. Version 0.1.0 was submitted on 2026-10-31. Changes below this line are for the next update of the listing.
 
 ## Name
 
@@ -31,7 +31,9 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 > • Makes no network requests of its own: no servers, no analytics, no account
 > • Open source (MIT): https://github.com/laboskiriste/unseen
 >
-> From the maker of Extension Guardian, which warns you when your browser extensions change owner or gain new permissions.
+> Core blocking is free forever. Optional Pro features may be added later.
+>
+> Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: Extension Guardian, which warns you when your browser extensions change owner or gain new permissions.
 >
 > Note: Gmail already hides your IP address from senders. Unseen stops the remaining signal: the fact that, and when, you opened the email.
 

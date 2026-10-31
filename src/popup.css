@@ -118,3 +118,10 @@ footer {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+#family {
+  flex-basis: 100%;
+}
+#family a {
+  color: var(--accent);
+  text-decoration: none;
+}

@@ -1,8 +1,8 @@
 # Unseen: Email Tracker Blocker
 
-Blocks email tracking pixels in Gmail on the web, so senders can't see when you open their emails. Chrome, Edge and Firefox. MVP, not published yet.
+Blocks email tracking pixels in Gmail on the web, so senders can't see when you open their emails. Chrome, Edge and Firefox. Submitted to the Chrome Web Store and Firefox Add-ons in October 2026.
 
-From the maker of [Extension Guardian](https://github.com/laboskiriste/extension-guardian).
+Part of **Tinyward**, small privacy tools with as few permissions as possible. Also from Tinyward: [Extension Guardian](https://github.com/laboskiriste/extension-guardian), which warns you when an extension you use is sold or gains new permissions.
 
 ## What it does
 
