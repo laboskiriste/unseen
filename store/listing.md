@@ -28,12 +28,13 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 > PRIVACY FIRST
 > • Runs only on mail.google.com and has no access to any other website
 > • Never reads, stores or sends your emails, contacts or address
-> • Makes no network requests of its own: no servers, no analytics, no account
+> • No servers, no analytics, no account. The only network request is checking an Unseen Pro license key with Polar, and only if you enter one
 > • Open source (MIT): https://github.com/laboskiriste/unseen
 >
 > FREE AND PRO, SAID UP FRONT
 > • Free forever: tracker blocking, the note above each email, "Load images anyway" and the weekly count
-> • Unseen Pro (coming soon): clean tracking links, rules per sender, full history and export. Every new user gets 30 days of Pro free. After that, Pro costs $15 once or $8 per year, and the free features keep working.
+> • Unseen Pro: when you click a link in an email, Unseen opens the real address without the click tracker, where the address is inside the link (Google, Amazon SES, Postmark, Kit, Substack, Mandrill, Facebook, LinkedIn and more), and removes tracking tags such as utm_ from the address. The tracker is never contacted. Coming later: rules per sender, full history and export.
+> • Every new user gets 30 days of Pro free. After that, Pro costs $15 once or $8 per year, and the free features keep working.
 > • Nothing that is free today will ever become paid
 >
 > Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: Extension Guardian, which warns you when your browser extensions change owner or gain new permissions.
@@ -53,14 +54,16 @@ Chrome Web Store: **Privacy & Security** (fallback: Productivity / Communication
 | Permission | Justification |
 |---|---|
 | `declarativeNetRequest` | Blocks Gmail's image-proxy requests for tracking pixels. Static rules only; the extension can't read request contents. |
-| `storage` | Saves the on/off setting and a local count of blocked trackers. |
-| Content script on `https://mail.google.com/*` | Looks at image addresses in opened emails to tell tracking pixels from normal images, and shows the "trackers blocked" note. |
+| `storage` | Saves the on/off setting, a local count of blocked trackers, the Pro trial start date and, if entered, the Pro license key. |
+| Content script on `https://mail.google.com/*` | Looks at image addresses in opened emails to tell tracking pixels from normal images, and shows the "trackers blocked" note. With Pro, opens clicked email links at their real address without the click tracker. |
+
+The license check calls `api.polar.sh` with `fetch`. Polar allows any origin (CORS), so no host permission is needed.
 
 Remote code: **No.**
 
 ## Data usage disclosure (CWS) and data collection (AMO)
 
-- Collected data: **none** in every category.
+- Collected data: **none** in every category. ⚠️ To decide before submitting the Pro version: the Pro license key is sent to Polar (only if the user enters one). It is not personal data about the user's browsing, but a reviewer may see it as "authentication information". The safe choice is to declare it in that category on both stores (CWS: "Authentication information"; Firefox: add `authenticationInfo` to `data_collection_permissions.optional`) and explain it is only the license key, sent to the seller to check the purchase.
 - Certifications: no selling or transfer of user data, no use unrelated to the single purpose, no creditworthiness use.
 - Firefox `data_collection_permissions`: `required: ["none"]` (already set in `dev/build-firefox.mjs`).
 - Privacy policy URL: https://laboskiriste.github.io/unseen/privacy/ (source: `docs/privacy/index.html`, same content as [PRIVACY.md](../PRIVACY.md)).

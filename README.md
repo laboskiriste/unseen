@@ -11,7 +11,14 @@ Part of **Tinyward**, small privacy tools with as few permissions as possible. A
 - Popup: trackers blocked in the last 7 days, top tracking companies, trackers on the current page, and an on/off switch.
 - Badge with the number of trackers on the current Gmail tab.
 
-**Permissions:** `declarativeNetRequest`, `storage`, and a content script on `https://mail.google.com/*`. No host permissions, no network requests of its own. See [PRIVACY.md](PRIVACY.md) or the [hosted privacy policy](https://laboskiriste.github.io/unseen/privacy/).
+### Unseen Pro
+
+Free forever: everything above. Pro adds new features only, with 30 days free for every new user, then $15 once or $8 per year. When the trial ends, only Pro turns off.
+
+- **Clean tracking links:** when you click a link in an email, Unseen opens the real address without the click tracker, where the address is written inside the link ([src/links.js](src/links.js)). The tracker is never contacted; links it can't clean are left to Gmail.
+- License keys are sold through [Polar](https://polar.sh) and checked directly with Polar's public API ([src/license.js](src/license.js)), about once a month, with 14 days of grace when offline. Trial and license logic: [src/pro.js](src/pro.js).
+
+**Permissions:** `declarativeNetRequest`, `storage`, and a content script on `https://mail.google.com/*`. No host permissions. The only network request is the Unseen Pro license check with Polar, and only after the user enters a key. See [PRIVACY.md](PRIVACY.md) or the [hosted privacy policy](https://laboskiriste.github.io/unseen/privacy/).
 
 ## How it works
 

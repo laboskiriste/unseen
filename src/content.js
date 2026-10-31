@@ -179,3 +179,27 @@ chrome.storage.local.get('enabled').then(({ enabled: value }) => {
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.enabled) enabled = changes.enabled.newValue !== false;
 });
+
+// Pro: open links in emails without their click tracker, when the real
+// address is written in the link itself (src/links.js). The tracker is never
+// contacted; links we can't clean are left to Gmail.
+let proState; // the stored `pro` object; PRO.status() decides at click time
+
+function openClean(e) {
+  if (!enabled || e.button > 1 || (e.type === 'click' && e.button !== 0)) return;
+  const a = e.target.closest?.('a[href]');
+  if (!a || !a.closest(BODY) || !proState || !PRO.status(proState).isPro) return;
+  const href = a.getAttribute('href');
+  const { url } = LINKS.clean(href);
+  if (url === href) return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+document.addEventListener('click', openClean, true);
+document.addEventListener('auxclick', openClean, true);
+
+chrome.storage.local.get('pro').then(({ pro }) => { proState = pro; });
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'local' && changes.pro) proState = changes.pro.newValue;
+});

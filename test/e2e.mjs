@@ -41,8 +41,17 @@ const PAGE = `<!doctype html><title>Fake Gmail</title>
 <div class="adn" id="m2"><div class="ii gt"><div class="a3s">
   <img id="meips-tracker" src="https://ci4.googleusercontent.com/meips/EEE#https://x.r.us-east-1.awstrack.me/I0/xyz" width="1" height="1">
   <img id="query-logo" src="${P}/proxy/FFF?sz=1#https://example.com/a.png?size=2" width="50">
+  <a id="ses-link" href="https://x.r.us-east-1.awstrack.me/L0/https:%2F%2Fshop.example.com%2Fdeal%3Fid%3D7%26utm_source%3Dmail/1/01-000000/s=">Deal</a>
+  <a id="opaque-link" href="https://us1.list-manage.com/track/click?u=1&id=2&e=3">Opaque</a>
 </div></div></div>
+<a id="outside-link" href="https://x.r.us-east-1.awstrack.me/L0/https:%2F%2Fshop.example.com%2Fnav/1/01-000000/s=">Not in an email</a>
 <script>
+// Stands in for Gmail's own link handling.
+window.gmailOpened = [];
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a');
+  if (a) { e.preventDefault(); gmailOpened.push(a.id); }
+});
 setTimeout(() => {
   document.querySelector('#m2 .a3s').insertAdjacentHTML('beforeend',
     '<img id="late-tracker" src="${P}/proxy/GGG#https://click.email.brand.com/open.aspx?ffcb10" width="1" height="1">' +
@@ -56,12 +65,16 @@ const COUNTED = 5; // all blocked except the spacer
 
 const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC', 'base64');
 let hits = [];
+let linkHits = [];
 const server = createHttps({ key: readFileSync(`${certDir}key.pem`), cert: readFileSync(`${certDir}cert.pem`) }, (req, res) => {
   const host = (req.headers.host || '').split(':')[0];
   if (host === 'mail.google.com') res.writeHead(200, { 'content-type': 'text/html' }).end(PAGE);
   else if (host.endsWith('.googleusercontent.com')) {
     hits.push(req.url);
     res.writeHead(200, { 'content-type': 'image/png' }).end(PNG);
+  } else if (host === 'shop.example.com') {
+    linkHits.push(req.url);
+    res.writeHead(200, { 'content-type': 'text/html' }).end('shop');
   } else res.writeHead(404).end();
 });
 await new Promise((r) => server.listen(HTTPS_PORT, '127.0.0.1', r));
@@ -69,7 +82,7 @@ await new Promise((r) => server.listen(HTTPS_PORT, '127.0.0.1', r));
 const proxy = createHttp((req, res) => res.writeHead(403).end());
 proxy.on('connect', (req, socket) => {
   const host = req.url.split(':')[0];
-  if (host !== 'mail.google.com' && !host.endsWith('.googleusercontent.com')) {
+  if (host !== 'mail.google.com' && host !== 'shop.example.com' && !host.endsWith('.googleusercontent.com')) {
     socket.end('HTTP/1.1 403 Forbidden\r\n\r\n');
     return;
   }
@@ -166,6 +179,31 @@ try {
     await popup.screenshot({ path: `${process.env.SHOTS}/popup.png` });
     await popup.close();
     await page.bringToFront();
+  }
+
+  console.log('-- clean links (Pro trial)');
+  const gmailOpened = () => page.evaluate(() => window.gmailOpened.splice(0));
+  await page.click('#ses-link');
+  await sleep(1500);
+  await page.bringToFront();
+  check(linkHits.includes('/deal?id=7'), `the real address opened, without utm_ (got ${JSON.stringify(linkHits)})`);
+  check((await gmailOpened()).length === 0, 'Gmail did not open the tracker');
+  await page.click('#opaque-link');
+  await page.click('#outside-link');
+  await sleep(300);
+  check(JSON.stringify(await gmailOpened()) === '["opaque-link","outside-link"]', 'links it cannot clean, or outside emails, are left to Gmail');
+  for (const p of (await browser.pages()).slice(2)) if (p !== page) await p.close();
+
+  if (browserName === 'chrome') {
+    const sw = await (await browser.waitForTarget((t) => t.type() === 'service_worker')).worker();
+    await sw.evaluate(() => chrome.storage.local.set({ pro: { trialStart: Date.now() - 31 * 864e5 } }));
+    await sleep(300);
+    linkHits = [];
+    await page.click('#ses-link');
+    await sleep(500);
+    await page.bringToFront();
+    check(JSON.stringify(await gmailOpened()) === '["ses-link"]' && linkHits.length === 0, 'after the trial, links are left to Gmail');
+    await sw.evaluate(() => chrome.storage.local.set({ pro: { trialStart: Date.now() } }));
   }
 
   console.log('-- load images anyway');

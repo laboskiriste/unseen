@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Unseen: Email Tracker Blocker",
   "short_name": "Unseen",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Blocks email tracking pixels in Gmail, so senders can't see when you open their emails. Runs only on Gmail.",
   "homepage_url": "https://laboskiriste.github.io/unseen/",
   "minimum_chrome_version": "121",
@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["src/trackers-data.js", "src/classify.js", "src/content.js"],
+      "js": ["src/trackers-data.js", "src/classify.js", "src/pro.js", "src/links.js", "src/content.js"],
       "css": ["src/content.css"],
       "run_at": "document_start"
     }
