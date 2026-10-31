@@ -1,0 +1,18 @@
+{
+  "name": "unseen",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "node test/e2e.mjs chrome",
+    "test:e2e:firefox": "node test/e2e.mjs firefox",
+    "build:trackers": "node dev/build-trackers.mjs",
+    "build:firefox": "node dev/build-firefox.mjs",
+    "icons": "node dev/make-icons.mjs",
+    "package": "npm test && node dev/package.mjs",
+    "store-images": "node dev/make-store-images.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

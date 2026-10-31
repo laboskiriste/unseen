@@ -1,0 +1,5 @@
+build/
+test/.cert/
+node_modules/
+store/*.zip
+_metadata/

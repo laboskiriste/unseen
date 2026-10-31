@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "priority": 2,
+    "action": { "type": "allow" },
+    "condition": {
+      "urlFilter": "pgb_ok=1",
+      "initiatorDomains": ["mail.google.com"],
+      "resourceTypes": ["image", "media"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||googleusercontent.com/proxy/",
+      "initiatorDomains": ["mail.google.com"],
+      "resourceTypes": ["image", "media"]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "||googleusercontent.com/meips/",
+      "initiatorDomains": ["mail.google.com"],
+      "resourceTypes": ["image", "media"]
+    }
+  }
+]

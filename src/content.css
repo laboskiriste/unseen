@@ -1,0 +1,32 @@
+.pgb-chip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font: 13px/1.4 'Google Sans', Roboto, Arial, sans-serif;
+}
+.pgb-chip.pgb-loaded {
+  background: #fff3e0;
+  color: #8a4b00;
+}
+.pgb-icon {
+  font-size: 14px;
+}
+.pgb-load {
+  margin-left: auto;
+  padding: 2px 10px;
+  border: 1px solid currentColor;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.pgb-load:hover {
+  background: rgba(0, 0, 0, 0.05);
+}

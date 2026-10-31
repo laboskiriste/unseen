@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Store shot</title>
+<link rel="stylesheet" href="../src/content.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+    color: #1f2933;
+    background: linear-gradient(135deg, #e8f5e9 0%, #f4f7f5 55%, #ffffff 100%);
+    overflow: hidden;
+  }
+  .scene { display: none; height: 100%; padding: 56px 64px; gap: 48px; align-items: center; }
+  .scene.on { display: flex; }
+  .copy { flex: 0 0 380px; }
+  .copy h1 { font-size: 40px; line-height: 1.15; margin: 0 0 18px; letter-spacing: -0.02em; }
+  .copy h1 em { font-style: normal; color: #2e7d32; }
+  .copy p { margin: 0 0 22px; color: #4b5563; font-size: 18px; }
+  .copy ul { margin: 0; padding: 0; list-style: none; }
+  .copy li { margin: 0 0 10px; padding-left: 28px; position: relative; font-size: 16px; }
+  .copy li::before { content: '✓'; position: absolute; left: 0; color: #2e7d32; font-weight: 700; }
+  .stage { flex: 1; position: relative; height: 100%; }
+
+  /* Neutral mail-client mock (no real brand). */
+  .window {
+    position: absolute; inset: 20px 90px 60px 0;
+    background: #fff; border-radius: 14px;
+    box-shadow: 0 20px 50px rgba(20, 60, 30, 0.18);
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .bar { height: 44px; background: #f1f3f4; display: flex; align-items: center; gap: 8px; padding: 0 16px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: #d0d5d9; }
+  .search { margin-left: 20px; flex: 1; height: 26px; border-radius: 13px; background: #fff; }
+  .mail { padding: 22px 28px; flex: 1; }
+  .subject { font-size: 21px; margin: 0 0 14px; }
+  .from { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 14px; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; }
+  .from small { color: #6b7280; display: block; }
+  .news { border: 1px solid #eceff1; border-radius: 10px; padding: 22px; text-align: center; }
+  .news .logo { font-weight: 800; letter-spacing: 0.25em; margin-bottom: 14px; }
+  .hero { height: 170px; border-radius: 8px; display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; }
+  .lines { margin: 16px auto 0; width: 70%; }
+  .lines div { height: 9px; border-radius: 5px; background: #eceff1; margin: 9px 0; }
+  .cta { display: inline-block; margin-top: 10px; padding: 9px 24px; border-radius: 20px; color: #fff; font-weight: 600; font-size: 14px; }
+
+  /* Popup mock, same CSS as the real popup. */
+  .popup {
+    position: absolute; right: 0; bottom: 0; width: 300px;
+    border-radius: 12px; box-shadow: 0 16px 40px rgba(20, 60, 30, 0.25); overflow: hidden;
+  }
+  .popup iframe { display: block; width: 300px; height: 362px; border: 0; }
+  .pin { position: absolute; right: 136px; top: -2px; font-size: 13px; color: #2e7d32; }
+
+  /* Promo tile */
+  #promo { padding: 0; justify-content: center; gap: 22px; background: linear-gradient(135deg, #2e7d32, #1b5e20); color: #fff; }
+  #promo .ico { width: 110px; height: 110px; background: #fff; border-radius: 26px; display: grid; place-items: center; }
+  #promo h1 { font-size: 34px; margin: 0; }
+  #promo p { margin: 4px 0 0; font-size: 16px; opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<section class="scene" id="s1">
+  <div class="copy">
+    <h1>See who tracks your email. <em>Stop them.</em></h1>
+    <p>Newsletters hide invisible pixels that tell the sender when you open their email. Unseen blocks them in Gmail.</p>
+    <ul>
+      <li>Blocks 330+ known trackers and hidden pixels</li>
+      <li>Normal images still load</li>
+      <li>Works only on Gmail, nowhere else</li>
+      <li>Nothing leaves your browser</li>
+    </ul>
+  </div>
+  <div class="stage">
+    <div class="window">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="search"></span></div>
+      <div class="mail">
+        <h2 class="subject">Our autumn sale starts now 🍂</h2>
+        <div class="from"><span class="avatar" style="background:#8e24aa">N</span><div>Northwind Store <small>to me</small></div></div>
+        <div class="pgb-chip"><span class="pgb-icon">🛡</span><span>Blocked 2 trackers: Mailchimp, Hidden pixel</span><button class="pgb-load" type="button">Load images anyway</button></div>
+        <div class="news">
+          <div class="logo">NORTHWIND</div>
+          <div class="hero" style="background:linear-gradient(120deg,#ef6c00,#ffb74d)">Up to 40% off</div>
+          <div class="lines"><div></div><div style="width:80%"></div><div style="width:60%"></div></div>
+          <span class="cta" style="background:#ef6c00">Shop the sale</span>
+        </div>
+      </div>
+    </div>
+    <div class="popup"><iframe src="store-popup.html"></iframe></div>
+  </div>
+</section>
+
+<section class="scene" id="s2">
+  <div class="copy">
+    <h1>You decide, <em>email by email.</em></h1>
+    <p>Want to support a newsletter you like? Load its images with one click. Unseen tells you what that means.</p>
+    <ul>
+      <li>One click to allow a single email</li>
+      <li>Weekly count of blocked trackers</li>
+      <li>Turn it off any time</li>
+      <li>Open source, no account, no data collection</li>
+    </ul>
+  </div>
+  <div class="stage">
+    <div class="window" style="right:0">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="search"></span></div>
+      <div class="mail">
+        <h2 class="subject">This week in web development</h2>
+        <div class="from"><span class="avatar" style="background:#1565c0">W</span><div>Weekly Dev Digest <small>to me</small></div></div>
+        <div class="pgb-chip pgb-loaded"><span class="pgb-icon">🛡</span><span>Tracking images loaded. The sender can now see that you opened this email.</span></div>
+        <div class="news">
+          <div class="logo">WEEKLY DEV</div>
+          <div class="hero" style="background:linear-gradient(120deg,#1565c0,#64b5f6)">5 links worth your time</div>
+          <div class="lines"><div></div><div style="width:85%"></div><div style="width:55%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="promo">
+  <div class="ico"><img src="../icons/icon128.png" width="84" height="84" alt=""></div>
+  <div>
+    <h1>Unseen</h1>
+    <p>Stop email tracking in Gmail</p>
+  </div>
+</section>
+
+<script>
+  const scene = new URLSearchParams(location.search).get('scene') || '1';
+  document.getElementById(scene === 'promo' ? 'promo' : `s${scene}`).classList.add('on');
+</script>
+</body>
+</html>

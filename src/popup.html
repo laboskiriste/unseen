@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon48.png" alt="" width="24" height="24">
+    <h1>Unseen</h1>
+    <label class="switch" title="Turn blocking on or off">
+      <input type="checkbox" id="enabled" checked>
+      <span></span>
+    </label>
+  </header>
+
+  <p id="off-note" class="note" hidden>Blocking is off. Reload Gmail for the change to apply.</p>
+
+  <section>
+    <div class="big" id="week">0</div>
+    <div class="label">trackers blocked in the last 7 days</div>
+    <ol id="top"></ol>
+  </section>
+
+  <section>
+    <h2>On this page</h2>
+    <ul id="page"><li class="muted">No trackers found yet.</li></ul>
+  </section>
+
+  <footer>
+    <span id="total"></span>
+    <span>Everything stays in your browser.</span>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>
