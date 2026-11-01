@@ -8,6 +8,7 @@ import { runInNewContext } from 'node:vm';
 const root = new URL('..', import.meta.url).pathname;
 const code = ['src/trackers-data.js', 'src/classify.js'].map((f) => readFileSync(`${root}${f}`, 'utf8')).join('\n');
 const PGB = runInNewContext(`${code}\nPGB`, { URL });
+PGB.setToken('ok'); // the mark becomes pgb_ok=1, as in the examples below
 
 const P = 'https://ci3.googleusercontent.com/meips/ADKq_Nabc';
 
@@ -110,3 +111,37 @@ test('classify: a tiny image without a readable original URL still counts as a p
   assert.equal(PGB.classify({ src: P, width: '1', height: '1' }).tracker, 'Hidden pixel');
   assert.equal(PGB.classify({ src: `${P}#not a url`, width: '1', height: '1' }).tracker, 'Hidden pixel');
 });
+
+test('the mark only counts before the fragment, where the sender has no say', () => {
+  const forged = `${P}#https://evil.example/o.gif?pgb_ok=1&uid=42`;
+  assert.ok(!PGB.hasMark(forged), 'a mark in the sender URL is ignored');
+  assert.equal(PGB.withMark(forged), `${P}?pgb_ok=1#https://evil.example/o.gif?pgb_ok=1&uid=42`);
+  assert.ok(!PGB.hasMark(`${P}?xpgb_ok=1#x`), 'only a whole parameter counts');
+  assert.ok(PGB.hasMark(`${P}?sz=1&pgb_ok=1#x`));
+});
+
+test('without a token nothing is marked', () => {
+  PGB.setToken(null);
+  try {
+    assert.equal(PGB.withMark(`${P}#https://x.com/a.png`), `${P}#https://x.com/a.png`);
+    assert.ok(!PGB.hasMark(`${P}?pgb_ok=1#x`));
+  } finally {
+    PGB.setToken('ok');
+  }
+});
+
+test('classify: hidden pixels written in other ways', () => {
+  const src = `${P}#https://news.example.com/o?id=7`;
+  const hidden = [
+    { width: '1px', height: '1px' },
+    { style: 'width:0;height:0' },
+    { style: 'max-height:0' },
+    { style: 'opacity:0.01' },
+    { style: 'opacity: .05' },
+    { style: 'position:absolute; left:-9999px' },
+  ];
+  for (const box of hidden) assert.equal(PGB.classify({ src, ...box }).tracker, 'Hidden pixel', JSON.stringify(box));
+  const shown = [{}, { width: '100%' }, { style: 'opacity:0.5' }, { style: 'min-width:0' }, { style: 'line-height:1' }, { width: '600', height: '1px' }];
+  for (const box of shown) assert.equal(PGB.classify({ src, ...box }).block, false, JSON.stringify(box));
+});
+

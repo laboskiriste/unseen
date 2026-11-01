@@ -2,7 +2,11 @@
 // Expects TRACKER_LIST (src/trackers-data.js) to be loaded first.
 
 const PGB = (() => {
-  const MARK = 'pgb_ok=1';
+  // The allow mark carries a random token made once per install (background.js),
+  // so a sender can't copy it into an email. Only the part of the URL before '#'
+  // counts: Gmail puts the sender's own URL after it.
+  let MARK = null;
+  const setToken = (token) => { MARK = token ? `pgb_${token}=1` : null; };
   const PROXY = /^https:\/\/[^/]*googleusercontent\.com\/(proxy|meips)\//;
   const PROXY_IN_TEXT = /https:\/\/[^/"'\s)]*googleusercontent\.com\/(?:proxy|meips)\/[^"'\s)]*/g;
   const STATIC_IMAGE = /\.(gif|png|jpe?g|webp|svg)$/i;
@@ -16,8 +20,14 @@ const PGB = (() => {
     return i > -1 ? src.slice(i + 1) : null;
   }
 
+  const beforeHash = (src) => {
+    const i = src.indexOf('#');
+    return i > -1 ? src.slice(0, i) : src;
+  };
+  const hasMark = (src) => !!MARK && beforeHash(src).split(/[?&]/).includes(MARK);
+
   function withMark(src) {
-    if (src.includes(MARK)) return src;
+    if (!MARK || hasMark(src)) return src;
     const hash = src.indexOf('#');
     const base = hash > -1 ? src.slice(0, hash) : src;
     const rest = hash > -1 ? src.slice(hash) : '';
@@ -33,12 +43,23 @@ const PGB = (() => {
   }
 
   // A 600×1 divider line is not a pixel: when both sizes are given, both must be tiny.
+  // Sizes may carry a unit ("1px"); a value that isn't a number counts as not given.
+  const size = (v) => {
+    const n = v == null ? NaN : parseFloat(v);
+    return Number.isNaN(n) ? null : n <= 2;
+  };
+  const HIDDEN_STYLE = new RegExp([
+    'display:none', 'visibility:hidden',
+    'opacity:(0|0?\\.0\\d*)(;|$|!)', // fully or almost fully transparent
+    '(^|;)(max-)?(width|height):-?[0-2](\\.\\d+)?(px)?(;|$|!)',
+    'position:(absolute|fixed).*(^|;)(left|top|right):-\\d{3,}', // moved off screen
+  ].join('|'));
+
   function isTiny({ width, height, style }) {
-    const w = width != null ? Number(width) <= 2 : null;
-    const h = height != null ? Number(height) <= 2 : null;
+    const w = size(width);
+    const h = size(height);
     if (w !== null && h !== null ? w && h : w || h) return true;
-    const s = (style || '').replace(/\s/g, '').toLowerCase();
-    return /display:none|visibility:hidden|opacity:0(;|$)|(^|;)(max-|min-)?(width|height):[0-2]px/.test(s);
+    return HIDDEN_STYLE.test((style || '').replace(/\s/g, '').toLowerCase());
   }
 
   // A static file such as spacer.gif is a layout spacer, not a per-recipient beacon.
@@ -64,5 +85,5 @@ const PGB = (() => {
     return { block: false, tracker: null };
   }
 
-  return { MARK, isProxyUrl, originalUrl, withMark, markAllIn, trackerName, classify };
+  return { setToken, hasMark, isProxyUrl, originalUrl, withMark, markAllIn, trackerName, classify };
 })();

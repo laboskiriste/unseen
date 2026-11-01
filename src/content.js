@@ -1,13 +1,15 @@
 // Gmail loads every email image through its proxy (ci*.googleusercontent.com/proxy/...
 // or /meips/...). A static DNR rule blocks all of those requests. This script
 // decides which images are safe and adds an allow mark to their URL, which a
-// higher-priority DNR rule lets through. Trackers keep their URL and stay blocked.
+// higher-priority DNR rule lets through. The mark holds a token made once per
+// install, so senders can't add it themselves. Trackers keep their URL and stay blocked.
 // Nothing about the email leaves the browser.
 
 const BODY = '.ii.gt'; // one message body in a Gmail conversation
 const STYLED = '[style*="googleusercontent.com/"], [background*="googleusercontent.com/"]';
+const PROXY_URLS = /https:\/\/[^/"'\s)]*googleusercontent\.com\/(?:proxy|meips)\/[^"'\s)]*/g;
 
-let enabled = false; // until the setting is read; a full scan follows then
+let enabled = false; // until the setting and the allow token are read; a full scan follows then
 const pageSeen = new Map(); // tracker key -> { name, host }, for the badge and popup
 const fresh = []; // trackers found since the last report, for weekly stats
 const messages = new WeakMap(); // body element -> per-message state
@@ -45,7 +47,7 @@ function record(body, tracker, key) {
 
 function checkImage(img) {
   const src = img.getAttribute('src');
-  if (!PGB.isProxyUrl(src) || src.includes(PGB.MARK)) return;
+  if (!PGB.isProxyUrl(src) || PGB.hasMark(src)) return;
   if (img.dataset.pgbSrc === src) return; // already judged and blocked
 
   const body = img.closest(BODY);
@@ -70,30 +72,46 @@ function checkImage(img) {
 }
 
 // Background images (inline style or the old `background` attribute) are let
-// through unless their original URL is a known tracker.
+// through unless their original URL is a known tracker or the element is hidden.
 function checkStyled(el) {
+  const box = { width: el.getAttribute('width'), height: el.getAttribute('height'), style: el.getAttribute('style') };
   for (const attr of ['style', 'background']) {
     const value = el.getAttribute(attr);
     if (!value || !value.includes('googleusercontent.com/')) continue;
-    const marked = value.replace(/https:\/\/[^/"'\s)]*googleusercontent\.com\/(?:proxy|meips)\/[^"'\s)]*/g, (url) => {
-      const original = PGB.originalUrl(url);
-      const tracker = original && PGB.trackerName(original);
-      if (tracker) {
-        record(el.closest(BODY), tracker, original);
-        return url;
-      }
-      return PGB.withMark(url);
+    const marked = value.replace(PROXY_URLS, (url) => {
+      const verdict = PGB.classify({ ...box, src: url });
+      if (!verdict.block) return PGB.withMark(url);
+      if (verdict.tracker) record(el.closest(BODY), verdict.tracker, PGB.originalUrl(url) || url);
+      return url;
     });
     if (marked !== value) el.setAttribute(attr, marked);
   }
 }
 
+// CSS in the email's own <style> blocks (Gmail keeps them): images there are
+// let through unless their original URL is a known tracker.
+function checkStyleSheet(el) {
+  const body = el.closest(BODY);
+  const css = el.textContent;
+  if (!body || !css.includes('googleusercontent.com/')) return;
+  const marked = css.replace(PROXY_URLS, (url) => {
+    const original = PGB.originalUrl(url);
+    const tracker = original && PGB.trackerName(original);
+    if (!tracker) return PGB.withMark(url);
+    record(body, tracker, original);
+    return url;
+  });
+  if (marked !== css) el.textContent = marked;
+}
+
 function scan(node) {
   if (!enabled || node.nodeType !== 1) return;
   if (node.nodeName === 'IMG') checkImage(node);
+  else if (node.nodeName === 'STYLE') checkStyleSheet(node);
   else if (node.matches(STYLED)) checkStyled(node);
   node.querySelectorAll('img').forEach(checkImage);
   node.querySelectorAll(STYLED).forEach(checkStyled);
+  node.querySelectorAll('style').forEach(checkStyleSheet);
 }
 
 function renderChip(body, state) {
@@ -142,6 +160,7 @@ function loadAnyway(body, state) {
       if (value) el.setAttribute(attr, PGB.markAllIn(value));
     }
   });
+  body.querySelectorAll('style').forEach((el) => { el.textContent = PGB.markAllIn(el.textContent); });
   renderChip(body, state);
 }
 
@@ -172,12 +191,19 @@ observer.observe(document, {
   attributeFilter: ['src', 'style', 'background'],
 });
 
-chrome.storage.local.get('enabled').then(({ enabled: value }) => {
-  enabled = value !== false;
-  if (enabled) scan(document.documentElement);
-});
+// Without the allow token nothing is marked, so images stay blocked (safe).
+function applySettings({ enabled: value, allowToken }) {
+  PGB.setToken(allowToken);
+  const was = enabled;
+  enabled = value !== false && !!allowToken;
+  if (enabled && !was) scan(document.documentElement);
+}
+const settings = {};
+chrome.storage.local.get(['enabled', 'allowToken']).then((stored) => applySettings(Object.assign(settings, stored)));
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'local' && changes.enabled) enabled = changes.enabled.newValue !== false;
+  if (area !== 'local' || !(changes.enabled || changes.allowToken)) return;
+  for (const key of ['enabled', 'allowToken']) if (changes[key]) settings[key] = changes[key].newValue;
+  applySettings(settings);
 });
 
 // Pro: open links in emails without their click tracker, when the real

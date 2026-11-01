@@ -44,6 +44,13 @@ const PAGE = `<!doctype html><title>Fake Gmail</title>
   <a id="ses-link" href="https://x.r.us-east-1.awstrack.me/L0/https:%2F%2Fshop.example.com%2Fdeal%3Fid%3D7%26utm_source%3Dmail/1/01-000000/s=">Deal</a>
   <a id="opaque-link" href="https://us1.list-manage.com/track/click?u=1&id=2&e=3">Opaque</a>
 </div></div></div>
+<div class="adn" id="m3"><div class="ii gt"><div class="a3s">
+  <style>.hero { background: url(${P}/proxy/CSS#https://example.com/hero2.jpg) }</style>
+  <div class="hero">Sale</div>
+  <img id="forged-mark" src="${P}/proxy/FRG#https://evil.example/o.gif?pgb_ok=1&uid=42" width="1" height="1">
+  <img id="px-units" src="${P}/proxy/PXU#https://news.example.com/o?id=3" width="1px" height="1px">
+  <div id="tiny-bg" style="background-image: url(${P}/proxy/TBG#https://news.example.com/b?id=4); width: 1px; height: 1px"></div>
+</div></div></div>
 <a id="outside-link" href="https://x.r.us-east-1.awstrack.me/L0/https:%2F%2Fshop.example.com%2Fnav/1/01-000000/s=">Not in an email</a>
 <script>
 // Stands in for Gmail's own link handling.
@@ -59,9 +66,9 @@ setTimeout(() => {
 }, 300);
 </script>`;
 
-const LOADED = ['CCC', 'DDD', 'BGG', 'FFF', 'HHH'];
-const BLOCKED = ['AAA', 'BBB', 'SSS', 'BGT', 'EEE', 'GGG'];
-const COUNTED = 5; // all blocked except the spacer
+const LOADED = ['CCC', 'DDD', 'BGG', 'FFF', 'HHH', 'CSS'];
+const BLOCKED = ['AAA', 'BBB', 'SSS', 'BGT', 'EEE', 'GGG', 'FRG', 'PXU', 'TBG'];
+const COUNTED = 8; // all blocked except the spacer
 
 const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC', 'base64');
 let hits = [];
@@ -142,13 +149,14 @@ try {
   console.log('-- blocking');
   for (const id of BLOCKED) check(!reached(id), `tracker ${id} never reached the server`);
   for (const id of LOADED) check(reached(id), `normal image ${id} loaded`);
-  check(hits.every((h) => h.includes('pgb_ok=1')), 'every request that got through carries the allow mark');
+  check(hits.every((h) => /[?&]pgb_[0-9a-f]{24}=1/.test(h.split('#')[0])), 'every request that got through carries the secret allow mark');
 
   console.log('-- message chips');
   const chips = await page.evaluate(() =>
     [...document.querySelectorAll('.pgb-chip')].map((c) => ({ msg: c.closest('.adn')?.id, text: c.textContent })));
   console.log('   ' + JSON.stringify(chips));
-  check(chips.length === 2, 'one chip per message with trackers');
+  check(chips.length === 3, 'one chip per message with trackers');
+  check(/Blocked 3 trackers/.test(chips.find((c) => c.msg === 'm3')?.text || ''), 'message 3 chip counts 3 (forged mark, px units, tiny background)');
   check(/Blocked 3 trackers/.test(chips.find((c) => c.msg === 'm1')?.text || ''), 'message 1 chip counts 3 (spacer not counted)');
   check(/Blocked 2 trackers/.test(chips.find((c) => c.msg === 'm2')?.text || ''), 'message 2 chip counts 2');
 
@@ -224,7 +232,7 @@ try {
     await page.reload({ waitUntil: 'load' });
     await sleep(2000);
     for (const id of [...BLOCKED, ...LOADED]) check(reached(id), `off: ${id} loads`);
-    check(hits.every((h) => !h.includes('pgb_ok=1')), 'off: page is left untouched');
+    check(hits.every((h) => !h.includes('pgb_')), 'off: page is left untouched');
     check((await page.$$('.pgb-chip')).length === 0, 'off: no chips');
   }
 

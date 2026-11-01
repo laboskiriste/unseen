@@ -18,6 +18,35 @@ async function syncRuleset() {
   );
 }
 
+// Lets through proxy images that carry the allow mark. The mark holds a random
+// token made once per install, and the rule only looks before '#', where Gmail
+// keeps its own part of the URL; the sender's URL comes after it. A dynamic
+// rule because static rules can't hold a per-install value.
+const ALLOW_RULE_ID = 1;
+const allowRule = (token) => ({
+  id: ALLOW_RULE_ID,
+  priority: 2,
+  action: { type: 'allow' },
+  condition: {
+    regexFilter: `^https://[a-z0-9.-]*googleusercontent\\.com/(proxy|meips)/[^?#]*\\?([^#]*&)?pgb_${token}=1(&|#|$)`,
+    initiatorDomains: ['mail.google.com'],
+    resourceTypes: ['image', 'media'],
+  },
+});
+
+// The token is saved only after its rule exists, so the content script never
+// marks an image the rule wouldn't let through.
+async function syncAllowRule() {
+  let { allowToken } = await chrome.storage.local.get('allowToken');
+  allowToken ??= [...crypto.getRandomValues(new Uint8Array(12))].map((b) => b.toString(16).padStart(2, '0')).join('');
+  const rule = allowRule(allowToken);
+  const current = (await chrome.declarativeNetRequest.getDynamicRules()).find((r) => r.id === ALLOW_RULE_ID);
+  if (current?.condition?.regexFilter !== rule.condition.regexFilter) {
+    await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: [ALLOW_RULE_ID], addRules: [rule] });
+  }
+  await chrome.storage.local.set({ allowToken });
+}
+
 // Starts the Pro trial if needed and re-checks the license key when it is due.
 // The check only talks to the license provider when a key was entered.
 function syncPro() {
@@ -26,11 +55,13 @@ function syncPro() {
 
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   syncRuleset();
+  syncAllowRule().catch((e) => console.error('allow rule failed', e));
   syncPro();
   if (reason === 'install') chrome.tabs.create({ url: chrome.runtime.getURL('src/welcome/welcome.html') });
 });
 chrome.runtime.onStartup.addListener(() => {
   syncRuleset();
+  syncAllowRule().catch((e) => console.error('allow rule failed', e));
   syncPro();
 });
 chrome.storage.onChanged.addListener((changes, area) => {
