@@ -5,7 +5,7 @@ Unseen: Email Tracker Blocker collects nothing about you. It sends one thing, an
 - It runs only on `https://mail.google.com`. It has no access to any other site.
 - It looks at the image addresses inside the emails you open, to decide which ones are tracking pixels. It doesn't read, store or send the text of your emails, your contacts, or your address.
 - Everything else happens in your browser. Blocking trackers and cleaning tracking links make no network requests: a link's real address is read from the link itself, and the tracker is never contacted.
-- With Unseen Pro, a cleaned link opens directly at its real address in a new tab. It skips the click tracker and also Gmail's own redirect page for that link. Links Unseen can't clean are left to Gmail as usual.
+- With Unseen Pro, a cleaned link opens directly at its real address in a new tab. It skips the click tracker and also Gmail's own redirect page for that link. Only email services' click trackers are skipped; pages that warn before leaving a site, such as Google's redirect notice or LinkedIn's and Facebook's link checks, are kept. Links Unseen can't clean are left to Gmail as usual.
 - It keeps a local count of blocked trackers (company name and date) for the "last 7 days" view. To avoid counting the same email twice, it stores short one-way hashes of tracker addresses, never the addresses themselves. Entries older than 30 days are deleted. Removing the extension deletes everything.
 - It stores the date you first used it, for the 30-day Pro trial. Reinstalling starts the trial again.
 

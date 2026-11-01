@@ -4,8 +4,12 @@
 // never contact the tracker. Trackers with an opaque id (Mailchimp's
 // list-manage, SendGrid's upn=, HubSpot marketing...) are left alone.
 //
-// Corporate security gateways (Outlook Safe Links, Proofpoint, Mimecast,
-// Barracuda) are deliberately not unwrapped: they scan the page on click.
+// Only email services' click trackers are unwrapped. Redirects that exist to
+// warn or to check the link (Google's /url notice, the Facebook and LinkedIn
+// link shims, YouTube's and Steam's "leaving" pages, corporate gateways such
+// as Outlook Safe Links or Proofpoint) are left alone, and so are trackers on
+// a sender's own look-alike domain: skipping them would let a phishing link
+// show a trusted site on hover and skip the warning.
 //
 // Formats cross-checked against urlpurify, ClearURLs and uBlock Origin's
 // filter lists (2026-11-01).
@@ -30,12 +34,7 @@ const LINKS = (() => {
 
   // [tracker name, host, path, read the destination]
   const UNWRAP = [
-    ['Google', /^(www\.)?google\.[a-z]{2,3}(\.[a-z]{2})?$/, /^\/url$/, param('q', 'url')],
     ['Amazon SES', /\.awstrack\.me$/, /^\/L0\/([^/]+)\//, (u, m) => decodeURIComponent(m[1])],
-    // SES on a sender's own tracking domain. Only known domains: on any host,
-    // a link that shows one site on hover could open another.
-    ['Amazon SES', /^click\.redditmail\.com$/, /^\/CL0\/([^/]+)\/\d+\/[^/]+-000000\/[^/]+$/,
-      (u, m) => decodeURIComponent(m[1])],
     ['Postmark', /^(click|track)\.pstmrk\.it$/, /^\/[23][mt]?(s?)\/([^/]+)\//,
       (u, m) => `${m[1] ? 'https' : 'http'}://${decodeURIComponent(m[2])}`],
     ['Kit', /^click\.convertkit-mail\d*\.com$/, /^\/[^/]+\/[^/]+\/([A-Za-z0-9+/=_-]+)\/?$/, (u, m) => b64(m[1])],
@@ -50,20 +49,6 @@ const LINKS = (() => {
       const i = u.href.lastIndexOf('&&&');
       return i > -1 ? u.href.slice(i + 3) : null;
     }],
-    ['Facebook', /^((l|lm|www|m|web|business)\.facebook\.com|l\.messenger\.com)$/, /^\/l\.php$/, param('u')],
-    ['Instagram', /^l\.instagram\.com$/, /^\/$/, param('u')],
-    ['LinkedIn', /^(www\.)?linkedin\.com$/, /^\/(redir\/redirect|safety\/go|redirect|nus-trk|nhome\/nus-redirect)\/?$/, param('url')],
-    ['YouTube', /^(www\.|m\.)?youtube\.com$/, /^\/redirect$/, param('q')],
-    ['Slack', /^slack-redir\.net$/, /^\/link$/, param('url')],
-    ['Medium', /^(gen\.)?medium\.com$/, /^\/m\/global-identity(-2)?$/, param('redirectUrl')],
-    ['Medium', /^medium\.com$/, /^\/r\/?$/, param('url')],
-    ['Steam', /^steamcommunity\.com$/, /^\/linkfilter\/?$/, param('url', 'u')],
-    ['Reddit', /^out\.reddit\.com$/, /^\//, param('url')],
-    ['Tumblr', /^t\.umblr\.com$/, /^\/redirect$/, param('z')],
-    ['VK', /^(m\.)?vk\.(com|ru)$/, /^\/away\.php$/, param('to')],
-    ['Disqus', /^disq\.us$/, /^\/(url)?$/, (u) => u.searchParams.get('url')?.replace(/:[\w-]{27}$/, '')],
-    ['X', /^t\.co$/, /^\/redirect$/, param('url')],
-    ['Pinterest', /^([a-z]{2,3}\.)?pinterest\.(com|co\.uk|com\.au)$/, /^\/offsite\/?$/, param('url')],
   ];
 
   // Tracking parameters on the destination. Kept conservative: every name is
