@@ -207,3 +207,11 @@ test('checkout links are plain Polar links', () => {
     assert.match(url, /^https:\/\/buy\.polar\.sh\/polar_cl_\w+$/);
   }
 });
+
+test('a 200 that is not a license reply is reported as such, and kept like offline', async () => {
+  const store = fakeStore({ trialStart: T0 });
+  reply = () => ({ status: 200, data: { hello: 'portal login page' } });
+  await assert.rejects(PRO.activate('UNSEEN-X', { store }), LICENSE.UnexpectedReplyError);
+  await assert.rejects(PRO.activate('UNSEEN-X', { store }), LICENSE.OfflineError, 'still handled like offline');
+  assert.deepEqual(store.data.pro, { trialStart: T0 });
+});

@@ -66,7 +66,9 @@ function renderFamily() {
 const $ = (id) => document.getElementById(id);
 const KEY_ERRORS = {
   'not-found': "That key wasn't found. Check it and try again.",
-  refused: "This key can't be used: it was refunded, has expired, or is already active in 3 browsers.",
+  refused: "This key can't be used: it was refunded, has expired, or is already active in 3 browsers. To move it, remove it from a browser you no longer use in Polar's customer portal (the link is in your purchase email).",
+  unexpected: "The license server gave an answer Unseen doesn't understand. Please update Unseen, or tell us on GitHub.",
+  'not-allowed': 'Firefox needs your OK to send the key to Polar. Allow it under Unseen in about:addons, then try again.',
   offline: "Couldn't reach the license server. Check your connection and try again.",
   declined: 'Firefox needs your OK to send the key to Polar, the seller, to check it. Nothing else is sent.',
   error: 'Something went wrong. Please try again.',

@@ -115,12 +115,17 @@ const PRO_ACTIONS = {
   'pro-remove': () => PRO.removeKey().then(() => ({ ok: true })),
   'pro-recheck': () => PRO.recheck().then(() => ({ ok: true })),
 };
+const errorReason = (e) => {
+  if (e instanceof LICENSE.NotAllowedError) return 'not-allowed';
+  if (e instanceof LICENSE.UnexpectedReplyError) return 'unexpected';
+  return e instanceof LICENSE.OfflineError ? 'offline' : 'error';
+};
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   const action = PRO_ACTIONS[msg?.type];
   // Only the extension's own pages, never a content script.
   if (!action || sender.id !== chrome.runtime.id || !sender.url?.startsWith(chrome.runtime.getURL(''))) return;
   action(msg)
-    .catch((e) => (e instanceof LICENSE.OfflineError ? { ok: false, reason: 'offline' } : { ok: false, reason: 'error' }))
+    .catch((e) => ({ ok: false, reason: errorReason(e) }))
     .then(sendResponse);
   return true;
 });

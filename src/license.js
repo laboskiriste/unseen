@@ -22,8 +22,20 @@ const LICENSE = (() => {
   // a timeout, a server error, a Wi-Fi login page. Callers keep the current
   // state and retry later.
   class OfflineError extends Error {}
+  // A 200 that isn't a license reply. Handled like being offline, so a brief
+  // glitch costs nothing, but the popup says so: if Polar changed its replies,
+  // Unseen needs an update rather than a better connection.
+  class UnexpectedReplyError extends OfflineError {}
+  // Firefox: the user took back the permission to send the key (about:addons).
+  class NotAllowedError extends OfflineError {}
+
+  async function allowedToSend() {
+    if (typeof browser === 'undefined' || typeof browser.runtime?.getBrowserInfo !== 'function') return true;
+    return browser.permissions.contains({ data_collection: ['authenticationInfo'] }).catch(() => true);
+  }
 
   async function post(path, body) {
+    if (!(await allowedToSend())) throw new NotAllowedError(`${path}: not allowed`);
     let res;
     try {
       res = await fetch(`${API}/${path}`, {
@@ -41,7 +53,7 @@ const LICENSE = (() => {
     // A 200 must be a real license reply; anything else came from somewhere
     // between us and Polar.
     if (res.status === 200 && !(data && typeof data === 'object' && 'benefit_id' in (data.license_key ?? data))) {
-      throw new OfflineError(`${path}: unexpected reply`);
+      throw new UnexpectedReplyError(`${path}: unexpected reply`);
     }
     return { status: res.status, data };
   }
@@ -84,5 +96,5 @@ const LICENSE = (() => {
     } catch {}
   }
 
-  return { CHECKOUT, OfflineError, activate, validate, deactivate };
+  return { CHECKOUT, OfflineError, UnexpectedReplyError, NotAllowedError, activate, validate, deactivate };
 })();
