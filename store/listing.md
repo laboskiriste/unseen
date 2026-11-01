@@ -34,7 +34,7 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 > FREE AND PRO, SAID UP FRONT
 > • Free forever: tracker blocking, the note above each email, "Load images anyway" and the weekly count
 > • Unseen Pro: when you click a link in an email, Unseen opens the real address without the click tracker, where the address is inside the link (Amazon SES, Postmark, Kit, Substack, Mandrill, Mailchimp, HubSpot and more; pages that warn before leaving a site are never skipped), and removes tracking tags such as utm_ from that address. The tracker is never contacted. Coming later: rules per sender, full history and export.
-> • Every new user gets 30 days of Pro free. After that, Pro costs $15 once or $8 per year, and the free features keep working.
+> • Every new user gets 30 days of Pro free. After that, Pro costs $15 once, and the free features keep working.
 > • Nothing that is free today will ever become paid
 >
 > Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: Extension Guardian, which warns you when your browser extensions change owner or gain new permissions.

@@ -147,10 +147,6 @@ button {
   text-decoration: none;
   cursor: pointer;
 }
-.button.secondary {
-  background: transparent;
-  color: var(--accent);
-}
 button.link {
   padding: 0;
   border: 0;

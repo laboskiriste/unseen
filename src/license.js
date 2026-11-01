@@ -15,7 +15,6 @@ const LICENSE = (() => {
   // Polar checkout links. Plain links: opening them sends nothing from here.
   const CHECKOUT = {
     lifetime: 'https://buy.polar.sh/polar_cl_ufyOS7IHgqRtf7LB67tKPwA9nSgQzgIt6rY1o0lb8fX',
-    yearly: 'https://buy.polar.sh/polar_cl_hRnpqKQh10PuDIbMJ5GabP0wcbjDpD51qFPFW2KLuJz',
   };
 
   // Thrown for anything that isn't a clear answer about the key: no internet,
@@ -79,7 +78,7 @@ const LICENSE = (() => {
   }
 
   // Returns true while the key is good, false once Polar says it is not
-  // (refunded, revoked, a yearly plan that lapsed, or this activation removed).
+  // (refunded, revoked, or this activation removed).
   async function validate(key, activationId) {
     const { status, data } = await post('validate', { key, activation_id: activationId, benefit_id: BENEFIT_ID });
     // Polar answers 404 when the activation doesn't belong to the key; the

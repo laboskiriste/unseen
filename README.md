@@ -15,7 +15,7 @@ Part of **Tinyward**, small privacy tools with as few permissions as possible. A
 
 ### Unseen Pro
 
-Free forever: everything above. Pro adds new features only, with 30 days free for every new user, then $15 once or $8 per year. When the trial ends, only Pro turns off.
+Free forever: everything above. Pro adds new features only, with 30 days free for every new user, then $15 once. When the trial ends, only Pro turns off.
 
 - **Clean tracking links:** when you click a link in an email, Unseen opens the real address without the click tracker, where the address is written inside the link ([src/links.js](src/links.js)). The tracker is never contacted; links it can't clean are left to Gmail.
 - License keys are sold through [Polar](https://polar.sh) and checked directly with Polar's public API ([src/license.js](src/license.js)), about once a month, with 14 days of grace when offline. Trial and license logic: [src/pro.js](src/pro.js).
@@ -76,7 +76,7 @@ Free forever: blocking pixels, the note above each email, "Load images anyway", 
 2. Rules per sender: always allow images from your bank, always block one newsletter.
 3. Full history and export.
 
-Every new user gets 30 days of Pro free. After that, Pro costs $15 once or $8 per year, and the free features keep working. No account is needed.
+Every new user gets 30 days of Pro free. After that, Pro costs $15 once, and the free features keep working. No account is needed.
 
 Later, not yet decided whether free or Pro: Outlook.com.
 

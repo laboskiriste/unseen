@@ -76,7 +76,7 @@ const KEY_ERRORS = {
 
 function proStatusText(s) {
   if (s.licensed) return 'Pro is active. Thank you for supporting Unseen!';
-  if (s.revoked) return 'Your license key is no longer valid (refunded, or the yearly plan ended), so Pro is off. Blocking trackers stays free.';
+  if (s.revoked) return 'Your license key is no longer valid (for example refunded), so Pro is off. Blocking trackers stays free.';
   if (s.hasKey) return "Your license key hasn't been checked for a while. Pro turns back on once you're online.";
   if (s.trialDaysLeft > 0) return `${s.trialDaysLeft} ${s.trialDaysLeft === 1 ? 'day' : 'days'} of Pro left in your free trial.`;
   return 'Your Pro trial ended. Blocking trackers stays free.';
@@ -86,12 +86,10 @@ async function renderPro() {
   const pro = await PRO.load(chrome.storage.local);
   const s = PRO.status(pro);
   $('pro-status').textContent = proStatusText(s);
-  const { lifetime, yearly } = LICENSE.CHECKOUT;
+  const { lifetime } = LICENSE.CHECKOUT;
   $('buy-lifetime').href = lifetime ?? '';
   $('buy-lifetime').hidden = !lifetime;
-  $('buy-yearly').href = yearly ?? '';
-  $('buy-yearly').hidden = !yearly;
-  $('pro-buy').hidden = s.licensed || !(lifetime || yearly);
+  $('pro-buy').hidden = s.licensed || !lifetime;
   $('pro-form').hidden = s.hasKey;
   $('pro-owned').hidden = !s.hasKey;
   $('pro-recheck').hidden = !s.revoked;
