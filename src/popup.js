@@ -68,6 +68,7 @@ const KEY_ERRORS = {
   'not-found': "That key wasn't found. Check it and try again.",
   refused: "This key can't be used: it was refunded, has expired, or is already active in 3 browsers.",
   offline: "Couldn't reach the license server. Check your connection and try again.",
+  declined: 'Firefox needs your OK to send the key to Polar, the seller, to check it. Nothing else is sent.',
   error: 'Something went wrong. Please try again.',
 };
 
@@ -109,9 +110,21 @@ async function proAction(message, button, where) {
   return res?.ok;
 }
 
+// Firefox asks for the optional authenticationInfo data permission before the
+// key leaves the browser. It has to be requested straight from the click.
+function allowKeyCheck() {
+  if (typeof browser === 'undefined' || typeof browser.runtime?.getBrowserInfo !== 'function') return true;
+  return browser.permissions.request({ data_collection: ['authenticationInfo'] }).catch(() => false);
+}
+
 $('pro-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const key = $('pro-key').value.trim();
+  if (!(await allowKeyCheck())) {
+    $('pro-error').textContent = KEY_ERRORS.declined;
+    $('pro-error').hidden = false;
+    return;
+  }
   if (await proAction({ type: 'pro-activate', key }, $('pro-activate'), $('pro-error'))) $('pro-key').value = '';
 });
 $('pro-remove').addEventListener('click', () => proAction({ type: 'pro-remove' }, $('pro-remove'), $('pro-owned-error')));

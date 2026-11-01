@@ -1,5 +1,7 @@
 // Builds the Firefox copy. Only the manifest differs: Firefox runs the
 // background as a script instead of a service worker and needs an add-on id.
+// The Pro license key, sent to Polar only when the user enters one, is declared
+// as optional authenticationInfo; the popup asks for it before the first check.
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
 const root = new URL('..', import.meta.url).pathname;
@@ -12,7 +14,7 @@ manifest.browser_specific_settings = {
   gecko: {
     id: 'unseen@laboskiriste',
     strict_min_version: '140.0',
-    data_collection_permissions: { required: ['none'] },
+    data_collection_permissions: { required: ['none'], optional: ['authenticationInfo'] },
   },
 };
 

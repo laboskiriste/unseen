@@ -39,3 +39,16 @@ All texts to paste are in [listing.md](listing.md). Files are in this `store/` f
 5. **Submit for review.** Review usually takes from a few days to two weeks.
 
 After both are approved, add the store links to the README and the home page (`docs/index.html`).
+
+## Updating to 0.2.0 (Pro)
+
+Only after Polar payouts and identity verification are done, so Pro can be bought.
+
+1. `npm run package`, then upload `store/unseen-0.2.0-chrome.zip` and `store/unseen-0.2.0-firefox.zip` as new versions of the existing items.
+2. Paste the new detailed description from [listing.md](listing.md) on both stores (it says what is free and what is Pro).
+3. **Chrome, Privacy tab:**
+   - **Data usage:** tick **Authentication information** only, then all three certifications.
+   - Update the `storage` and content-script justifications from listing.md.
+4. **Firefox:** the manifest already declares `authenticationInfo` as optional.
+5. **Notes to reviewer** (both stores): "Blocks Gmail image-proxy requests with static declarativeNetRequest rules. No remote code. Optional Pro: if the user enters a license key, the background sends only that key to api.polar.sh (the seller) to activate it and re-checks it about once a month. Nothing about browsing or email is sent. Source: https://github.com/laboskiriste/unseen. To test the free part, open any newsletter in Gmail; Pro starts with a 30-day trial, so no key is needed to try it."
+

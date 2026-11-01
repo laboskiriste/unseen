@@ -63,9 +63,9 @@ Remote code: **No.**
 
 ## Data usage disclosure (CWS) and data collection (AMO)
 
-- Collected data: **none** in every category. ⚠️ To decide before submitting the Pro version: the Pro license key is sent to Polar (only if the user enters one). It is not personal data about the user's browsing, but a reviewer may see it as "authentication information". The safe choice is to declare it in that category on both stores (CWS: "Authentication information"; Firefox: add `authenticationInfo` to `data_collection_permissions.optional`) and explain it is only the license key, sent to the seller to check the purchase.
+- Collected data, CWS: tick only **Authentication information**. It is the Pro license key, sent to Polar (the seller) only if the user enters one, to check the purchase. Nothing about browsing or email is collected. Every other category: none.
+- Firefox: `data_collection_permissions: { required: ["none"], optional: ["authenticationInfo"] }` (set in `dev/build-firefox.mjs`). The popup asks for `authenticationInfo` when the user enters a key, and sends nothing if they say no.
 - Certifications: no selling or transfer of user data, no use unrelated to the single purpose, no creditworthiness use.
-- Firefox `data_collection_permissions`: `required: ["none"]` (already set in `dev/build-firefox.mjs`).
 - Privacy policy URL: https://laboskiriste.github.io/unseen/privacy/ (source: `docs/privacy/index.html`, same content as [PRIVACY.md](../PRIVACY.md)).
 
 ## Assets
