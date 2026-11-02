@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to block email tracking in Gmail (2026 guide)</title>
+  <meta name="description" content="Three ways to stop senders from seeing when you open their emails in Gmail: a built-in setting, a browser extension, and what each one costs you. Plain steps, no sign-up.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/block-email-tracking-gmail/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to block email tracking in Gmail">
+  <meta property="og:description" content="Three ways to stop senders from seeing when you open their emails in Gmail, and what each one costs you.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/block-email-tracking-gmail/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to block email tracking in Gmail",
+    "step": [
+      { "@type": "HowToStep", "name": "Open Gmail settings", "text": "In Gmail on the web, click the gear icon, then See all settings." },
+      { "@type": "HowToStep", "name": "Turn off automatic images", "text": "On the General tab, next to Images, choose Ask before displaying external images." },
+      { "@type": "HowToStep", "name": "Save", "text": "Scroll down and click Save Changes." }
+    ]
+  }
+  </script>
+</head>
+<body>
+<main>
+  <header><img src="../icon.png" alt=""><a href="../">Unseen</a></header>
+  <h1>How to block email tracking in Gmail</h1>
+  <p class="muted">Updated November 2, 2026. Written by the developer of Unseen, one of the tools below.</p>
+
+  <p>Most newsletters and sales emails can tell the sender whether you opened them, when, and how often. You can stop that in Gmail. There are two real options, and they cost you different things.</p>
+
+  <h2>How senders know you opened an email</h2>
+  <p>The email contains a tiny image, often 1×1 pixel and invisible, whose address is unique to you. When Gmail shows the email, it downloads that image, and the sender's server writes down that you opened it. Links work the same way: a tracked link first goes to the sender's server, which records the click, then forwards you to the real page.</p>
+  <p>Gmail loads images through its own proxy. That hides your IP address and rough location, but the image is still downloaded when you open the email, so <strong>the open is still recorded</strong>.</p>
+
+  <h2>Option 1: turn off images in Gmail (free, built in)</h2>
+  <ol>
+    <li>In Gmail on the web, click the gear icon, then <strong>See all settings</strong>.</li>
+    <li>On the <strong>General</strong> tab, next to <strong>Images</strong>, choose <strong>Ask before displaying external images</strong>.</li>
+    <li>Scroll down and click <strong>Save Changes</strong>.</li>
+  </ol>
+  <p>In the Gmail app on your phone, the same setting is in <strong>Settings</strong>, then your account, then <strong>Images</strong>.</p>
+  <p><strong>What it costs you:</strong> every picture in every email is hidden until you click "Display images", including logos, photos and receipts. And the moment you click, the trackers load too. It also doesn't stop link tracking.</p>
+
+  <h2>Option 2: a browser extension that blocks only the trackers</h2>
+  <p>A tracker-blocking extension keeps images on, but recognises tracking pixels (by their address, or because they're hidden or 1×1) and blocks just those. Normal pictures load as usual.</p>
+  <p><strong>What it costs you:</strong> you have to trust the extension, because it runs inside your Gmail. Before installing any of them, check three things on its store page:</p>
+  <ul>
+    <li><strong>Permissions.</strong> It should need Gmail, not "all websites".</li>
+    <li><strong>Source code.</strong> Open source means anyone can check what it does with your email.</li>
+    <li><strong>Who makes it, and since when.</strong> Extensions are sometimes sold and then changed for the worse. <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a>, a free checker, shows who publishes any Chrome extension.</li>
+  </ul>
+  <p>There are several good options. <a href="../alternatives/">We compare the main ones here</a>, including ones that aren't ours. Unseen is free and open source, runs only on Gmail and has no access to other websites: <a href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">add it to Chrome</a>.</p>
+
+  <h2>What doesn't work</h2>
+  <ul>
+    <li><strong>Ad blockers alone.</strong> In Gmail, images come from Google's proxy address, not the tracker's, so most ad-blocker lists can't see which image is a tracker.</li>
+    <li><strong>A VPN.</strong> It hides your IP address, which Gmail's proxy already does. The open is still recorded.</li>
+    <li><strong>Marking emails as read without opening them.</strong> Nothing is downloaded, so nothing is tracked, but you also can't read them.</li>
+  </ul>
+
+  <h2>Questions</h2>
+  <h3>Can I see which emails are tracked?</h3>
+  <p>Yes, with an extension. Unseen shows a small note above each email that had trackers, with the names of the tracking companies.</p>
+  <h3>Will the sender know I blocked the tracker?</h3>
+  <p>No. They see the same as when someone reads email with images turned off: no open is recorded.</p>
+  <h3>Does this work in Outlook or Apple Mail?</h3>
+  <p>This guide is for Gmail. Apple Mail has "Protect Mail Activity" in its settings, and Outlook has an option to not download pictures automatically.</p>
+
+  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. <a href="../">Unseen home</a> · <a href="../privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gmail email tracker blockers compared: Unseen, Trocker, PixelBlock, Gblock, Ugly Email</title>
+  <meta name="description" content="An honest comparison of extensions that block email tracking in Gmail: price, open source, which sites they can access, and how recently they were updated. Checked November 2026.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/alternatives/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Gmail email tracker blockers compared">
+  <meta property="og:description" content="Unseen, Trocker, PixelBlock, Gblock and Ugly Email: price, open source, access and updates. Checked November 2026.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/alternatives/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .table { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; font-size: 15px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-weight: 600; }
+  </style>
+</head>
+<body>
+<main>
+  <header><img src="../icon.png" alt=""><a href="../">Unseen</a></header>
+  <h1>Gmail tracker blockers compared</h1>
+  <p class="muted">Checked on November 2, 2026, from each Chrome Web Store page, GitHub and Firefox Add-ons. Written by the developer of Unseen, so read it with that in mind; we've tried to be fair, and corrections are welcome on <a href="https://github.com/laboskiriste/unseen/issues">GitHub</a>.</p>
+
+  <p>All of these block the hidden images that tell a sender you opened their email. They differ in price, in how much of your browser they can access, and in whether you can check their code.</p>
+
+  <div class="table">
+  <table>
+    <thead><tr><th>Extension</th><th>Price</th><th>Open source</th><th>Users (Chrome)</th><th>Last update</th><th>Webmail</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Unseen</strong></td><td>Free; optional Pro $15 once</td><td>Yes (MIT)</td><td>new</td><td>Nov 2026</td><td>Gmail</td></tr>
+      <tr><td><strong>Trocker</strong></td><td>Free</td><td>Yes (Apache-2.0)</td><td>10,000</td><td>Jul 2026</td><td>Gmail, Outlook.com, Yahoo; known trackers in any webmail</td></tr>
+      <tr><td><strong>PixelBlock</strong></td><td>Free</td><td>No</td><td>40,000</td><td>Dec 2025</td><td>Gmail</td></tr>
+      <tr><td><strong>Gblock</strong></td><td>30-day trial, then $1.99/month or $23.88/year</td><td>No</td><td>1,000</td><td>Oct 2026</td><td>Gmail</td></tr>
+      <tr><td><strong>Ugly Email</strong></td><td>Free</td><td>Yes (MIT)</td><td>no longer listed</td><td>Mar 2024 (Firefox)</td><td>Gmail</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Trocker</h2>
+  <p>A long-running, free and open-source blocker. It also handles click tracking for free, and it works in Outlook.com and Yahoo Mail as well as Gmail. The trade-off is access: to cover any webmail, it asks for access to all websites. Its own description explains why and says it makes no network requests. <strong>Pick Trocker</strong> if you use more than one webmail, or want free link cleaning.</p>
+
+  <h2>PixelBlock</h2>
+  <p>One of the oldest Gmail pixel blockers, with the most users here. It shows a red eye on tracked emails. It isn't open source, so you can't check what it does inside your Gmail.</p>
+
+  <h2>Gblock</h2>
+  <p>A paid, actively developed Gmail extension that blocks pixels and click tracking. It has a 30-day free trial, then a subscription. <strong>Pick Gblock</strong> if you want a commercial product with support and don't mind a monthly fee.</p>
+
+  <h2>Ugly Email</h2>
+  <p>A well-known open-source blocker that labels tracked emails with an eye. On November 2, 2026, its Chrome Web Store listing no longer loads, and the Firefox version was last updated in March 2024.</p>
+
+  <h2>Unseen</h2>
+  <p>Our extension. It blocks 330+ known trackers plus hidden and 1×1 images, shows which company tracked each email, and keeps every normal picture. What makes it different:</p>
+  <ul>
+    <li><strong>Access to Gmail only.</strong> No access to any other website, and no host permissions: blocking uses the browser's own rules.</li>
+    <li><strong>Open source (MIT)</strong>, and it makes no network requests of its own, except checking a Pro license key with the seller if you enter one.</li>
+    <li><strong>Free forever for blocking.</strong> Pro (clean tracking links) is optional, with 30 days free, then $15 once, no subscription. If you want free link cleaning today, Trocker does that.</li>
+  </ul>
+  <p>It's new, so it has few users and no reviews yet. <a href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add Unseen to Chrome</a> · <a href="https://github.com/laboskiriste/unseen">Read the source</a></p>
+
+  <h2>Whatever you pick</h2>
+  <p>A Gmail extension can see your email, so check who publishes it before you install, and again from time to time: extensions do get sold. <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a> is a free checker that shows the publisher and warns you when it changes. Not sure you need an extension at all? <a href="../block-email-tracking-gmail/">Gmail's built-in setting</a> works too, at the cost of hiding all pictures.</p>
+
+  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. <a href="../">Unseen home</a> · <a href="../privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
+</main>
+</body>
+</html>
