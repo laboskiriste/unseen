@@ -14,12 +14,14 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 
 ## Detailed description
 
+No lists of company names: Chrome Web Store rejected 0.2.0 on 2026-11-02 for keyword spam ("Yellow Argon") over the list of email services in the Pro line.
+
 > Most newsletters and sales emails contain an invisible image, a "tracking pixel". When you open the email, it tells the sender that you read it, when, and how many times.
 >
 > Unseen blocks those pixels in Gmail on the web and leaves normal images alone.
 >
 > WHAT IT DOES
-> • Blocks 330+ known email trackers (Mailchimp, HubSpot, SendGrid, Salesforce Marketing Cloud, Customer.io and many more) and hidden 1×1 images
+> • Blocks 330+ known email trackers and hidden 1×1 images
 > • Shows a small note above each email that had trackers, with the tracking companies' names
 > • "Load images anyway" button when you want to let one email through
 > • Weekly count of blocked trackers and the companies that track you most
@@ -33,7 +35,7 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 >
 > FREE AND PRO, SAID UP FRONT
 > • Free forever: tracker blocking, the note above each email, "Load images anyway" and the weekly count
-> • Unseen Pro: when you click a link in an email, Unseen opens the real address without the click tracker, where the address is inside the link (Amazon SES, Postmark, Kit, Substack, Mandrill, Mailchimp, HubSpot and more; pages that warn before leaving a site are never skipped), and removes tracking tags such as utm_ from that address. The tracker is never contacted. Coming later: rules per sender, full history and export.
+> • Unseen Pro: when you click a link in an email, Unseen opens the real address without the click tracker, if the address is inside the link, and removes tracking tags such as utm_ from it. The tracker is never contacted, and pages that warn before you leave a site are never skipped. Coming later: rules per sender, full history and export.
 > • Every new user gets 30 days of Pro free. After that, Pro costs $15 once, and the free features keep working.
 > • Nothing that is free today will ever become paid
 >
