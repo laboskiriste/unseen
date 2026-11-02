@@ -3,10 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Unseen Email Tracker Blocker</title>
-  <meta name="description" content="Blocks email tracking pixels in Gmail, so senders can't see when you open their emails.">
+  <title>Unseen: block email tracking pixels in Gmail</title>
+  <meta name="description" content="Free, open-source extension that blocks email tracking pixels in Gmail, so senders can't see when or where you open their emails. Runs only on Gmail. No ads, no analytics.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Unseen: block email tracking pixels in Gmail">
+  <meta property="og:description" content="Free, open-source extension that blocks email tracking pixels in Gmail. Runs only on Gmail. No ads, no analytics.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
   <link rel="icon" href="icon.png">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Unseen: Email Tracker Blocker",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome, Edge",
+    "description": "Blocks email tracking pixels in Gmail on the web.",
+    "url": "https://laboskiriste.github.io/unseen/",
+    "downloadUrl": "https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd",
+    "license": "https://opensource.org/licenses/MIT",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
 </head>
 <body>
 <main>
@@ -15,18 +35,44 @@
   <p>Newsletters and sales emails hide invisible images that tell the sender when you open them. Unseen blocks those tracking pixels in Gmail on the web and leaves normal images alone.</p>
   <ul>
     <li>Blocks 330+ known email trackers and hidden pixels</li>
+    <li>Shows which company tried to track each email</li>
     <li>Runs only on Gmail, with no access to other websites</li>
     <li>No ads, no analytics, no account. Blocking happens entirely in your browser</li>
-    <li>Chrome, Edge and Firefox</li>
+    <li>Chrome and Edge today; Firefox is coming</li>
   </ul>
-  <p><a href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add to Chrome</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a> · <a href="privacy/">Privacy policy</a></p>
+  <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add to Chrome, free</a></p>
+  <p><a href="https://github.com/laboskiriste/unseen">Source code</a> · <a href="privacy/">Privacy policy</a></p>
+
+  <h2>How email tracking works</h2>
+  <p>A tracked email contains a tiny image, often 1×1 pixel, with an address that is unique to you. When Gmail shows the email, it downloads that image, and the sender's server records that you opened it, when, and how many times. Sales tools such as HubSpot, Mailtrack and Yesware, and newsletter services such as Mailchimp and SendGrid, do this by default.</p>
+
+  <h2>Doesn't Gmail already block this?</h2>
+  <p>Not fully. Gmail loads email images through its own proxy, which hides your IP address and rough location from the sender. But the proxy still downloads the image when you open the email, so the sender still learns that you opened it and when. Turning off images in Gmail's settings stops tracking, but it also hides every normal picture. Unseen blocks only the trackers.</p>
+
+  <h2>How Unseen decides what to block</h2>
+  <ol>
+    <li>It checks each image's original address against a list of 332 tracking patterns from about 195 companies, built from the open-source Simplify and Trocker lists.</li>
+    <li>It also blocks hidden and 1×1 images, which have no purpose except tracking.</li>
+    <li>Everything else loads as usual. A small note above the email names the tracker, with a <strong>Load images anyway</strong> button for that one email.</li>
+  </ol>
+
+  <h2>Questions</h2>
+  <h3>Can Unseen read my emails?</h3>
+  <p>It looks only at the image addresses inside the emails you open. It never reads, stores or sends the text of your emails, your contacts or your address. The code is open source, so anyone can check.</p>
+  <h3>Does it work with the Gmail app on my phone?</h3>
+  <p>No. Unseen works in Gmail on the web, in a desktop browser.</p>
+  <h3>Does it work in Outlook or Yahoo Mail?</h3>
+  <p>Not yet. Gmail on the web only, for now.</p>
+  <h3>Will senders know I blocked them?</h3>
+  <p>They see the same thing as when someone reads email with images turned off: no open is recorded.</p>
+
   <h2>Unseen Pro</h2>
-  <p>Blocking is free and stays free. Unseen Pro adds new features on top, starting with version 0.2.0:</p>
+  <p>Blocking is free and stays free. Unseen Pro adds extra features on top, starting with version 0.2.0:</p>
   <ul>
-    <li><strong>Clean tracking links:</strong> when you click a link in an email, Unseen opens the real address without the click tracker. The tracker is never contacted.</li>
+    <li><strong>Clean tracking links:</strong> when you click a link in an email, Unseen opens the real address without the click tracker, when the real address is inside the link. The tracker is never contacted.</li>
   </ul>
-  <p>Every new user gets 30 days of Pro free. After that, Pro is <strong>$15 once</strong>: no subscription. If you don't buy it, only Pro turns off; blocking keeps working.</p>
-  <p class="muted">Payment, receipts, taxes and refunds are handled by <a href="https://polar.sh">Polar</a>, the merchant of record. Your license key is checked with Polar about once a month; nothing else is sent. Questions and support: <a href="https://github.com/laboskiriste/unseen/issues">GitHub issues</a>.</p>
+  <p>Every user gets 30 days of Pro free. After that, Pro is <strong>$15 once</strong>: no subscription. If you don't buy it, only Pro turns off; blocking keeps working.</p>
+  <p class="muted">Payment, receipts, taxes and refunds are handled by <a href="https://polar.sh">Polar</a>, the merchant of record. If you enter a license key, Unseen checks it with Polar about once a month; nothing else is sent. Questions and support: <a href="https://github.com/laboskiriste/unseen/issues">GitHub issues</a>.</p>
   <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a>, which warns you when an extension you use is sold. Open source under the MIT licence.</footer>
 </main>
 </body>
