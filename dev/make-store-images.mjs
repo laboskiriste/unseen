@@ -10,6 +10,7 @@ mkdirSync(out, { recursive: true });
 const shots = [
   ['screenshot-1', 1280, 800, '1'],
   ['screenshot-2', 1280, 800, '2'],
+  ['screenshot-3', 1280, 800, '3'],
   ['promo-small', 440, 280, 'promo'],
 ];
 

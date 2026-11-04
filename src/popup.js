@@ -138,6 +138,23 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.pro) renderPro();
 });
 
+// Asks once for a store rating, after a week and 20 blocked trackers.
+async function renderRate() {
+  const [{ ratePrompt, total = 0 }, pro] = await Promise.all([
+    chrome.storage.local.get(['ratePrompt', 'total']),
+    PRO.load(chrome.storage.local),
+  ]);
+  const ask = RATE.shouldAsk({ answered: ratePrompt, since: pro.trialStart, total });
+  $('rate').hidden = !ask;
+  if (!ask) return;
+  const firefox = typeof browser !== 'undefined' && typeof browser.runtime?.getBrowserInfo === 'function';
+  $('rate-count').textContent = total;
+  $('rate-go').href = RATE.reviewUrl({ firefox, id: chrome.runtime.id });
+}
+const answerRate = (value) => chrome.storage.local.set({ ratePrompt: value }).then(() => { $('rate').hidden = true; });
+$('rate-go').addEventListener('click', () => answerRate('rated'));
+$('rate-no').addEventListener('click', () => answerRate('dismissed'));
+
 renderFamily();
 render();
-initPro();
+initPro().then(renderRate);

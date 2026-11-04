@@ -72,7 +72,7 @@ Remote code: **No.**
 
 ## Assets
 
-- `screenshot-1.png`, `screenshot-2.png`: 1280×800 (`npm run store-images`)
+- `screenshot-1.png`, `screenshot-2.png`, `screenshot-3.png` (Pro): 1280×800 (`npm run store-images`)
 - `promo-small.png`: 440×280
 - Icon: `icons/icon128.png`
 - Packages: `npm run package` → `unseen-<version>-chrome.zip` / `-firefox.zip`. The Firefox build passes `web-ext lint` with 0 errors and 0 warnings.

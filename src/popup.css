@@ -183,3 +183,11 @@ button:disabled {
 [hidden] {
   display: none !important;
 }
+#rate p {
+  margin: 0 0 8px;
+}
+.rate-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
