@@ -20,6 +20,7 @@ manifest.browser_specific_settings = {
 
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
+cpSync(`${root}_locales`, `${out}_locales`, { recursive: true });
 cpSync(`${root}icons`, `${out}icons`, { recursive: true });
 cpSync(`${root}src`, `${out}src`, { recursive: true });
 writeFileSync(`${out}manifest.json`, `${JSON.stringify(manifest, null, 2)}\n`);

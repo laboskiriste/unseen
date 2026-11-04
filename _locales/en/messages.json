@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Unseen: Email Tracker Blocker",
+    "description": "Extension name in the store and browser (max 45 characters)."
+  },
+  "extDescription": {
+    "message": "Blocks email tracking pixels in Gmail, so senders can't see when you open their emails. Runs only on Gmail.",
+    "description": "Short store description (max 132 characters)."
+  }
+}

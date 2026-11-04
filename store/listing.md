@@ -78,3 +78,61 @@ Remote code: **No.**
 - Packages: `npm run package` → `unseen-<version>-chrome.zip` / `-firefox.zip`. The Firefox build passes `web-ext lint` with 0 errors and 0 warnings.
 
 Homepage URL for the listing: https://laboskiriste.github.io/unseen/
+
+## Italian listing (0.2.2, `_locales/it`)
+
+Name and short description come from `_locales/it/messages.json`. In the Chrome Web Store, pick **Italiano** in the Store listing tab's language menu and paste this detailed description. On AMO, add the Italian locale on the Edit Product Page. The extension's own popup is still in English.
+
+> Molte newsletter ed email commerciali contengono un'immagine invisibile, un "tracking pixel". Quando apri l'email, dice al mittente che l'hai letta, quando e quante volte.
+>
+> Unseen blocca questi pixel in Gmail sul web e lascia caricare le immagini normali.
+>
+> COSA FA
+> • Blocca più di 330 tracker noti e le immagini nascoste di 1×1 pixel
+> • Mostra una piccola nota sopra ogni email tracciata, con il nome delle aziende di tracciamento
+> • Pulsante "Carica comunque le immagini" per far passare una singola email
+> • Conteggio settimanale dei tracker bloccati
+> • Un interruttore per disattivarlo
+>
+> PRIVACY PRIMA DI TUTTO
+> • Funziona solo su mail.google.com e non ha accesso ad altri siti
+> • Non legge, non salva e non invia le tue email, i tuoi contatti o il tuo indirizzo
+> • Niente server, niente statistiche, nessun account. L'unica richiesta di rete è il controllo della chiave di licenza Pro con Polar, e solo se ne inserisci una
+> • Open source (MIT): https://github.com/laboskiriste/unseen
+>
+> GRATIS E PRO, DETTO SUBITO
+> • Gratis per sempre: il blocco dei tracker, la nota sopra le email, "Carica comunque le immagini" e il conteggio settimanale
+> • Unseen Pro: quando fai clic su un link in un'email, Unseen apre l'indirizzo reale senza passare dal tracker dei clic, se l'indirizzo è contenuto nel link, e rimuove i parametri di tracciamento come utm_. Il tracker non viene mai contattato.
+> • Ogni nuovo utente ha 30 giorni di Pro gratis. Poi Pro costa 15 dollari una volta sola, e le funzioni gratuite continuano a funzionare.
+> • Niente di ciò che oggi è gratis diventerà a pagamento
+>
+> Dal 29 ottobre 2026, secondo le linee guida del Garante privacy, chi invia email in Italia deve di regola chiedere il consenso prima di usare i tracking pixel. Unseen ti permette di bloccarli comunque.
+>
+> Nota: Gmail nasconde già il tuo indirizzo IP ai mittenti. Unseen blocca il segnale che resta: il fatto che hai aperto l'email, e quando.
+
+## German listing (0.2.2, `_locales/de`)
+
+> Viele Newsletter und Werbe-E-Mails enthalten ein unsichtbares Bild, ein „Tracking-Pixel“. Wenn du die E-Mail öffnest, erfährt der Absender, dass du sie gelesen hast, wann und wie oft.
+>
+> Unseen blockiert diese Pixel in Gmail im Browser und lässt normale Bilder laden.
+>
+> WAS ES MACHT
+> • Blockiert über 330 bekannte Tracker und versteckte 1×1-Bilder
+> • Zeigt über jeder getrackten E-Mail einen kleinen Hinweis mit den Namen der Tracking-Firmen
+> • Schaltfläche „Bilder trotzdem laden“, um eine einzelne E-Mail durchzulassen
+> • Wöchentliche Zahl der blockierten Tracker
+> • Ein Schalter zum Ausschalten
+>
+> DATENSCHUTZ ZUERST
+> • Läuft nur auf mail.google.com und hat keinen Zugriff auf andere Websites
+> • Liest, speichert und sendet weder deine E-Mails noch deine Kontakte oder deine Adresse
+> • Keine Server, keine Statistiken, kein Konto. Die einzige Netzwerkanfrage ist die Prüfung eines Unseen-Pro-Lizenzschlüssels bei Polar, und nur, wenn du einen eingibst
+> • Open Source (MIT): https://github.com/laboskiriste/unseen
+>
+> KOSTENLOS UND PRO, GLEICH GESAGT
+> • Für immer kostenlos: das Blockieren, der Hinweis über den E-Mails, „Bilder trotzdem laden“ und die Wochenzahl
+> • Unseen Pro: Wenn du auf einen Link in einer E-Mail klickst, öffnet Unseen die echte Adresse ohne den Klick-Tracker, sofern die Adresse im Link steckt, und entfernt Tracking-Parameter wie utm_. Der Tracker wird nie kontaktiert.
+> • Jeder neue Nutzer bekommt 30 Tage Pro kostenlos. Danach kostet Pro einmalig 15 US-Dollar, und die kostenlosen Funktionen laufen weiter.
+> • Nichts, was heute kostenlos ist, wird kostenpflichtig
+>
+> Hinweis: Gmail verbirgt deine IP-Adresse bereits vor Absendern. Unseen blockiert das Signal, das bleibt: dass und wann du die E-Mail geöffnet hast.

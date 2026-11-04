@@ -10,13 +10,13 @@ const extras = ['LICENSE', 'THIRD_PARTY_NOTICES.md', 'vendor/LICENSE-trocker', '
 
 const chromeZip = `${root}store/unseen-${version}-chrome.zip`;
 rmSync(chromeZip, { force: true });
-execFileSync('zip', ['-qr', chromeZip, 'manifest.json', 'icons', 'src', ...extras], { cwd: root });
+execFileSync('zip', ['-qr', chromeZip, 'manifest.json', '_locales', 'icons', 'src', ...extras], { cwd: root });
 
 execFileSync('node', [`${root}dev/build-firefox.mjs`]);
 const firefoxDir = `${root}build/firefox/`;
 for (const f of extras) execFileSync('install', ['-D', `${root}${f}`, `${firefoxDir}${f}`]);
 const firefoxZip = `${root}store/unseen-${version}-firefox.zip`;
 rmSync(firefoxZip, { force: true });
-execFileSync('zip', ['-qr', firefoxZip, 'manifest.json', 'icons', 'src', ...extras], { cwd: firefoxDir });
+execFileSync('zip', ['-qr', firefoxZip, 'manifest.json', '_locales', 'icons', 'src', ...extras], { cwd: firefoxDir });
 
 console.log(`${chromeZip}\n${firefoxZip}`);
