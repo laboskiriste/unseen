@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Como bloquear o rastreamento de e-mails no Gmail (guia 2026)</title>
+  <meta name="description" content="Como impedir que os remetentes saibam quando você abre os e-mails deles no Gmail: a configuração integrada e uma extensão gratuita e de código aberto, com o custo de cada opção.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/pt/bloquear-rastreamento-email-gmail/">
+  <link rel="alternate" hreflang="pt-BR" href="https://laboskiriste.github.io/unseen/pt/bloquear-rastreamento-email-gmail/">
+  <link rel="alternate" hreflang="en" href="https://laboskiriste.github.io/unseen/block-email-tracking-gmail/">
+  <link rel="alternate" hreflang="es" href="https://laboskiriste.github.io/unseen/es/bloquear-rastreo-email-gmail/">
+  <link rel="alternate" hreflang="it" href="https://laboskiriste.github.io/unseen/it/bloccare-tracking-pixel-gmail/">
+  <link rel="alternate" hreflang="de" href="https://laboskiriste.github.io/unseen/de/e-mail-tracking-blockieren-gmail/">
+  <link rel="alternate" hreflang="fr" href="https://laboskiriste.github.io/unseen/fr/bloquer-pixels-espions-gmail/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Como bloquear o rastreamento de e-mails no Gmail">
+  <meta property="og:description" content="Duas formas de bloquear os pixels que avisam o remetente que você abriu o e-mail, e o custo de cada uma.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/pt/bloquear-rastreamento-email-gmail/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "inLanguage": "pt-BR",
+    "name": "Como bloquear o rastreamento de e-mails no Gmail",
+    "step": [
+      { "@type": "HowToStep", "name": "Abra as configurações", "text": "No Gmail no computador, clique na engrenagem e depois em Ver todas as configurações." },
+      { "@type": "HowToStep", "name": "Desative as imagens automáticas", "text": "Na guia Geral, em Imagens, escolha Perguntar antes de exibir imagens externas." },
+      { "@type": "HowToStep", "name": "Salve", "text": "Role até o fim da página e clique em Salvar alterações." }
+    ]
+  }
+  </script>
+</head>
+<body>
+<main>
+  <header><img src="../../icon.png" alt=""><a href="../../">Unseen</a></header>
+  <h1>Como bloquear o rastreamento de e-mails no Gmail</h1>
+  <p class="muted">Atualizado em 6 de novembro de 2026. Escrito pelo desenvolvedor do Unseen, uma das ferramentas deste guia. <a href="../../block-email-tracking-gmail/" hreflang="en">English version</a> · <a href="../../es/bloquear-rastreo-email-gmail/" hreflang="es">Versión en español</a></p>
+
+  <p>A maioria das newsletters e dos e-mails de marketing conta ao remetente se você os abriu, quando e quantas vezes. Eles fazem isso com um <strong>pixel de rastreamento</strong>: uma imagem minúscula, muitas vezes de 1×1 pixel e invisível, cujo endereço é exclusivo para você. Quando o Gmail mostra o e-mail, ele baixa essa imagem, e o servidor do remetente registra a abertura. Os links funcionam do mesmo jeito: um link rastreado passa primeiro pelo servidor do remetente, que registra o clique, e só depois leva você à página real.</p>
+
+  <h2>O Gmail já não bloqueia isso?</h2>
+  <p>Não totalmente. O Gmail carrega as imagens por meio de um proxy próprio, que esconde seu endereço IP e sua localização aproximada. Mas a imagem é baixada mesmo assim quando você abre o e-mail, então <strong>a abertura é registrada do mesmo jeito</strong>.</p>
+
+  <h2>Opção 1: desativar as imagens no Gmail (grátis, integrado)</h2>
+  <ol>
+    <li>No Gmail no computador, clique na engrenagem e depois em <strong>Ver todas as configurações</strong>.</li>
+    <li>Na guia <strong>Geral</strong>, em <strong>Imagens</strong>, escolha <strong>Perguntar antes de exibir imagens externas</strong>.</li>
+    <li>Role até o fim e clique em <strong>Salvar alterações</strong>.</li>
+  </ol>
+  <p>No app do Gmail no celular, a mesma opção fica em <strong>Configurações</strong>, sua conta, <strong>Imagens</strong>.</p>
+  <p><strong>O custo:</strong> todas as imagens de todos os e-mails ficam escondidas até você exibi-las, inclusive logotipos, fotos e recibos. E assim que você clica em «Exibir imagens», os pixels também carregam. Isso também não bloqueia o rastreamento de links.</p>
+
+  <h2>Opção 2: uma extensão que bloqueia só os pixels</h2>
+  <p>Uma extensão do navegador deixa as imagens ativadas, mas reconhece os pixels de rastreamento (pelo endereço, ou porque estão escondidos ou têm 1×1) e bloqueia só esses. As imagens normais aparecem como sempre.</p>
+  <p>O <strong>Unseen</strong> faz exatamente isso, no Gmail na web:</p>
+  <ul>
+    <li>bloqueia mais de 330 rastreadores conhecidos e pixels escondidos;</li>
+    <li>acima de cada e-mail rastreado, mostra qual empresa tentou rastrear você, com um botão para carregar as imagens mesmo assim;</li>
+    <li>funciona só no Gmail e não tem acesso a outros sites;</li>
+    <li>sem anúncios, sem estatísticas, sem conta; código aberto (licença MIT);</li>
+    <li>o bloqueio é grátis. A função Pro, opcional, abre os links dos e-mails no endereço real sem passar pelo rastreador de cliques: 30 dias grátis, depois 15 dólares uma única vez, sem assinatura.</li>
+  </ul>
+  <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Adicionar o Unseen ao Chrome, grátis</a></p>
+  <p>Não é a única opção: <a href="../../alternatives/" hreflang="en">aqui comparamos com honestidade o Unseen com Trocker, PixelBlock, Gblock e Ugly Email</a> (em inglês). O Trocker, por exemplo, é grátis e também funciona no Outlook.com e no Yahoo.</p>
+
+  <h2>Antes de instalar uma extensão para o seu e-mail</h2>
+  <p>Uma extensão que funciona dentro do Gmail pode ver seus e-mails. Confira três coisas na página dela na Chrome Web Store:</p>
+  <ul>
+    <li><strong>Permissões:</strong> ela deve pedir acesso ao Gmail, não a «todos os sites».</li>
+    <li><strong>Código-fonte:</strong> se for de código aberto, qualquer pessoa pode verificar o que ela faz.</li>
+    <li><strong>Quem publica:</strong> às vezes extensões são vendidas e pioram depois. O <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a>, uma verificação gratuita, mostra quem publica qualquer extensão do Chrome.</li>
+  </ul>
+
+  <h2>O que não funciona</h2>
+  <ul>
+    <li><strong>Só um bloqueador de anúncios.</strong> No Gmail, as imagens vêm do endereço do proxy do Google, não do rastreador, então a maioria das listas de filtros não sabe qual imagem é um pixel.</li>
+    <li><strong>Uma VPN.</strong> Ela esconde seu endereço IP, o que o proxy do Gmail já faz. A abertura é registrada do mesmo jeito.</li>
+  </ul>
+
+  <h2>Perguntas frequentes</h2>
+  <h3>Como sei se um e-mail tem um pixel de rastreamento?</h3>
+  <p>Com o Unseen, aparece uma pequena nota acima do e-mail, com o nome da empresa de rastreamento. Sem extensão, você pode abrir o e-mail, escolher «Mostrar original» e procurar imagens com endereços longos e estranhos, mas dá trabalho.</p>
+  <h3>O remetente vai saber que eu bloqueei o pixel?</h3>
+  <p>Não. Ele vê o mesmo que veria com alguém que lê e-mails com as imagens desativadas: nenhuma abertura.</p>
+  <h3>Funciona no app do Gmail no celular?</h3>
+  <p>Não, o Unseen funciona no Gmail na web, no navegador do computador. No celular, use a configuração «Imagens» descrita acima.</p>
+
+  <footer>O Unseen faz parte da Tinyward, pequenas ferramentas de privacidade com o mínimo de permissões possível. <a href="../../">Início do Unseen</a> · <a href="../../privacy/">Política de privacidade</a> · <a href="https://github.com/laboskiriste/unseen">Código-fonte</a></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cómo bloquear el rastreo de emails en Gmail (guía 2026)</title>
+  <meta name="description" content="Cómo evitar que los remitentes sepan cuándo abres sus emails en Gmail: el ajuste integrado y una extensión gratuita y de código abierto, con lo que cuesta cada opción.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/es/bloquear-rastreo-email-gmail/">
+  <link rel="alternate" hreflang="es" href="https://laboskiriste.github.io/unseen/es/bloquear-rastreo-email-gmail/">
+  <link rel="alternate" hreflang="en" href="https://laboskiriste.github.io/unseen/block-email-tracking-gmail/">
+  <link rel="alternate" hreflang="it" href="https://laboskiriste.github.io/unseen/it/bloccare-tracking-pixel-gmail/">
+  <link rel="alternate" hreflang="de" href="https://laboskiriste.github.io/unseen/de/e-mail-tracking-blockieren-gmail/">
+  <link rel="alternate" hreflang="fr" href="https://laboskiriste.github.io/unseen/fr/bloquer-pixels-espions-gmail/">
+  <link rel="alternate" hreflang="pt-BR" href="https://laboskiriste.github.io/unseen/pt/bloquear-rastreamento-email-gmail/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Cómo bloquear el rastreo de emails en Gmail">
+  <meta property="og:description" content="Dos formas de bloquear los píxeles que le dicen al remitente que abriste su email, y lo que cuesta cada una.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/es/bloquear-rastreo-email-gmail/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "inLanguage": "es",
+    "name": "Cómo bloquear el rastreo de emails en Gmail",
+    "step": [
+      { "@type": "HowToStep", "name": "Abre los ajustes", "text": "En Gmail en el ordenador, haz clic en la rueda dentada y luego en Ver todos los ajustes." },
+      { "@type": "HowToStep", "name": "Desactiva las imágenes automáticas", "text": "En la pestaña General, junto a Imágenes, elige Preguntar antes de mostrar imágenes externas." },
+      { "@type": "HowToStep", "name": "Guarda", "text": "Baja hasta el final de la página y haz clic en Guardar cambios." }
+    ]
+  }
+  </script>
+</head>
+<body>
+<main>
+  <header><img src="../../icon.png" alt=""><a href="../../">Unseen</a></header>
+  <h1>Cómo bloquear el rastreo de emails en Gmail</h1>
+  <p class="muted">Actualizado el 6 de noviembre de 2026. Escrito por el desarrollador de Unseen, una de las herramientas de esta guía. <a href="../../block-email-tracking-gmail/" hreflang="en">English version</a> · <a href="../../pt/bloquear-rastreamento-email-gmail/" hreflang="pt-BR">Versão em português</a></p>
+
+  <p>La mayoría de newsletters y emails comerciales le dicen al remitente si los abriste, cuándo y cuántas veces. Lo hacen con un <strong>píxel de seguimiento</strong>: una imagen diminuta, a menudo de 1×1 píxel e invisible, cuya dirección es única para ti. Cuando Gmail muestra el email, descarga esa imagen, y el servidor del remitente anota la apertura. Los enlaces funcionan igual: un enlace rastreado pasa primero por el servidor del remitente, que registra el clic, y luego te lleva a la página real.</p>
+
+  <h2>¿Gmail no lo bloquea ya?</h2>
+  <p>No del todo. Gmail carga las imágenes a través de su propio proxy, que oculta tu dirección IP y tu ubicación aproximada. Pero la imagen se descarga igualmente cuando abres el email, así que <strong>la apertura se registra de todos modos</strong>.</p>
+
+  <h2>¿Es legal?</h2>
+  <p>En la Unión Europea, por regla general, el remitente necesita tu consentimiento para medir si abres sus emails. Italia y Francia lo dejaron por escrito en 2026 con directrices específicas sobre los píxeles de seguimiento. Aun así, muchos emails seguirán llevándolos: porque aceptaste en algún momento, porque el remitente está fuera de la UE o porque nadie lo revisa. Si no quieres que te rastreen, lo más seguro es bloquearlos tú.</p>
+
+  <h2>Opción 1: desactivar las imágenes en Gmail (gratis, integrado)</h2>
+  <ol>
+    <li>En Gmail en el ordenador, haz clic en la rueda dentada y luego en <strong>Ver todos los ajustes</strong>.</li>
+    <li>En la pestaña <strong>General</strong>, junto a <strong>Imágenes</strong>, elige <strong>Preguntar antes de mostrar imágenes externas</strong>.</li>
+    <li>Baja hasta el final y haz clic en <strong>Guardar cambios</strong>.</li>
+  </ol>
+  <p>En la app de Gmail del móvil, la misma opción está en <strong>Ajustes</strong>, tu cuenta, <strong>Imágenes</strong>.</p>
+  <p><strong>Lo que te cuesta:</strong> todas las imágenes de todos los emails quedan ocultas hasta que las muestres, incluidos logotipos, fotos y facturas. Y en cuanto haces clic en «Mostrar imágenes», también se cargan los píxeles. Tampoco bloquea el rastreo de enlaces.</p>
+
+  <h2>Opción 2: una extensión que bloquea solo los píxeles</h2>
+  <p>Una extensión del navegador deja las imágenes activadas, pero reconoce los píxeles de seguimiento (por su dirección, o porque están ocultos o miden 1×1) y bloquea solo esos. Las imágenes normales se ven como siempre.</p>
+  <p><strong>Unseen</strong> hace exactamente eso, en Gmail en la web:</p>
+  <ul>
+    <li>bloquea más de 330 rastreadores conocidos y los píxeles ocultos;</li>
+    <li>encima de cada email rastreado muestra qué empresa intentó rastrearte, con un botón para cargar las imágenes igualmente;</li>
+    <li>funciona solo en Gmail y no tiene acceso a otros sitios web;</li>
+    <li>sin anuncios, sin estadísticas, sin cuenta; código abierto (licencia MIT);</li>
+    <li>el bloqueo es gratis. La función Pro, opcional, abre los enlaces de los emails en su dirección real sin pasar por el rastreador de clics: 30 días gratis y luego 15 dólares una sola vez, sin suscripción.</li>
+  </ul>
+  <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Añadir Unseen a Chrome, gratis</a></p>
+  <p>No es la única opción: <a href="../../alternatives/" hreflang="en">aquí comparamos con honestidad Unseen con Trocker, PixelBlock, Gblock y Ugly Email</a> (en inglés). Trocker, por ejemplo, es gratis y también funciona con Outlook.com y Yahoo.</p>
+
+  <h2>Antes de instalar una extensión para tu correo</h2>
+  <p>Una extensión que funciona dentro de Gmail puede ver tus emails. Comprueba tres cosas en su página de Chrome Web Store:</p>
+  <ul>
+    <li><strong>Permisos:</strong> debe pedir acceso a Gmail, no a «todos los sitios web».</li>
+    <li><strong>Código fuente:</strong> si es de código abierto, cualquiera puede comprobar lo que hace.</li>
+    <li><strong>Quién la publica:</strong> a veces las extensiones se venden y luego empeoran. <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a>, una comprobación gratuita, muestra quién publica cualquier extensión de Chrome.</li>
+  </ul>
+
+  <h2>Lo que no funciona</h2>
+  <ul>
+    <li><strong>Solo un bloqueador de anuncios.</strong> En Gmail, las imágenes vienen de la dirección del proxy de Google, no del rastreador, así que la mayoría de listas de filtros no saben qué imagen es un píxel.</li>
+    <li><strong>Una VPN.</strong> Oculta tu dirección IP, algo que el proxy de Gmail ya hace. La apertura se registra igual.</li>
+  </ul>
+
+  <h2>Preguntas frecuentes</h2>
+  <h3>¿Cómo sé si un email tiene un píxel de seguimiento?</h3>
+  <p>Con Unseen aparece una pequeña nota encima del email, con el nombre de la empresa de rastreo. Sin extensión, puedes abrir el email, elegir «Mostrar original» y buscar imágenes con direcciones largas y extrañas, pero es pesado.</p>
+  <h3>¿Sabrá el remitente que bloqueé el píxel?</h3>
+  <p>No. Ve lo mismo que con alguien que lee el correo con las imágenes desactivadas: ninguna apertura.</p>
+  <h3>¿Funciona en la app de Gmail del móvil?</h3>
+  <p>No, Unseen funciona en Gmail en la web, en el navegador del ordenador. En el móvil, usa el ajuste «Imágenes» de arriba.</p>
+
+  <footer>Unseen forma parte de Tinyward, pequeñas herramientas de privacidad con los mínimos permisos posibles. <a href="../../">Inicio de Unseen</a> · <a href="../../privacy/">Política de privacidad</a> · <a href="https://github.com/laboskiriste/unseen">Código fuente</a></footer>
+</main>
+</body>
+</html>
