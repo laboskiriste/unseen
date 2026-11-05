@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bloquer les pixels espions dans Gmail : le guide 2026</title>
+  <meta name="description" content="Depuis la recommandation de la CNIL de 2026, les pixels de suivi dans les e-mails demandent en principe votre consentement. Voici comment les bloquer vous-même dans Gmail : le réglage intégré et une extension gratuite et open source.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/fr/bloquer-pixels-espions-gmail/">
+  <link rel="alternate" hreflang="fr" href="https://laboskiriste.github.io/unseen/fr/bloquer-pixels-espions-gmail/">
+  <link rel="alternate" hreflang="en" href="https://laboskiriste.github.io/unseen/block-email-tracking-gmail/">
+  <link rel="alternate" hreflang="it" href="https://laboskiriste.github.io/unseen/it/bloccare-tracking-pixel-gmail/">
+  <link rel="alternate" hreflang="de" href="https://laboskiriste.github.io/unseen/de/e-mail-tracking-blockieren-gmail/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Bloquer les pixels espions dans Gmail">
+  <meta property="og:description" content="Ce que dit la CNIL, et deux façons de bloquer les pixels qui signalent à l'expéditeur que vous avez ouvert un e-mail.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/fr/bloquer-pixels-espions-gmail/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "inLanguage": "fr",
+    "name": "Bloquer les pixels espions dans Gmail",
+    "step": [
+      { "@type": "HowToStep", "name": "Ouvrir les paramètres", "text": "Dans Gmail sur ordinateur, cliquez sur la roue dentée, puis sur Voir tous les paramètres." },
+      { "@type": "HowToStep", "name": "Désactiver les images automatiques", "text": "Dans l'onglet Général, à la ligne Images, choisissez Demander avant d'afficher des images externes." },
+      { "@type": "HowToStep", "name": "Enregistrer", "text": "Descendez en bas de la page et cliquez sur Enregistrer les modifications." }
+    ]
+  }
+  </script>
+</head>
+<body>
+<main>
+  <header><img src="../../icon.png" alt=""><a href="../../">Unseen</a></header>
+  <h1>Bloquer les pixels espions dans Gmail</h1>
+  <p class="muted">Mis à jour le 5 novembre 2026. Écrit par le développeur d'Unseen, l'un des outils présentés ici. <a href="../../block-email-tracking-gmail/" hreflang="en">English version</a> · <a href="../../de/e-mail-tracking-blockieren-gmail/" hreflang="de">Deutsche Version</a> · <a href="../../it/bloccare-tracking-pixel-gmail/" hreflang="it">Versione italiana</a></p>
+
+  <p>La plupart des newsletters et des e-mails commerciaux indiquent à l'expéditeur si vous les avez ouverts, quand et combien de fois. Ils utilisent un <strong>pixel espion</strong> (ou pixel de suivi) : une image minuscule, souvent de 1×1 pixel et invisible, dont l'adresse est unique pour vous. Quand Gmail affiche l'e-mail, il télécharge cette image, et le serveur de l'expéditeur enregistre l'ouverture. Les liens fonctionnent pareil : un lien suivi passe d'abord par le serveur de l'expéditeur, qui note le clic, puis vous redirige.</p>
+
+  <h2>Ce que dit la CNIL</h2>
+  <p>Dans sa recommandation sur les pixels de suivi dans les courriels, adoptée le 12 mars 2026 et publiée le 14 avril 2026, la CNIL considère ces pixels comme des traceurs. En règle générale, l'expéditeur doit donc obtenir votre <strong>consentement</strong> avant de mesurer l'ouverture de ses e-mails ou de vous profiler. Pour les adresses collectées avant le 14 avril, les entreprises avaient jusqu'au 14 juillet 2026 pour informer les destinataires et leur permettre de s'opposer.</p>
+  <ul>
+    <li>Il existe des exceptions, par exemple pour la délivrabilité et certains e-mails transactionnels (confirmation de commande, mot de passe).</li>
+    <li>Vous devez pouvoir retirer votre consentement facilement.</li>
+  </ul>
+  <p>En pratique, beaucoup d'e-mails contiendront encore des pixels : parce que vous avez accepté un jour, parce que l'expéditeur n'est pas en France, ou parce que personne n'a vérifié. Si vous ne voulez pas être suivi, le plus sûr est de les bloquer vous-même.</p>
+
+  <h2>Gmail ne les bloque-t-il pas déjà ?</h2>
+  <p>Pas entièrement. Gmail charge les images via son propre proxy, qui cache votre adresse IP et votre position approximative. Mais l'image est quand même téléchargée quand vous ouvrez l'e-mail, donc <strong>l'ouverture est quand même enregistrée</strong>.</p>
+
+  <h2>Méthode 1 : désactiver les images dans Gmail (gratuit, intégré)</h2>
+  <ol>
+    <li>Dans Gmail sur ordinateur, cliquez sur la roue dentée, puis sur <strong>Voir tous les paramètres</strong>.</li>
+    <li>Dans l'onglet <strong>Général</strong>, à la ligne <strong>Images</strong>, choisissez <strong>Demander avant d'afficher des images externes</strong>.</li>
+    <li>Descendez en bas et cliquez sur <strong>Enregistrer les modifications</strong>.</li>
+  </ol>
+  <p>Dans l'application Gmail sur téléphone, la même option se trouve dans <strong>Paramètres</strong>, votre compte, <strong>Images</strong>.</p>
+  <p><strong>L'inconvénient :</strong> toutes les images de tous les e-mails restent masquées jusqu'à ce que vous les affichiez, y compris les logos, les photos et les factures. Et dès que vous cliquez sur « Afficher les images », les pixels se chargent aussi. Cela ne bloque pas non plus le suivi des liens.</p>
+
+  <h2>Méthode 2 : une extension qui ne bloque que les pixels</h2>
+  <p>Une extension de navigateur laisse les images activées, mais reconnaît les pixels espions (par leur adresse, ou parce qu'ils sont cachés ou de 1×1) et ne bloque que ceux-là. Les images normales s'affichent comme d'habitude.</p>
+  <p><strong>Unseen</strong> fait exactement cela, dans Gmail sur le web :</p>
+  <ul>
+    <li>bloque plus de 330 traceurs connus et les pixels cachés ;</li>
+    <li>affiche au-dessus de chaque e-mail suivi le nom de l'entreprise qui a essayé de vous suivre, avec un bouton pour charger les images quand même ;</li>
+    <li>fonctionne uniquement sur Gmail et n'a accès à aucun autre site ;</li>
+    <li>pas de publicité, pas de statistiques, pas de compte ; open source (licence MIT) ;</li>
+    <li>le blocage est gratuit. La fonction Pro, facultative, ouvre les liens des e-mails à leur vraie adresse sans passer par le traceur de clics : 30 jours gratuits, puis 15 dollars une seule fois, sans abonnement.</li>
+  </ul>
+  <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Ajouter Unseen à Chrome, gratuit</a></p>
+  <p>Ce n'est pas la seule option : <a href="../../alternatives/" hreflang="en">nous comparons honnêtement Unseen à Trocker, PixelBlock, Gblock et Ugly Email</a> (en anglais). Trocker, par exemple, est gratuit et fonctionne aussi avec Outlook.com et Yahoo.</p>
+
+  <h2>Avant d'installer une extension pour vos e-mails</h2>
+  <p>Une extension qui fonctionne dans Gmail peut voir vos e-mails. Vérifiez donc trois choses sur sa page du Chrome Web Store :</p>
+  <ul>
+    <li><strong>Autorisations :</strong> elle doit demander l'accès à Gmail, pas à « tous les sites ».</li>
+    <li><strong>Code source :</strong> s'il est open source, tout le monde peut vérifier ce qu'elle fait.</li>
+    <li><strong>Qui la publie :</strong> des extensions sont parfois vendues, puis dégradées. <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a>, un outil gratuit, montre qui publie n'importe quelle extension Chrome.</li>
+  </ul>
+
+  <h2>Ce qui ne marche pas</h2>
+  <ul>
+    <li><strong>Un bloqueur de pub seul.</strong> Dans Gmail, les images viennent de l'adresse du proxy de Google, pas du traceur. La plupart des listes de filtres ne voient donc pas quelle image est un pixel espion.</li>
+    <li><strong>Un VPN.</strong> Il cache votre adresse IP, ce que le proxy de Gmail fait déjà. L'ouverture est quand même enregistrée.</li>
+  </ul>
+
+  <h2>Questions fréquentes</h2>
+  <h3>Comment savoir si un e-mail contient un pixel espion ?</h3>
+  <p>Avec Unseen, une petite note apparaît au-dessus de l'e-mail, avec le nom de l'entreprise de suivi. Sans extension, vous pouvez ouvrir l'e-mail, choisir « Afficher l'original » et chercher des images aux adresses longues et étranges, mais c'est fastidieux.</p>
+  <h3>L'expéditeur saura-t-il que j'ai bloqué le pixel ?</h3>
+  <p>Non. Il voit la même chose que pour quelqu'un qui lit ses e-mails avec les images désactivées : aucune ouverture enregistrée.</p>
+  <h3>Est-ce que ça marche dans l'application Gmail sur téléphone ?</h3>
+  <p>Non, Unseen fonctionne dans Gmail sur le web, dans le navigateur de l'ordinateur. Sur téléphone, utilisez le réglage « Images » décrit plus haut.</p>
+  <h3>Et Outlook ou Apple Mail ?</h3>
+  <p>Ce guide concerne Gmail. Apple Mail propose « Protéger l'activité Mail » dans ses réglages, et Outlook peut désactiver le téléchargement automatique des images.</p>
+
+  <footer>Unseen fait partie de Tinyward, de petits outils de confidentialité avec le moins d'autorisations possible. <a href="../../">Accueil d'Unseen</a> · <a href="../../privacy/">Politique de confidentialité</a> · <a href="https://github.com/laboskiriste/unseen">Code source</a></footer>
+</main>
+</body>
+</html>
