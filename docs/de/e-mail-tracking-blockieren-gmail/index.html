@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-Mail-Tracking in Gmail blockieren: Tracking-Pixel stoppen (Anleitung 2026)</title>
+  <meta name="description" content="So verhinderst du, dass Absender sehen, wann du ihre E-Mails in Gmail öffnest: die eingebaute Einstellung und eine kostenlose Open-Source-Erweiterung, mit allen Vor- und Nachteilen.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/de/e-mail-tracking-blockieren-gmail/">
+  <link rel="alternate" hreflang="de" href="https://laboskiriste.github.io/unseen/de/e-mail-tracking-blockieren-gmail/">
+  <link rel="alternate" hreflang="en" href="https://laboskiriste.github.io/unseen/block-email-tracking-gmail/">
+  <link rel="alternate" hreflang="it" href="https://laboskiriste.github.io/unseen/it/bloccare-tracking-pixel-gmail/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="E-Mail-Tracking in Gmail blockieren">
+  <meta property="og:description" content="Zwei Wege, Tracking-Pixel in Gmail zu stoppen, und was dich jeder kostet.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/de/e-mail-tracking-blockieren-gmail/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "inLanguage": "de",
+    "name": "E-Mail-Tracking in Gmail blockieren",
+    "step": [
+      { "@type": "HowToStep", "name": "Einstellungen öffnen", "text": "Klicke in Gmail am Computer auf das Zahnrad und dann auf Alle Einstellungen aufrufen." },
+      { "@type": "HowToStep", "name": "Automatische Bilder ausschalten", "text": "Wähle auf dem Tab Allgemein bei Bilder die Option Vor dem Anzeigen externer Bilder fragen." },
+      { "@type": "HowToStep", "name": "Speichern", "text": "Scrolle nach unten und klicke auf Änderungen speichern." }
+    ]
+  }
+  </script>
+</head>
+<body>
+<main>
+  <header><img src="../../icon.png" alt=""><a href="../../">Unseen</a></header>
+  <h1>E-Mail-Tracking in Gmail blockieren</h1>
+  <p class="muted">Aktualisiert am 5. November 2026. Geschrieben vom Entwickler von Unseen, einem der Tools unten. <a href="../../block-email-tracking-gmail/" hreflang="en">English version</a> · <a href="../../it/bloccare-tracking-pixel-gmail/" hreflang="it">Versione italiana</a></p>
+
+  <p>Die meisten Newsletter und Werbe-E-Mails verraten dem Absender, ob du sie geöffnet hast, wann und wie oft. Dafür steckt in der E-Mail ein <strong>Tracking-Pixel</strong>: ein winziges, oft unsichtbares Bild von 1×1 Pixel, dessen Adresse nur für dich gilt. Zeigt Gmail die E-Mail an, lädt es dieses Bild, und der Server des Absenders notiert die Öffnung. Links funktionieren genauso: Ein getrackter Link führt erst zum Server des Absenders, der den Klick speichert, und leitet dich dann weiter.</p>
+
+  <h2>Blockiert Gmail das nicht schon?</h2>
+  <p>Nicht ganz. Gmail lädt Bilder über einen eigenen Proxy. Der verbirgt deine IP-Adresse und deinen ungefähren Standort. Das Bild wird aber trotzdem geladen, sobald du die E-Mail öffnest, also <strong>wird die Öffnung trotzdem gezählt</strong>.</p>
+
+  <h2>Ist das überhaupt erlaubt?</h2>
+  <p>In der EU brauchen Absender für das Tracking von Öffnungen in der Regel deine Einwilligung. Italiens Datenschutzbehörde hat das 2026 ausdrücklich in eigenen Leitlinien festgeschrieben. In der Praxis enthalten trotzdem viele E-Mails Pixel: weil du irgendwann zugestimmt hast, weil der Absender außerhalb der EU sitzt oder weil sich niemand darum kümmert. Wer nicht getrackt werden will, blockiert sie am besten selbst.</p>
+
+  <h2>Weg 1: Bilder in Gmail ausschalten (kostenlos, eingebaut)</h2>
+  <ol>
+    <li>Klicke in Gmail am Computer auf das Zahnrad und dann auf <strong>Alle Einstellungen aufrufen</strong>.</li>
+    <li>Wähle auf dem Tab <strong>Allgemein</strong> bei <strong>Bilder</strong> die Option <strong>Vor dem Anzeigen externer Bilder fragen</strong>.</li>
+    <li>Scrolle nach unten und klicke auf <strong>Änderungen speichern</strong>.</li>
+  </ol>
+  <p>In der Gmail-App auf dem Handy findest du die gleiche Option unter <strong>Einstellungen</strong>, dein Konto, <strong>Bilder</strong>.</p>
+  <p><strong>Der Nachteil:</strong> Alle Bilder in allen E-Mails bleiben versteckt, bis du sie einblendest, auch Logos, Fotos und Rechnungen. Und sobald du auf „Bilder anzeigen“ klickst, laden auch die Pixel. Getrackte Links stoppt das nicht.</p>
+
+  <h2>Weg 2: eine Erweiterung, die nur die Pixel blockiert</h2>
+  <p>Eine Browser-Erweiterung lässt Bilder an, erkennt aber Tracking-Pixel (an ihrer Adresse, oder weil sie versteckt oder 1×1 groß sind) und blockiert nur diese. Normale Bilder siehst du wie immer.</p>
+  <p><strong>Unseen</strong> macht genau das, in Gmail im Browser:</p>
+  <ul>
+    <li>blockiert über 330 bekannte Tracker und versteckte Pixel;</li>
+    <li>zeigt über jeder getrackten E-Mail, welche Firma dich tracken wollte, mit einem Knopf, um die Bilder doch zu laden;</li>
+    <li>läuft nur auf Gmail und hat keinen Zugriff auf andere Websites;</li>
+    <li>keine Werbung, keine Statistiken, kein Konto; Open Source (MIT-Lizenz);</li>
+    <li>das Blockieren ist kostenlos. Die optionale Pro-Funktion öffnet Links in E-Mails direkt an ihrer echten Adresse, ohne Umweg über den Klick-Tracker: 30 Tage gratis, danach einmalig 15 US-Dollar, kein Abo.</li>
+  </ul>
+  <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Unseen kostenlos zu Chrome hinzufügen</a></p>
+  <p>Es ist nicht die einzige Option: <a href="../../alternatives/" hreflang="en">Hier vergleichen wir Unseen ehrlich mit Trocker, PixelBlock, Gblock und Ugly Email</a> (auf Englisch). Trocker zum Beispiel ist kostenlos und funktioniert auch mit Outlook.com und Yahoo.</p>
+
+  <h2>Bevor du eine Erweiterung für dein Postfach installierst</h2>
+  <p>Eine Erweiterung, die in Gmail läuft, kann deine E-Mails sehen. Prüfe deshalb auf ihrer Seite im Chrome Web Store drei Dinge:</p>
+  <ul>
+    <li><strong>Berechtigungen:</strong> Sie sollte Zugriff auf Gmail verlangen, nicht auf „alle Websites“.</li>
+    <li><strong>Quellcode:</strong> Ist sie Open Source, kann jeder nachprüfen, was sie tut.</li>
+    <li><strong>Wer sie veröffentlicht:</strong> Erweiterungen werden manchmal verkauft und danach verschlechtert. <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a>, ein kostenloser Check, zeigt dir, wer eine Chrome-Erweiterung veröffentlicht.</li>
+  </ul>
+
+  <h2>Was nicht hilft</h2>
+  <ul>
+    <li><strong>Nur ein Werbeblocker.</strong> In Gmail kommen Bilder von Googles Proxy-Adresse, nicht vom Tracker. Die meisten Filterlisten erkennen deshalb nicht, welches Bild ein Tracker ist.</li>
+    <li><strong>Ein VPN.</strong> Es verbirgt deine IP-Adresse, das macht Gmails Proxy schon. Die Öffnung wird trotzdem gezählt.</li>
+  </ul>
+
+  <h2>Häufige Fragen</h2>
+  <h3>Wie erkenne ich, ob eine E-Mail ein Tracking-Pixel enthält?</h3>
+  <p>Mit Unseen erscheint ein kleiner Hinweis über der E-Mail, mit dem Namen der Tracking-Firma. Ohne Erweiterung kannst du die E-Mail öffnen, „Original anzeigen“ wählen und nach Bildern mit langen, seltsamen Adressen suchen, aber das ist mühsam.</p>
+  <h3>Merkt der Absender, dass ich das Pixel blockiert habe?</h3>
+  <p>Nein. Er sieht dasselbe wie bei jemandem, der E-Mails mit ausgeschalteten Bildern liest: keine Öffnung.</p>
+  <h3>Funktioniert das in der Gmail-App auf dem Handy?</h3>
+  <p>Nein, Unseen läuft in Gmail im Browser am Computer. Auf dem Handy nutzt du die Einstellung „Bilder“ von oben.</p>
+  <h3>Und Outlook oder Apple Mail?</h3>
+  <p>Diese Anleitung ist für Gmail. Apple Mail hat in den Einstellungen „E-Mail-Aktivität schützen“, und Outlook kann das automatische Herunterladen von Bildern abschalten.</p>
+
+  <footer>Unseen gehört zu Tinyward, kleinen Datenschutz-Tools mit so wenigen Berechtigungen wie möglich. <a href="../../">Unseen Startseite</a> · <a href="../../privacy/">Datenschutzerklärung</a> · <a href="https://github.com/laboskiriste/unseen">Quellcode</a></footer>
+</main>
+</body>
+</html>
