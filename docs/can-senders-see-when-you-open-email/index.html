@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Can senders see when you open their email? (Gmail, 2026)</title>
+  <meta name="description" content="Yes, most marketing and sales emails tell the sender when, where and how often you opened them. How it works, how to check a single email, and how to stop it in Gmail.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/can-senders-see-when-you-open-email/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Can senders see when you open their email?">
+  <meta property="og:description" content="Usually yes. How email open tracking works, and how to stop it in Gmail.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/can-senders-see-when-you-open-email/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Can senders see when I open their email?", "acceptedAnswer": { "@type": "Answer", "text": "Usually yes. Most newsletters, marketing and sales emails contain a hidden tracking pixel. When your email app loads it, the sender learns that you opened the email and when." } },
+      { "@type": "Question", "name": "Does Gmail block email tracking?", "acceptedAnswer": { "@type": "Answer", "text": "Partly. Gmail's image proxy hides your IP address and location, but the pixel is still loaded when you open the email, so the open is still recorded." } },
+      { "@type": "Question", "name": "How do I stop senders from knowing I opened their email in Gmail?", "acceptedAnswer": { "@type": "Answer", "text": "Turn on Ask before displaying external images in Gmail's settings, or use a browser extension that blocks only the tracking pixels and keeps normal images." } }
+    ]
+  }
+  </script>
+</head>
+<body>
+<main>
+  <header><img src="../icon.png" alt=""><a href="../">Unseen</a></header>
+  <h1>Can senders see when you open their email?</h1>
+  <p class="muted">Updated November 6, 2026. Written by the developer of Unseen, a Gmail tracker blocker.</p>
+
+  <p><strong>Usually, yes.</strong> Most newsletters, shop emails and sales emails tell the sender whether you opened them, when, how many times, and sometimes on what kind of device. Personal emails from friends usually don't, unless they use a tracking add-on.</p>
+
+  <h2>How it works</h2>
+  <p>The email contains a tiny image, often 1×1 pixel and invisible, with an address that's unique to you. When you open the email, your email app downloads that image, and the sender's server writes down: this person opened it, at this time. Open it again tomorrow, and that's logged too.</p>
+  <p>Links can be tracked the same way. A tracked link first goes to the sender's server, which records the click, and then forwards you to the real page.</p>
+
+  <h2>What the sender actually sees</h2>
+  <ul>
+    <li><strong>That you opened it, and when.</strong> Every time, not just the first.</li>
+    <li><strong>Which links you clicked.</strong></li>
+    <li><strong>Your rough location and device</strong>, in some email apps. In Gmail, Google's image proxy hides your IP address and location, but not the open itself.</li>
+  </ul>
+  <p>Sales tools use this to time follow-ups ("you opened my proposal three times, ready to talk?"), and some employers use it as a hidden read receipt.</p>
+
+  <h2>How to check a single email</h2>
+  <p>In Gmail, open the email, click the three dots, choose <strong>Show original</strong>, and look for image addresses with long random codes, often from a mailing company's domain. It works, but it's slow. A blocker extension can name the tracker for you.</p>
+
+  <h2>How to stop it in Gmail</h2>
+  <ul>
+    <li><strong>Built in, free:</strong> in Gmail's settings, set Images to <strong>Ask before displaying external images</strong>. Trackers stop, but so does every normal picture until you click. <a href="../block-email-tracking-gmail/">Step-by-step guide</a>.</li>
+    <li><strong>An extension that blocks only trackers:</strong> images keep loading and only the pixels are blocked. <a href="../alternatives/">We compare the main ones</a>, including ones that aren't ours.</li>
+  </ul>
+  <p>Unseen is ours: free and open source, it runs only on Gmail, blocks 330+ known trackers and hidden images, and shows which company tried to track each email. <a href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add it to Chrome</a>.</p>
+
+  <h2>Questions</h2>
+  <h3>Is this legal?</h3>
+  <p>It depends where you and the sender are. In the EU, senders generally need your consent, and Italy's and France's data protection authorities spelled this out for email pixels in 2026. In the US it's mostly allowed.</p>
+  <h3>Will the sender know I blocked it?</h3>
+  <p>No. They see the same as for someone reading with images turned off: no open.</p>
+  <h3>What about Apple Mail and Outlook?</h3>
+  <p>Apple Mail's "Protect Mail Activity" loads images in advance through Apple's servers, which makes open tracking unreliable. Outlook can be set not to download pictures automatically.</p>
+
+  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. <a href="../">Unseen home</a> · <a href="../privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
+</main>
+</body>
+</html>

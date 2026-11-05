@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PixelBlock alternatives for Gmail (November 2026)</title>
+  <meta name="description" content="PixelBlock hasn't been updated since December 2025. If you want a maintained Gmail tracking-pixel blocker, here are the options, open source and not, with what each one can access.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/pixelblock-alternative/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PixelBlock alternatives for Gmail">
+  <meta property="og:description" content="PixelBlock hasn't been updated since December 2025. The maintained alternatives, compared fairly.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/pixelblock-alternative/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+  <header><img src="../icon.png" alt=""><a href="../">Unseen</a></header>
+  <h1>PixelBlock alternatives for Gmail</h1>
+  <p class="muted">Checked November 6, 2026. Written by the developer of Unseen, one of the options below.</p>
+
+  <p>PixelBlock is one of the oldest Gmail tracking-pixel blockers, with about 40,000 users in the Chrome Web Store. Its last update was in December 2025. That doesn't mean it stopped working, and you don't need to remove it today. But a Gmail extension that nobody updates has two problems:</p>
+  <ul>
+    <li><strong>Gmail changes.</strong> When Gmail's page changes, an unmaintained blocker can quietly stop catching trackers, and nothing tells you.</li>
+    <li><strong>Unmaintained extensions get sold.</strong> A popular extension with access to your email is exactly what buyers look for. A new owner gets every permission, and Chrome installs their next update without asking you.</li>
+  </ul>
+
+  <h2>Check first: is it still the same publisher?</h2>
+  <p>Paste PixelBlock's store link into <a href="https://app.extensionguardian.workers.dev">Extension Guardian's free checker</a>. It shows who publishes it today, when it was last updated and what it can access. If you keep it, the Extension Guardian extension can warn you if it's ever sold.</p>
+
+  <h2>The alternatives</h2>
+  <div class="table">
+  <table>
+    <thead><tr><th>Extension</th><th>Price</th><th>Open source</th><th>Can access</th><th>Last update</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Trocker</strong></td><td>Free</td><td>Yes (Apache-2.0)</td><td>All websites (to cover any webmail)</td><td>Jul 2026</td></tr>
+      <tr><td><strong>Unseen</strong></td><td>Free; optional Pro $15 once</td><td>Yes (MIT)</td><td>Gmail only</td><td>Nov 2026</td></tr>
+      <tr><td><strong>Gblock</strong></td><td>Trial, then $1.99/month</td><td>No</td><td>Gmail</td><td>Oct 2026</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Trocker</h3>
+  <p>Free, open source and long-running. It also cleans tracked links for free, and works in Outlook.com and Yahoo Mail too. The trade-off is that it asks for access to all websites. <strong>Pick Trocker</strong> if you use more than one webmail.</p>
+
+  <h3>Unseen</h3>
+  <p>Ours. It blocks 330+ known trackers plus hidden and 1×1 images, and shows a note above each tracked email naming the company, a bit like PixelBlock's red eye but with the name. It can only see Gmail, has no host permissions, and makes no network requests of its own. Blocking is free; an optional Pro feature cleans tracked links for $15 once. <a href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add Unseen to Chrome</a></p>
+
+  <h3>Gblock</h3>
+  <p>A commercial, actively developed extension that blocks pixels and link tracking, with support. <strong>Pick Gblock</strong> if you prefer a paid product and don't mind a subscription.</p>
+
+  <h3>No extension at all</h3>
+  <p>Gmail's own setting, "Ask before displaying external images", stops pixel tracking without installing anything, at the cost of hiding every picture until you click. <a href="../block-email-tracking-gmail/">Step-by-step guide</a>.</p>
+
+  <p><a href="../alternatives/">Full comparison of Gmail tracker blockers</a></p>
+
+  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. <a href="../">Unseen home</a> · <a href="../privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
+</main>
+</body>
+</html>
