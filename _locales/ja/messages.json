@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Unseen: メール追跡ブロッカー",
+    "description": "Extension name in the store and browser (max 45 characters)."
+  },
+  "extDescription": {
+    "message": "Gmail のトラッキングピクセルをブロックし、メールを開いたことを送信者に知られないようにします。Gmail 専用です。",
+    "description": "Short store description (max 132 characters)."
+  }
+}

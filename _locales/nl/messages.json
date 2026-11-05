@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Unseen: e-mailtracking blokkeren",
+    "description": "Extension name in the store and browser (max 45 characters)."
+  },
+  "extDescription": {
+    "message": "Blokkeert trackingpixels in Gmail, zodat afzenders niet zien wanneer je hun e-mails opent. Werkt alleen in Gmail.",
+    "description": "Short store description (max 132 characters)."
+  }
+}

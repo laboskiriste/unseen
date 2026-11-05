@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Unseen : bloqueur de pistage des e-mails",
+    "description": "Extension name in the store and browser (max 45 characters)."
+  },
+  "extDescription": {
+    "message": "Bloque les pixels espions dans Gmail : les expéditeurs ne savent pas quand vous ouvrez leurs e-mails. Uniquement sur Gmail.",
+    "description": "Short store description (max 132 characters)."
+  }
+}

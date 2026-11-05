@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Unseen: blokada śledzenia e-maili",
+    "description": "Extension name in the store and browser (max 45 characters)."
+  },
+  "extDescription": {
+    "message": "Blokuje piksele śledzące w Gmailu, więc nadawcy nie wiedzą, kiedy otwierasz ich e-maile. Działa tylko w Gmailu.",
+    "description": "Short store description (max 132 characters)."
+  }
+}

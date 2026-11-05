@@ -136,3 +136,7 @@ Name and short description come from `_locales/it/messages.json`. In the Chrome 
 > • Nichts, was heute kostenlos ist, wird kostenpflichtig
 >
 > Hinweis: Gmail verbirgt deine IP-Adresse bereits vor Absendern. Unseen blockiert das Signal, das bleibt: dass und wann du die E-Mail geöffnet hast.
+
+## More languages (0.2.3)
+
+Name and short description only, from `_locales/{es,fr,pt_BR,pl,nl,tr,ja}`. If the Chrome Web Store asks for a detailed description in one of these languages, paste the English one; search matches the name and short description.

@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Unseen: bloqueio de rastreamento de e-mail",
+    "description": "Extension name in the store and browser (max 45 characters)."
+  },
+  "extDescription": {
+    "message": "Bloqueia pixels de rastreamento no Gmail, para que os remetentes não saibam quando você abre os e-mails. Funciona só no Gmail.",
+    "description": "Short store description (max 132 characters)."
+  }
+}
