@@ -29,55 +29,92 @@
   }
   </script>
 </head>
-<body>
-<main>
-  <header><img src="icon.png" alt=""><a href="./">Unseen</a></header>
-  <h1>Stop email tracking in Gmail</h1>
-  <p>Newsletters and sales emails hide invisible images that tell the sender when you open them. Unseen blocks those tracking pixels in Gmail on the web and leaves normal images alone.</p>
-  <ul>
-    <li>Blocks 330+ known email trackers and hidden pixels</li>
-    <li>Shows which company tried to track each email</li>
-    <li>Runs only on Gmail, with no access to other websites</li>
-    <li>No ads, no analytics, no account. Blocking happens entirely in your browser</li>
-    <li>For Chrome, Edge and Firefox</li>
-  </ul>
-  <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add to Chrome, free</a> <a href="https://addons.mozilla.org/firefox/addon/unseen-email-tracker-blocker/">Also for Firefox</a></p>
-  <p><a href="https://github.com/laboskiriste/unseen">Source code</a> · <a href="privacy/">Privacy policy</a></p>
-  <p><strong>Is an email tracking you right now?</strong> Paste it into the free <a href="check-email/">email tracker checker</a>. It runs in your browser, no install needed.</p>
+<body class="home">
+<header class="hero"><div class="wrap">
+  <nav>
+    <a class="brand" href="./"><img src="icon.png" alt="">Unseen</a>
+    <div class="nav-links"><a href="#how">How it works</a><a href="check-email/">Check an email</a><a href="alternatives/">Compare</a><a href="#pro">Pro</a></div>
+  </nav>
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">Free · Open source · Gmail only</p>
+      <h1>Stop email tracking <em>in Gmail</em>.</h1>
+      <p class="lead">Newsletters and sales emails hide invisible images that tell the sender when you open them. Unseen blocks those tracking pixels in Gmail on the web and leaves normal images alone.</p>
+      <div class="ctas">
+        <a class="btn btn-light" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add to Chrome, free</a>
+        <a class="btn btn-ghost" href="https://addons.mozilla.org/firefox/addon/unseen-email-tracker-blocker/">Firefox</a>
+      </div>
+      <p class="hero-note">Is an email tracking you right now? <a href="check-email/">Check it free</a>, no install needed.</p>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><i></i><i></i><i></i></div>
+      <div class="mock-body">
+        <div class="mock-from">Weekly Deals</div>
+        <p class="mock-subject">Our autumn sale starts today</p>
+        <div class="chip-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 9.7 4-1.4 7-5.2 7-9.7V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>Blocked 2 trackers: <b>Mailchimp</b>, <b>HubSpot</b></span><span>Load images</span></div>
+        <div class="mock-lines"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+</div></header>
 
-  <h2>How email tracking works</h2>
-  <p>A tracked email contains a tiny image, often 1×1 pixel, with an address that is unique to you. When Gmail shows the email, it downloads that image, and the sender's server records that you opened it, when, and how many times. Sales tools such as <a href="block/hubspot/">HubSpot</a>, <a href="block/mailtrack/">Mailtrack</a> and <a href="block/yesware/">Yesware</a>, and newsletter services such as <a href="block/mailchimp/">Mailchimp</a> and <a href="block/sendgrid/">SendGrid</a>, do this by default. <a href="trackers/">See every tracker Unseen blocks</a>.</p>
+<main class="wrap">
+  <section class="grid" aria-label="Features">
+    <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 9.7 4-1.4 7-5.2 7-9.7V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Blocks 330+ trackers</h3><p>Known email trackers from about 185 companies, plus hidden and 1×1 images. <a href="trackers/">See the list</a>.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8L3 12Z"/><circle cx="7.5" cy="8.5" r="1.5"/></svg><h3>Names who tracked you</h3><p>A small note above each email says which company tried, like Mailchimp or HubSpot.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg><h3>Keeps normal images</h3><p>Only the trackers are blocked. Photos and logos load as usual, with a "Load images anyway" button.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><h3>Gmail only</h3><p>No access to any other website, and no host permissions. Blocking uses the browser's own rules.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c5 0 9 4.5 10 7a13 13 0 0 1-2.6 3.8M6.6 6.6A13 13 0 0 0 2 12c1 2.5 5 7 10 7a10 10 0 0 0 4.4-1"/></svg><h3>No ads, no analytics</h3><p>No account, nothing sent anywhere. Blocking happens entirely in your browser.</p></div>
+    <div class="card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 4l-4 16"/></svg><h3>Open source</h3><p>MIT licensed. <a href="https://github.com/laboskiriste/unseen">Read the source</a> · <a href="privacy/">Privacy policy</a>. For Chrome, Edge and Firefox.</p></div>
+  </section>
 
-  <h2>Doesn't Gmail already block this?</h2>
-  <p>Not fully. Gmail loads email images through its own proxy, which hides your IP address and rough location from the sender. But the proxy still downloads the image when you open the email, so the sender still learns that you opened it and when. Turning off images in Gmail's settings stops tracking, but it also hides every normal picture. Unseen blocks only the trackers. <a href="can-senders-see-when-you-open-email/">Can senders see when you open their email?</a> · <a href="block-email-tracking-gmail/">All the ways to block tracking in Gmail</a> · <a href="it/bloccare-tracking-pixel-gmail/" hreflang="it">In italiano</a> · <a href="de/e-mail-tracking-blockieren-gmail/" hreflang="de">Auf Deutsch</a> · <a href="fr/bloquer-pixels-espions-gmail/" hreflang="fr">En français</a> · <a href="es/bloquear-rastreo-email-gmail/" hreflang="es">En español</a> · <a href="pt/bloquear-rastreamento-email-gmail/" hreflang="pt-BR">Em português</a>.</p>
+  <div class="section-head" id="how"><h2>How email tracking works</h2><p>And why Gmail alone doesn't stop it.</p></div>
+  <section class="split">
+    <div class="card">
+      <h2>The tracking pixel</h2>
+      <p>A tracked email contains a tiny image, often 1×1 pixel, with an address that is unique to you. When Gmail shows the email, it downloads that image, and the sender's server records that you opened it, when, and how many times. Sales tools such as <a href="block/hubspot/">HubSpot</a>, <a href="block/mailtrack/">Mailtrack</a> and <a href="block/yesware/">Yesware</a>, and newsletter services such as <a href="block/mailchimp/">Mailchimp</a> and <a href="block/sendgrid/">SendGrid</a>, do this by default. <a href="trackers/">See every tracker Unseen blocks</a>.</p>
+    </div>
+    <div class="card">
+      <h2>Doesn't Gmail already block this?</h2>
+      <p>Not fully. Gmail loads email images through its own proxy, which hides your IP address and rough location from the sender. But the proxy still downloads the image when you open the email, so the sender still learns that you opened it and when.</p>
+      <p>Turning off images in Gmail's settings stops tracking, but it also hides every normal picture. Unseen blocks only the trackers. <a href="can-senders-see-when-you-open-email/">Can senders see when you open their email?</a> · <a href="block-email-tracking-gmail/">All the ways to block tracking in Gmail</a></p>
+    </div>
+    <div class="card">
+      <h2>How Unseen decides what to block</h2>
+      <ol>
+        <li>It checks each image's original address against a list of 332 tracking patterns from about 185 companies, built from the open-source Simplify and Trocker lists.</li>
+        <li>It also blocks hidden and 1×1 images, which have no purpose except tracking.</li>
+        <li>Everything else loads as usual. A small note above the email names the tracker, with a <strong>Load images anyway</strong> button for that one email.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>Switching from another blocker?</h2>
+      <p>Unseen asks for access to Gmail only, is open source and free for blocking. <a href="alternatives/">See an honest comparison</a>, including where the others do better.</p>
+      <p>Moving from <a href="ugly-email-alternative/">Ugly Email</a>, <a href="pixelblock-alternative/">PixelBlock</a> or <a href="gblock-alternative/">Gblock</a>?</p>
+    </div>
+  </section>
 
-  <h2>How Unseen decides what to block</h2>
-  <ol>
-    <li>It checks each image's original address against a list of 332 tracking patterns from about 195 companies, built from the open-source Simplify and Trocker lists.</li>
-    <li>It also blocks hidden and 1×1 images, which have no purpose except tracking.</li>
-    <li>Everything else loads as usual. A small note above the email names the tracker, with a <strong>Load images anyway</strong> button for that one email.</li>
-  </ol>
+  <div class="section-head"><h2>Questions</h2></div>
+  <section class="faq">
+    <div class="card"><h3>Can Unseen read my emails?</h3><p>It looks only at the image addresses inside the emails you open. It never reads, stores or sends the text of your emails, your contacts or your address. The code is open source, so anyone can check.</p></div>
+    <div class="card"><h3>Will senders know I blocked them?</h3><p>They see the same thing as when someone reads email with images turned off: no open is recorded.</p></div>
+    <div class="card"><h3>Does it work with the Gmail app on my phone?</h3><p>No. Unseen works in Gmail on the web, in a desktop browser.</p></div>
+    <div class="card"><h3>Does it work in Outlook or Yahoo Mail?</h3><p>Not yet. Gmail on the web only, for now.</p></div>
+  </section>
 
-  <h2>Questions</h2>
-  <h3>How is it different from Trocker, PixelBlock or Gblock?</h3>
-  <p>Unseen asks for access to Gmail only, is open source and free for blocking. <a href="alternatives/">See an honest comparison</a>, including where the others do better. Moving from <a href="ugly-email-alternative/">Ugly Email</a>, <a href="pixelblock-alternative/">PixelBlock</a> or <a href="gblock-alternative/">Gblock</a>?</p>
-  <h3>Can Unseen read my emails?</h3>
-  <p>It looks only at the image addresses inside the emails you open. It never reads, stores or sends the text of your emails, your contacts or your address. The code is open source, so anyone can check.</p>
-  <h3>Does it work with the Gmail app on my phone?</h3>
-  <p>No. Unseen works in Gmail on the web, in a desktop browser.</p>
-  <h3>Does it work in Outlook or Yahoo Mail?</h3>
-  <p>Not yet. Gmail on the web only, for now.</p>
-  <h3>Will senders know I blocked them?</h3>
-  <p>They see the same thing as when someone reads email with images turned off: no open is recorded.</p>
+  <div class="section-head" id="pro"><h2>Unseen Pro</h2><p>Blocking is free and stays free.</p></div>
+  <section class="card pro">
+    <div>
+      <p>Unseen Pro adds extra features on top, starting with version 0.2.0:</p>
+      <ul><li><strong>Clean tracking links:</strong> when you click a link in an email, Unseen opens the real address without the click tracker, when the real address is inside the link. The tracker is never contacted.</li></ul>
+      <p>Every user gets 30 days of Pro free. After that, Pro is <strong>$15 once</strong>: no subscription. If you don't buy it, only Pro turns off; blocking keeps working.</p>
+      <p class="muted">Payment, receipts, taxes and refunds are handled by <a href="https://polar.sh">Polar</a>, the merchant of record. If you enter a license key, Unseen checks it with Polar about once a month; nothing else is sent. Questions and support: <a href="https://github.com/laboskiriste/unseen/issues">GitHub issues</a>.</p>
+    </div>
+    <div class="price"><strong>$15</strong><span>once, after 30 days free</span></div>
+  </section>
 
-  <h2>Unseen Pro</h2>
-  <p>Blocking is free and stays free. Unseen Pro adds extra features on top, starting with version 0.2.0:</p>
-  <ul>
-    <li><strong>Clean tracking links:</strong> when you click a link in an email, Unseen opens the real address without the click tracker, when the real address is inside the link. The tracker is never contacted.</li>
-  </ul>
-  <p>Every user gets 30 days of Pro free. After that, Pro is <strong>$15 once</strong>: no subscription. If you don't buy it, only Pro turns off; blocking keeps working.</p>
-  <p class="muted">Payment, receipts, taxes and refunds are handled by <a href="https://polar.sh">Polar</a>, the merchant of record. If you enter a license key, Unseen checks it with Polar about once a month; nothing else is sent. Questions and support: <a href="https://github.com/laboskiriste/unseen/issues">GitHub issues</a>.</p>
-  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: <a href="https://guardian.tinyward.org">Extension Guardian</a>, which warns you when an extension you use is sold. Open source under the MIT licence.</footer>
+  <p class="langs"><a href="it/bloccare-tracking-pixel-gmail/" hreflang="it">In italiano</a> · <a href="de/e-mail-tracking-blockieren-gmail/" hreflang="de">Auf Deutsch</a> · <a href="fr/bloquer-pixels-espions-gmail/" hreflang="fr">En français</a> · <a href="es/bloquear-rastreo-email-gmail/" hreflang="es">En español</a> · <a href="pt/bloquear-rastreamento-email-gmail/" hreflang="pt-BR">Em português</a></p>
 </main>
+<footer>Unseen is part of <a href="https://tinyward.org/">Tinyward</a>, small privacy tools with as few permissions as possible. Also from Tinyward: <a href="https://guardian.tinyward.org">Extension Guardian</a>, which warns you when an extension you use is sold. Open source under the MIT licence.</footer>
 </body>
 </html>
