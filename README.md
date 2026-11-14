@@ -4,7 +4,7 @@ Blocks email tracking pixels in Gmail on the web, so senders can't see when you 
 
 **Install:** [Chrome Web Store](https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd) (also works in Edge and Brave). Firefox Add-ons: submitted, waiting for review.
 
-Part of **Tinyward**, small privacy tools with as few permissions as possible. Also from Tinyward: [Extension Guardian](https://github.com/laboskiriste/extension-guardian), which warns you when an extension you use is sold or gains new permissions.
+Part of **Tinyward**, small privacy tools with as few permissions as possible. Also from Tinyward: [Extension Guardian](https://github.com/laboskiriste/extension-guardian), which warns you when an extension you use is sold or gains new permissions. Its [free web checker](https://app.extensionguardian.workers.dev) shows who publishes any Chrome extension today.
 
 ## What it does
 

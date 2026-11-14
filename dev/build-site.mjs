@@ -98,7 +98,7 @@ function page({ path, title, description, body, depth }) {
 <main>
   <header><img src="${up}icon.png" alt=""><a href="${up}">Unseen</a></header>
 ${body}
-  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. <a href="${up}">Unseen home</a> · <a href="${up}privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
+  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: <a href="https://app.extensionguardian.workers.dev">Extension Guardian</a>, a free checker that shows who owns a Chrome extension. <a href="${up}">Unseen home</a> · <a href="${up}privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
 </main>
 </body>
 </html>
