@@ -183,7 +183,7 @@ button:disabled {
 [hidden] {
   display: none !important;
 }
-#rate p {
+#rate p, #share p {
   margin: 0 0 8px;
 }
 .rate-actions {

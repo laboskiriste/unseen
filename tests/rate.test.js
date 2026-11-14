@@ -30,3 +30,12 @@ test('links to the right store', () => {
   assert.equal(RATE.reviewUrl({ id: 'fibpgcjlnnookmhclhpmhmajileledhd' }), 'https://chromewebstore.google.com/detail/fibpgcjlnnookmhclhpmhmajileledhd/reviews');
   assert.match(RATE.reviewUrl({ firefox: true }), /addons\.mozilla\.org\/firefox\/addon\/unseen-email-tracker-blocker\/reviews\/$/);
 });
+
+test('offers sharing once, after 100 blocked and the rating card is answered', () => {
+  assert.equal(RATE.shouldShare({ rated: 'dismissed', total: 100 }), true);
+  assert.equal(RATE.shouldShare({ rated: 'rated', total: 99 }), false);
+  assert.equal(RATE.shouldShare({ rated: undefined, total: 500 }), false);
+  for (const shared of ['copied', 'dismissed']) {
+    assert.equal(RATE.shouldShare({ rated: 'rated', shared, total: 500 }), false);
+  }
+});

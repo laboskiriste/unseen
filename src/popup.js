@@ -155,6 +155,23 @@ const answerRate = (value) => chrome.storage.local.set({ ratePrompt: value }).th
 $('rate-go').addEventListener('click', () => answerRate('rated'));
 $('rate-no').addEventListener('click', () => answerRate('dismissed'));
 
+// After the rating card is answered, offers once to copy a link to Unseen's
+// site. Nothing is sent and the link carries no referral code.
+async function renderShare() {
+  const { ratePrompt, sharePrompt, total = 0 } = await chrome.storage.local.get(['ratePrompt', 'sharePrompt', 'total']);
+  const show = RATE.shouldShare({ rated: ratePrompt, shared: sharePrompt, total });
+  $('share').hidden = !show;
+  if (show) $('share-count').textContent = total;
+}
+const answerShare = (value) => chrome.storage.local.set({ sharePrompt: value });
+$('share-go').addEventListener('click', async () => {
+  await navigator.clipboard.writeText(RATE.SHARE_URL).catch(() => {});
+  $('share-go').textContent = 'Copied';
+  await answerShare('copied');
+  setTimeout(() => { $('share').hidden = true; }, 1500);
+});
+$('share-no').addEventListener('click', () => answerShare('dismissed').then(() => { $('share').hidden = true; }));
+
 renderFamily();
 render();
-initPro().then(renderRate);
+initPro().then(renderRate).then(renderShare);
