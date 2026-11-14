@@ -4,7 +4,7 @@ Blocks email tracking pixels in Gmail on the web, so senders can't see when you 
 
 **Install:** [Chrome Web Store](https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd) (also works in Edge and Brave). Firefox Add-ons: submitted, waiting for review.
 
-Part of **Tinyward**, small privacy tools with as few permissions as possible. Also from Tinyward: [Extension Guardian](https://github.com/laboskiriste/extension-guardian), which warns you when an extension you use is sold or gains new permissions. Its [free web checker](https://app.extensionguardian.workers.dev) shows who publishes any Chrome extension today.
+Part of **Tinyward**, small privacy tools with as few permissions as possible. Also from Tinyward: [Extension Guardian](https://github.com/laboskiriste/extension-guardian), which warns you when an extension you use is sold or gains new permissions. Its [free web checker](https://guardian.tinyward.org) shows who publishes any Chrome extension today.
 
 ## What it does
 
@@ -20,7 +20,7 @@ Free forever: everything above. Pro adds new features only, with 30 days free fo
 - **Clean tracking links:** when you click a link in an email, Unseen opens the real address without the click tracker, where the address is written inside the link ([src/links.js](src/links.js)). The tracker is never contacted; links it can't clean are left to Gmail.
 - License keys are sold through [Polar](https://polar.sh) and checked directly with Polar's public API ([src/license.js](src/license.js)), about once a month, with 14 days of grace when offline. Trial and license logic: [src/pro.js](src/pro.js).
 
-**Permissions:** `declarativeNetRequest`, `storage`, and a content script on `https://mail.google.com/*`. No host permissions. The only network request is the Unseen Pro license check with Polar, and only after the user enters a key. See [PRIVACY.md](PRIVACY.md) or the [hosted privacy policy](https://laboskiriste.github.io/unseen/privacy/).
+**Permissions:** `declarativeNetRequest`, `storage`, and a content script on `https://mail.google.com/*`. No host permissions. The only network request is the Unseen Pro license check with Polar, and only after the user enters a key. See [PRIVACY.md](PRIVACY.md) or the [hosted privacy policy](https://unseen.tinyward.org/privacy/).
 
 ## How it works
 

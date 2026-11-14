@@ -8,7 +8,7 @@ const RATE = (() => {
   const AFTER_MS = 7 * 864e5;
   const MIN_BLOCKED = 20;
   const SHARE_BLOCKED = 100;
-  const SHARE_URL = 'https://laboskiriste.github.io/unseen/';
+  const SHARE_URL = 'https://unseen.tinyward.org/';
 
   // `since` is when the user started using Unseen (the Pro trial start, set
   // on install or on the update to 0.2.0); `answered` is the stored answer.

@@ -18,7 +18,7 @@ All texts to paste are in [listing.md](listing.md). Files are in this `store/` f
    - **License:** MIT License
    - **Privacy policy:** tick it and paste the text of [PRIVACY.md](../PRIVACY.md)
    - **Notes to reviewer:** "Blocks Gmail image-proxy requests with static declarativeNetRequest rules. No remote code and no network requests. Source: https://github.com/laboskiriste/unseen. To test, open any newsletter in Gmail."
-6. **Submit Version.** Later, on the add-on's **Edit Product Page**, upload `screenshot-1.png` and `screenshot-2.png`, and set the homepage to https://laboskiriste.github.io/unseen/
+6. **Submit Version.** Later, on the add-on's **Edit Product Page**, upload `screenshot-1.png` and `screenshot-2.png`, and set the homepage to https://unseen.tinyward.org/
 
 ## Chrome Web Store (same developer account as Extension Guardian, no new fee)
 
@@ -28,13 +28,13 @@ All texts to paste are in [listing.md](listing.md). Files are in this `store/` f
    - **Category:** Privacy & Security. **Language:** English
    - **Store icon:** `icons/icon128.png`
    - **Screenshots:** `screenshot-1.png`, `screenshot-2.png`. **Small promo tile:** `promo-small.png`
-   - **Homepage URL:** https://laboskiriste.github.io/unseen/. **Support URL:** https://github.com/laboskiriste/unseen/issues
+   - **Homepage URL:** https://unseen.tinyward.org/. **Support URL:** https://github.com/laboskiriste/unseen/issues
 3. **Privacy** tab:
    - **Single purpose:** "Block email tracking pixels in Gmail on the web." For 0.2.0 and later: "Prevent email open and click tracking in Gmail on the web."
    - **Permission justifications:** paste the three rows from the table in listing.md (declarativeNetRequest, storage, host permission for the content script on mail.google.com).
    - **Remote code:** No
    - **Data usage:** tick nothing, then tick all three certifications
-   - **Privacy policy URL:** https://laboskiriste.github.io/unseen/privacy/
+   - **Privacy policy URL:** https://unseen.tinyward.org/privacy/
 4. **Distribution** tab: Free, all regions, Public.
 5. **Submit for review.** Review usually takes from a few days to two weeks.
 

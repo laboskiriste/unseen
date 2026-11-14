@@ -68,7 +68,7 @@ Remote code: **No.**
 - Collected data, CWS: tick only **Authentication information**. It is the Pro license key, sent to Polar (the seller) only if the user enters one, to check the purchase. Nothing about browsing or email is collected. Every other category: none.
 - Firefox: `data_collection_permissions: { required: ["none"], optional: ["authenticationInfo"] }` (set in `dev/build-firefox.mjs`). The popup asks for `authenticationInfo` when the user enters a key, and sends nothing if they say no.
 - Certifications: no selling or transfer of user data, no use unrelated to the single purpose, no creditworthiness use.
-- Privacy policy URL: https://laboskiriste.github.io/unseen/privacy/ (source: `docs/privacy/index.html`, same content as [PRIVACY.md](../PRIVACY.md)).
+- Privacy policy URL: https://unseen.tinyward.org/privacy/ (source: `docs/privacy/index.html`, same content as [PRIVACY.md](../PRIVACY.md)).
 
 ## Assets
 
@@ -77,7 +77,7 @@ Remote code: **No.**
 - Icon: `icons/icon128.png`
 - Packages: `npm run package` → `unseen-<version>-chrome.zip` / `-firefox.zip`. The Firefox build passes `web-ext lint` with 0 errors and 0 warnings.
 
-Homepage URL for the listing: https://laboskiriste.github.io/unseen/
+Homepage URL for the listing: https://unseen.tinyward.org/
 
 ## Italian listing (0.2.2, `_locales/it`)
 
