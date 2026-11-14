@@ -10,7 +10,8 @@
     "build:firefox": "node dev/build-firefox.mjs",
     "icons": "node dev/make-icons.mjs",
     "package": "npm test && node dev/package.mjs",
-    "store-images": "node dev/make-store-images.mjs"
+    "store-images": "node dev/make-store-images.mjs",
+    "build:site": "node dev/build-site.mjs"
   },
   "devDependencies": {
     "puppeteer-core": "^24.0.0"

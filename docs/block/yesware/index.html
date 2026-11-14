@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to block Yesware in Gmail</title>
+  <meta name="description" content="Yesware tells senders when you open their email. How it works, how to check if an email has it, and how to block it in Gmail for free.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/block/yesware/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to block Yesware in Gmail">
+  <meta property="og:description" content="Yesware tells senders when you open their email. How it works, how to check if an email has it, and how to block it in Gmail for free.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/block/yesware/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<main>
+  <header><img src="../../icon.png" alt=""><a href="../../">Unseen</a></header>
+  <h1>How to block Yesware in Gmail</h1>
+  <p class="muted">Checked November 14, 2026. Written by the developer of Unseen, a free tracker blocker for Gmail.</p>
+  <p>Yesware is a sales tool for Gmail and Outlook. Salespeople use it to see who opens their emails and when to follow up.</p>
+
+  <h2>What the sender sees</h2>
+  <p>Through a tracking pixel, a tiny invisible image unique to you, the sender learns when you open the email and how many times. Gmail loads images through its own proxy, which hides your IP address, but the open is still recorded. <a href="../../can-senders-see-when-you-open-email/">More on what Gmail does and doesn't hide</a>.</p>
+
+  <h2>Check whether an email has it</h2>
+  <p>In Gmail, open the email, click ⋮ and then <strong>Show original</strong>, copy the whole text and paste it into the <a href="../../check-email/">email tracker checker</a>. It lists every tracking pixel it finds and runs entirely in your browser.</p>
+
+  <h2>Block it</h2>
+  <h3>With Unseen (free)</h3>
+  <p>Unseen recognizes 4 Yesware tracking patterns, among 332 patterns from 184 companies, and also blocks hidden 1×1 images. It blocks only the tracker, so the rest of the email looks normal, and shows a note naming who tried to track you. It can only see Gmail, and it's open source.</p>
+  <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add Unseen to Chrome, free</a> <a href="https://addons.mozilla.org/firefox/addon/unseen-email-tracker-blocker/">Also for Firefox</a></p>
+  <h3>Without an extension</h3>
+  <p>In Gmail's settings, set <strong>Images</strong> to <strong>Ask before displaying external images</strong>. That stops every tracking pixel, but also hides every normal picture until you click. <a href="../../block-email-tracking-gmail/">Step-by-step guide</a>.</p>
+
+  <h2>Will the sender know I blocked it?</h2>
+  <p>No. They see the same thing as when someone reads email with images off: no open is recorded.</p>
+
+  <p>Other tools: <a href="../mailtrack/">Mailtrack</a> · <a href="../hubspot/">HubSpot email tracking</a> · <a href="../mailchimp/">Mailchimp open tracking</a> · <a href="../streak/">Streak email tracking</a> · <a href="../mixmax/">Mixmax</a> · <a href="../sendgrid/">SendGrid open tracking</a> · <a href="../../trackers/">All 184 companies Unseen recognizes</a></p>
+  <footer>Unseen is part of Tinyward, small privacy tools with as few permissions as possible. <a href="../../">Unseen home</a> · <a href="../../privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
+</main>
+</body>
+</html>

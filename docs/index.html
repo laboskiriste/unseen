@@ -20,7 +20,7 @@
     "@type": "SoftwareApplication",
     "name": "Unseen: Email Tracker Blocker",
     "applicationCategory": "BrowserApplication",
-    "operatingSystem": "Chrome, Edge",
+    "operatingSystem": "Chrome, Edge, Firefox",
     "description": "Blocks email tracking pixels in Gmail on the web.",
     "url": "https://laboskiriste.github.io/unseen/",
     "downloadUrl": "https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd",
@@ -43,9 +43,10 @@
   </ul>
   <p><a class="button" href="https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd">Add to Chrome, free</a> <a href="https://addons.mozilla.org/firefox/addon/unseen-email-tracker-blocker/">Also for Firefox</a></p>
   <p><a href="https://github.com/laboskiriste/unseen">Source code</a> · <a href="privacy/">Privacy policy</a></p>
+  <p><strong>Is an email tracking you right now?</strong> Paste it into the free <a href="check-email/">email tracker checker</a>. It runs in your browser, no install needed.</p>
 
   <h2>How email tracking works</h2>
-  <p>A tracked email contains a tiny image, often 1×1 pixel, with an address that is unique to you. When Gmail shows the email, it downloads that image, and the sender's server records that you opened it, when, and how many times. Sales tools such as HubSpot, Mailtrack and Yesware, and newsletter services such as Mailchimp and SendGrid, do this by default.</p>
+  <p>A tracked email contains a tiny image, often 1×1 pixel, with an address that is unique to you. When Gmail shows the email, it downloads that image, and the sender's server records that you opened it, when, and how many times. Sales tools such as <a href="block/hubspot/">HubSpot</a>, <a href="block/mailtrack/">Mailtrack</a> and <a href="block/yesware/">Yesware</a>, and newsletter services such as <a href="block/mailchimp/">Mailchimp</a> and <a href="block/sendgrid/">SendGrid</a>, do this by default. <a href="trackers/">See every tracker Unseen blocks</a>.</p>
 
   <h2>Doesn't Gmail already block this?</h2>
   <p>Not fully. Gmail loads email images through its own proxy, which hides your IP address and rough location from the sender. But the proxy still downloads the image when you open the email, so the sender still learns that you opened it and when. Turning off images in Gmail's settings stops tracking, but it also hides every normal picture. Unseen blocks only the trackers. <a href="can-senders-see-when-you-open-email/">Can senders see when you open their email?</a> · <a href="block-email-tracking-gmail/">All the ways to block tracking in Gmail</a> · <a href="it/bloccare-tracking-pixel-gmail/" hreflang="it">In italiano</a> · <a href="de/e-mail-tracking-blockieren-gmail/" hreflang="de">Auf Deutsch</a> · <a href="fr/bloquer-pixels-espions-gmail/" hreflang="fr">En français</a> · <a href="es/bloquear-rastreo-email-gmail/" hreflang="es">En español</a> · <a href="pt/bloquear-rastreamento-email-gmail/" hreflang="pt-BR">Em português</a>.</p>
@@ -59,7 +60,7 @@
 
   <h2>Questions</h2>
   <h3>How is it different from Trocker, PixelBlock or Gblock?</h3>
-  <p>Unseen asks for access to Gmail only, is open source and free for blocking. <a href="alternatives/">See an honest comparison</a>, including where the others do better.</p>
+  <p>Unseen asks for access to Gmail only, is open source and free for blocking. <a href="alternatives/">See an honest comparison</a>, including where the others do better. Moving from <a href="ugly-email-alternative/">Ugly Email</a>, <a href="pixelblock-alternative/">PixelBlock</a> or <a href="gblock-alternative/">Gblock</a>?</p>
   <h3>Can Unseen read my emails?</h3>
   <p>It looks only at the image addresses inside the emails you open. It never reads, stores or sends the text of your emails, your contacts or your address. The code is open source, so anyone can check.</p>
   <h3>Does it work with the Gmail app on my phone?</h3>

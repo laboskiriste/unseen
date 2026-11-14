@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Email tracker checker: is this email tracking me?</title>
+  <meta name="description" content="Paste an email's original source and see which tracking pixels it contains: Mailchimp, HubSpot, Mailtrack and 180+ more. Free, runs in your browser, nothing is uploaded.">
+  <link rel="canonical" href="https://laboskiriste.github.io/unseen/check-email/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Is this email tracking me? Free email tracker checker">
+  <meta property="og:description" content="Paste an email's original source and see every tracking pixel in it. Runs in your browser; nothing is uploaded.">
+  <meta property="og:url" content="https://laboskiriste.github.io/unseen/check-email/">
+  <meta property="og:image" content="https://laboskiriste.github.io/unseen/icon.png">
+  <link rel="icon" href="../icon.png">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Email tracker checker",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "url": "https://laboskiriste.github.io/unseen/check-email/",
+    "description": "Finds tracking pixels in a pasted email. Runs in the browser.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+<main>
+  <header><img src="../icon.png" alt=""><a href="../">Unseen</a></header>
+  <h1>Is this email tracking me?</h1>
+  <p>Paste an email's original source and this page lists every tracking pixel in it: which company, and which server would learn that you opened it. It uses the same 330+ rules as the Unseen extension.</p>
+  <p class="muted">Runs entirely in your browser. Nothing you paste is uploaded or stored, and this page can't load any of the email's images.</p>
+
+  <h2>1. Copy the email's original</h2>
+  <ul>
+    <li><strong>Gmail:</strong> open the email, click ⋮ (top right of the message), then <strong>Show original</strong>, then <strong>Copy to clipboard</strong>.</li>
+    <li><strong>Outlook.com:</strong> open the email, ⋯, <strong>View</strong>, <strong>View message source</strong>.</li>
+    <li><strong>Apple Mail:</strong> <strong>View</strong>, <strong>Message</strong>, <strong>Raw Source</strong>.</li>
+  </ul>
+
+  <h2>2. Paste it here</h2>
+  <textarea id="email" rows="10" style="width:100%;font:13px/1.4 ui-monospace,monospace;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)" placeholder="Paste the original message or its HTML" aria-label="Email source"></textarea>
+  <p><button id="check" class="button" type="button" style="border:0;cursor:pointer;font:inherit">Check for trackers</button> <button id="example" type="button" style="border:0;background:none;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline">Try an example</button></p>
+  <div id="result" aria-live="polite"></div>
+
+  <h2>What this can and can't see</h2>
+  <ul>
+    <li>It finds tracking <strong>pixels</strong>: images whose address matches a known tracker, and hidden or 1×1 images.</li>
+    <li>It doesn't flag tracked <strong>links</strong>. Most marketing emails also track clicks.</li>
+    <li>A tracker that isn't on the list and uses a normal-sized image won't show up. <a href="../trackers/">See the full list</a>.</li>
+  </ul>
+
+  <h2>Guides for common trackers</h2>
+  <p><a href="../block/mailtrack/">Mailtrack</a> · <a href="../block/hubspot/">HubSpot</a> · <a href="../block/mailchimp/">Mailchimp</a> · <a href="../block/streak/">Streak</a> · <a href="../block/yesware/">Yesware</a> · <a href="../block/mixmax/">Mixmax</a> · <a href="../block/sendgrid/">SendGrid</a> · <a href="../can-senders-see-when-you-open-email/">Can senders see when you open their email?</a></p>
+
+  <footer>Made by the developer of Unseen, part of Tinyward, small privacy tools with as few permissions as possible. <a href="../">Unseen home</a> · <a href="../privacy/">Privacy policy</a> · <a href="https://github.com/laboskiriste/unseen">Source code</a></footer>
+</main>
+<script src="../assets/trackers-data.js"></script>
+<script src="../assets/classify.js"></script>
+<script src="check.js"></script>
+</body>
+</html>

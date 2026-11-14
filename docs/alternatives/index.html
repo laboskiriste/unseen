@@ -51,7 +51,10 @@
   <p>A paid, actively developed Gmail extension that blocks pixels and click tracking. It has a 30-day free trial, then a subscription. <strong>Pick Gblock</strong> if you want a commercial product with support and don't mind a monthly fee.</p>
 
   <h2>Ugly Email</h2>
-  <p>A well-known open-source blocker that labels tracked emails with an eye. On November 2, 2026, its Chrome Web Store listing no longer loads, and the Firefox version was last updated in March 2024.</p>
+  <p>A well-known open-source blocker that labels tracked emails with an eye. On November 2, 2026, its Chrome Web Store listing no longer loads, and the Firefox version was last updated in March 2024. <a href="../ugly-email-alternative/">What to use instead of Ugly Email</a>.</p>
+
+  <h2>What about uBlock Origin?</h2>
+  <p>A fair question, and uBlock Origin is worth having for the rest of the web. In Gmail, though, it has a blind spot. Gmail rewrites every image address in an email to its own proxy on googleusercontent.com, so the request your browser makes doesn't contain the tracker's domain. uBlock Origin's filter lists block trackers by address, so in Gmail they generally can't tell a tracking pixel from a photo. A Gmail tracker blocker reads the sender's original address, which Gmail keeps in the page, before the image loads. Use both: uBlock Origin for websites, a Gmail blocker for email.</p>
 
   <h2>Unseen</h2>
   <p>Our extension. It blocks 330+ known trackers plus hidden and 1×1 images, shows which company tracked each email, and keeps every normal picture. What makes it different:</p>
