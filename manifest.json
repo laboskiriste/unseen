@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "Unseen",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "homepage_url": "https://unseen.tinyward.org/",
@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["src/trackers-data.js", "src/classify.js", "src/pro.js", "src/links.js", "src/content.js"],
+      "js": ["src/trackers-data.js", "src/classify.js", "src/links.js", "src/content.js"],
       "css": ["src/content.css"],
       "run_at": "document_start"
     }

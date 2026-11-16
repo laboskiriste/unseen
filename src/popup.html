@@ -44,20 +44,24 @@
   </section>
 
   <section id="pro">
-    <h2>Unseen Pro</h2>
-    <p class="muted">Opens links in emails without their click trackers, when the real address is inside the link.</p>
+    <h2>Unseen Plus</h2>
+    <p class="muted">Everything that protects you is free. Plus adds your tracker history and export, for people who want to support Unseen.</p>
     <p id="pro-status"></p>
     <div id="pro-buy" class="buttons" hidden>
-      <a id="buy-lifetime" class="button" target="_blank" rel="noopener">Get Pro: $15 once</a>
+      <a id="buy-plus" class="button" target="_blank" rel="noopener">Get Plus: pay what you want</a>
     </div>
-    <form id="pro-form" hidden>
-      <label for="pro-key">License key</label>
-      <div class="row">
-        <input id="pro-key" autocomplete="off" spellcheck="false" placeholder="UNSEEN-…">
-        <button id="pro-activate">Activate</button>
-      </div>
-      <p id="pro-error" class="error" hidden></p>
-    </form>
+    <p><a id="open-history" href="history/history.html" target="_blank" rel="noopener">See your tracker history</a></p>
+    <details id="pro-key-box">
+      <summary>I have a license key</summary>
+      <form id="pro-form">
+        <label for="pro-key">License key</label>
+        <div class="row">
+          <input id="pro-key" autocomplete="off" spellcheck="false" placeholder="UNSEEN-…">
+          <button id="pro-activate">Activate</button>
+        </div>
+        <p id="pro-error" class="error" hidden></p>
+      </form>
+    </details>
     <div id="pro-owned" hidden>
       <p>
         Key <code id="pro-key-shown"></code>

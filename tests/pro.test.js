@@ -1,4 +1,4 @@
-// Trial and license logic, with a fake storage and a fake Polar API.
+// Plus license logic, with a fake storage and a fake Polar API.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -38,16 +38,14 @@ test.beforeEach(() => {
   reply = () => ({ status: 500 });
 });
 
-test('trial: 30 days of Pro from the first run, then only Pro turns off', async () => {
+test('there is no trial: Plus is on only with a valid key, and nothing is sent without one', async () => {
   const store = fakeStore();
-  await PRO.startTrial({ store, now: T0 });
-  await PRO.startTrial({ store, now: T0 + 5 * DAY });
-  assert.equal(store.data.pro.trialStart, T0, 'a second run keeps the first date');
-  assert.equal(PRO.status(store.data.pro, T0).trialDaysLeft, 30);
-  assert.equal(PRO.status(store.data.pro, T0 + 29.5 * DAY).trialDaysLeft, 1);
-  assert.equal(await PRO.isPro({ store, now: T0 + 29.9 * DAY }), true);
-  assert.equal(await PRO.isPro({ store, now: T0 + 30 * DAY }), false);
+  assert.equal(PRO.status({}, T0).isPro, false);
+  assert.equal(PRO.status({ trialStart: T0 }, T0 + DAY).isPro, false, 'an old trial date unlocks nothing');
+  assert.equal(await PRO.isPro({ store, now: T0 }), false);
+  await PRO.refresh({ store, now: T0 + 400 * DAY });
   assert.equal(requests.length, 0, 'no network without a key');
+  assert.equal(PRO.startTrial, undefined);
 });
 
 test('activating sends only the key, org id and a fixed label, and stores only key and activation id', async () => {
@@ -58,14 +56,14 @@ test('activating sends only the key, org id and a fixed label, and stores only k
   assert.equal(requests[0].url, `${API}/activate`);
   assert.deepEqual(requests[0].body, { key: 'UNSEEN-ABCD-1234', label: 'Unseen', organization_id: ORG });
   assert.deepEqual(store.data.pro, {
-    trialStart: T0, key: 'UNSEEN-ABCD-1234', activationId: 'act-1', okAt: T0 + 40 * DAY, triedAt: T0 + 40 * DAY,
+    key: 'UNSEEN-ABCD-1234', activationId: 'act-1', okAt: T0 + 40 * DAY, triedAt: T0 + 40 * DAY,
   });
   assert.ok(!JSON.stringify(store.data).includes('buyer@example.com'), "the buyer's details are not kept");
   assert.equal(await PRO.isPro({ store, now: T0 + 40 * DAY }), true);
 });
 
 test('activation errors: unknown key, refused key, no internet', async () => {
-  const store = fakeStore({ trialStart: T0 });
+  const store = fakeStore({});
   reply = () => ({ status: 404, data: { error: 'ResourceNotFound' } });
   assert.equal((await PRO.activate('UNSEEN-X', { store })).reason, 'not-found');
   reply = () => ({ status: 403, data: { error: 'NotPermitted' } });
@@ -83,10 +81,10 @@ test('activation errors: unknown key, refused key, no internet', async () => {
   reply = () => ({ status: 503 });
   await assert.rejects(PRO.activate('UNSEEN-X', { store }), LICENSE.OfflineError);
   assert.equal((await PRO.activate('   ', { store })).reason, 'not-found');
-  assert.deepEqual(store.data.pro, { trialStart: T0 });
+  assert.deepEqual(store.data.pro, {}, 'nothing was stored');
 });
 
-const licensed = (okAt, extra = {}) => ({ trialStart: T0, key: 'UNSEEN-K', activationId: 'act-1', okAt, triedAt: okAt, ...extra });
+const licensed = (okAt, extra = {}) => ({ key: 'UNSEEN-K', activationId: 'act-1', okAt, triedAt: okAt, ...extra });
 
 test('the key is re-checked only once a month', async () => {
   const store = fakeStore(licensed(T0));
@@ -114,7 +112,7 @@ test('offline: 14 days of grace after the check is due, retried daily', async ()
 
   reply = () => ({ status: 200, data: granted({ activation: { id: 'act-1' } }) });
   await PRO.refresh({ store, now: T0 + 50 * DAY });
-  assert.equal(await PRO.isPro({ store, now: T0 + 50 * DAY }), true, 'back online turns Pro back on');
+  assert.equal(await PRO.isPro({ store, now: T0 + 50 * DAY }), true, 'back online turns Plus back on');
 });
 
 test('a valid reply without the activation keeps the key', async () => {
@@ -124,7 +122,7 @@ test('a valid reply without the activation keeps the key', async () => {
   assert.equal(store.data.pro.okAt, T0 + 31 * DAY);
 });
 
-test('a revoked key turns Pro off and is removed', async () => {
+test('a revoked key turns Plus off and is kept so it can be checked again', async () => {
   const cases = [
     { status: 404, data: { error: 'ResourceNotFound' } },
     { status: 200, data: granted({ status: 'revoked', activation: { id: 'act-1' } }) },
@@ -177,7 +175,7 @@ test('the local clock never expires a key; Polar does', async () => {
   assert.equal(store.data.pro.okAt, T0 + 31 * DAY);
 });
 
-test('without a trial start date there is no trial', () => {
+test('a key the provider confirmed turns Plus on', () => {
   assert.equal(PRO.status({}, T0).isPro, false);
   assert.equal(PRO.status({ key: 'k', activationId: 'a', okAt: T0 }, T0).isPro, true);
 });
@@ -193,13 +191,13 @@ test('a check that raced a key change does not touch the new key', async () => {
   assert.equal(store.data.pro.revoked, undefined);
 });
 
-test('removing the key frees the activation and keeps the trial date', async () => {
+test('removing the key frees the activation and clears the stored key', async () => {
   reply = () => ({ status: 204 });
   const store = fakeStore(licensed(T0));
   await PRO.removeKey({ store });
   assert.equal(requests[0].url, `${API}/deactivate`);
   assert.deepEqual(requests[0].body, { key: 'UNSEEN-K', activation_id: 'act-1', organization_id: ORG });
-  assert.deepEqual(store.data.pro, { trialStart: T0 });
+  assert.deepEqual(store.data.pro, {});
 });
 
 test('checkout links are plain Polar links', () => {
@@ -209,9 +207,9 @@ test('checkout links are plain Polar links', () => {
 });
 
 test('a 200 that is not a license reply is reported as such, and kept like offline', async () => {
-  const store = fakeStore({ trialStart: T0 });
+  const store = fakeStore({});
   reply = () => ({ status: 200, data: { hello: 'portal login page' } });
   await assert.rejects(PRO.activate('UNSEEN-X', { store }), LICENSE.UnexpectedReplyError);
   await assert.rejects(PRO.activate('UNSEEN-X', { store }), LICENSE.OfflineError, 'still handled like offline');
-  assert.deepEqual(store.data.pro, { trialStart: T0 });
+  assert.deepEqual(store.data.pro, {});
 });

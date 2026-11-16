@@ -164,9 +164,11 @@ try {
     console.log('-- stats');
     const sw = await (await browser.waitForTarget((t) => t.type() === 'service_worker')).worker();
     await sleep(500);
-    const stored = await sw.evaluate(() => chrome.storage.local.get(['total', 'events', 'seen']));
+    const stored = await sw.evaluate(() => chrome.storage.local.get(['total', 'events', 'seen', 'daily']));
     check(stored.total === COUNTED, `total is ${COUNTED} (got ${stored.total})`);
     check(!JSON.stringify(stored).includes('http'), 'no URLs stored, only hashes');
+    const dailyTotal = Object.values(stored.daily || {}).flatMap((c) => Object.values(c)).reduce((a, b) => a + b, 0);
+    check(dailyTotal === COUNTED, `the daily history adds up to ${COUNTED} (got ${dailyTotal})`);
 
     await page.reload({ waitUntil: 'load' });
     await sleep(2000);
@@ -189,7 +191,7 @@ try {
     await page.bringToFront();
   }
 
-  console.log('-- clean links (Pro trial)');
+  console.log('-- clean links (free for everyone)');
   const gmailOpened = () => page.evaluate(() => window.gmailOpened.splice(0));
   await page.click('#ses-link');
   await sleep(1500);
@@ -203,15 +205,46 @@ try {
   for (const p of (await browser.pages()).slice(2)) if (p !== page) await p.close();
 
   if (browserName === 'chrome') {
+    // Before 0.3.0 links were cleaned only during a 30-day trial. An expired old trial must not matter now.
     const sw = await (await browser.waitForTarget((t) => t.type() === 'service_worker')).worker();
-    await sw.evaluate(() => chrome.storage.local.set({ pro: { trialStart: Date.now() - 31 * 864e5 } }));
+    await sw.evaluate(() => chrome.storage.local.set({ pro: { trialStart: Date.now() - 400 * 864e5 } }));
     await sleep(300);
     linkHits = [];
     await page.click('#ses-link');
-    await sleep(500);
+    await sleep(1500);
     await page.bringToFront();
-    check(JSON.stringify(await gmailOpened()) === '["ses-link"]' && linkHits.length === 0, 'after the trial, links are left to Gmail');
-    await sw.evaluate(() => chrome.storage.local.set({ pro: { trialStart: Date.now() } }));
+    check(linkHits.includes('/deal?id=7'), 'with an old, expired trial date, links are still cleaned');
+    check((await gmailOpened()).length === 0, 'and Gmail still does not open the tracker');
+    for (const p of (await browser.pages()).slice(2)) if (p !== page) await p.close();
+    await sw.evaluate(() => chrome.storage.local.remove('pro'));
+
+    console.log('-- history page');
+    const id = new URL(sw.url()).host;
+    const history = await browser.newPage();
+    await history.goto(`chrome-extension://${id}/src/history/history.html`);
+    await sleep(500);
+    const state = await history.evaluate(() => ({
+      locked: !document.getElementById('locked').hidden,
+      plus: !document.getElementById('plus').hidden,
+      buy: document.getElementById('buy').href,
+    }));
+    check(state.locked && !state.plus, 'without a key the history page explains Plus and shows no data');
+    check(/^https:\/\/buy\.polar\.sh\//.test(state.buy), 'the Get Plus button goes to the checkout');
+    // A key Polar confirmed turns Plus on; set it directly, since the test has no network.
+    await sw.evaluate(() => chrome.storage.local.set({ pro: { key: 'UNSEEN-TEST', activationId: 'a', okAt: Date.now() } }));
+    await sleep(500);
+    const unlocked = await history.evaluate(() => ({
+      plus: !document.getElementById('plus').hidden,
+      all: Number(document.getElementById('t-all').textContent),
+      bars: document.querySelectorAll('#months .month').length,
+      top: document.querySelectorAll('#top-all li').length,
+    }));
+    check(unlocked.plus, 'with a key the history is shown');
+    check(unlocked.all === COUNTED, `the history total is ${COUNTED} (got ${unlocked.all})`);
+    check(unlocked.bars === 12 && unlocked.top > 0, '12 months and a top list');
+    await history.close();
+    await sw.evaluate(() => chrome.storage.local.remove('pro'));
+    await page.bringToFront();
   }
 
   console.log('-- load images anyway');

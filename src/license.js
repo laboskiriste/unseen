@@ -1,4 +1,4 @@
-// License keys, sold through Polar. This is the only file that knows about
+// Unseen Plus license keys, sold through Polar. This is the only file that knows about
 // the provider; swapping it means rewriting these three calls.
 //
 // What is sent, and only after the user enters a key: the key, the activation
@@ -8,13 +8,14 @@
 const LICENSE = (() => {
   const API = 'https://api.polar.sh/v1/customer-portal/license-keys';
   const ORGANIZATION_ID = '823c8500-74cf-4283-bbf1-ffd30ed8611e';
-  // The "Unseen Pro license key" benefit, so keys for other Tinyward
+  // The Plus license key benefit (named "Unseen Pro license key" in Polar), so keys for other Tinyward
   // products in the same organization don't unlock Unseen.
   const BENEFIT_ID = '88642029-aeb9-4cdf-bbeb-4ef18c5a7ab7';
   const LABEL = 'Unseen';
-  // Polar checkout links. Plain links: opening them sends nothing from here.
+  // Polar checkout link for Unseen Plus (pay what you want, once). A plain
+  // link: opening it sends nothing from here.
   const CHECKOUT = {
-    lifetime: 'https://buy.polar.sh/polar_cl_ufyOS7IHgqRtf7LB67tKPwA9nSgQzgIt6rY1o0lb8fX',
+    plus: 'https://buy.polar.sh/polar_cl_ufyOS7IHgqRtf7LB67tKPwA9nSgQzgIt6rY1o0lb8fX',
   };
 
   // Thrown for anything that isn't a clear answer about the key: no internet,

@@ -8,7 +8,16 @@ if (typeof importScripts === 'function') importScripts('license.js', 'pro.js');
 
 const RULESET = 'gmail_proxy';
 const KEEP_DAYS = 30;
+// The history page (Unseen Plus) shows daily counts per company for up to a
+// year. They stay in chrome.storage.local, like the rest.
+const KEEP_DAILY_DAYS = 400;
 const MAX_SEEN = 5000;
+
+// Local calendar day, "2026-11-16".
+function dayKey(t) {
+  const d = new Date(t);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
 
 async function syncRuleset() {
   const { enabled } = await chrome.storage.local.get('enabled');
@@ -47,10 +56,20 @@ async function syncAllowRule() {
   await chrome.storage.local.set({ allowToken });
 }
 
-// Starts the Pro trial if needed and re-checks the license key when it is due.
-// The check only talks to the license provider when a key was entered.
+// Remembers the day Unseen was first used, for the rating card. Installs from
+// before 0.3.0 start from their old trial date. Nothing leaves the browser.
+async function markStart() {
+  const { installedAt, pro } = await chrome.storage.local.get(['installedAt', 'pro']);
+  if (!installedAt) await chrome.storage.local.set({ installedAt: pro?.trialStart ?? Date.now() });
+}
+
+// Re-checks the Plus license key when it is due. The check only talks to the
+// license provider when a key was entered.
 function syncPro() {
-  PRO.startTrial().then(() => PRO.refresh()).catch((e) => console.error('pro check failed', e));
+  markStart()
+    .then(() => backfillDaily())
+    .then(() => PRO.refresh())
+    .catch((e) => console.error('pro check failed', e));
 }
 
 chrome.runtime.onInstalled.addListener(({ reason }) => {
@@ -75,9 +94,21 @@ async function hash(text) {
 
 // Messages can arrive together; run the read-modify-write one at a time.
 let queue = Promise.resolve();
+
+function addDaily(daily, day, name) {
+  const counts = (daily[day] ??= {});
+  counts[name] = (counts[name] || 0) + 1;
+}
+
+// Drops days older than the history keeps. Day keys sort as text.
+function pruneDaily(daily, now) {
+  const oldest = dayKey(now - KEEP_DAILY_DAYS * 864e5);
+  for (const day of Object.keys(daily)) if (day < oldest) delete daily[day];
+}
+
 function addStats(items) {
   queue = queue.then(async () => {
-    const { seen = [], events = [], total = 0 } = await chrome.storage.local.get(['seen', 'events', 'total']);
+    const { seen = [], events = [], total = 0, daily = {} } = await chrome.storage.local.get(['seen', 'events', 'total', 'daily']);
     const seenSet = new Set(seen);
     const now = Date.now();
     let added = 0;
@@ -86,16 +117,32 @@ function addStats(items) {
       if (seenSet.has(h)) continue;
       seenSet.add(h);
       events.push({ t: now, n: item.name });
+      addDaily(daily, dayKey(now), item.name);
       added++;
     }
     if (!added) return;
     const cutoff = now - KEEP_DAYS * 864e5;
+    pruneDaily(daily, now);
     await chrome.storage.local.set({
       seen: [...seenSet].slice(-MAX_SEEN),
       events: events.filter((e) => e.t >= cutoff),
       total: total + added,
+      daily,
     });
   }).catch((e) => console.error('stats update failed', e));
+}
+
+// Installs from before 0.3.0 have the last 30 days as events but no daily
+// counts yet. Builds them once, so the history doesn't start empty.
+function backfillDaily() {
+  queue = queue.then(async () => {
+    const { events = [], daily } = await chrome.storage.local.get(['events', 'daily']);
+    if (daily) return;
+    const built = {};
+    for (const e of events) addDaily(built, dayKey(e.t), e.n);
+    await chrome.storage.local.set({ daily: built });
+  }).catch((e) => console.error('history backfill failed', e));
+  return queue;
 }
 
 chrome.runtime.onMessage.addListener((msg, sender) => {

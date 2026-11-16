@@ -1,15 +1,15 @@
-// Unseen Pro: the 30-day trial and the license key. Everything is kept in
-// chrome.storage.local under `pro`:
-//   { trialStart, key, activationId, okAt, triedAt, revoked }
+// Unseen Plus: the license key. (Called Pro until 0.3.0; the code and the
+// storage key keep the old name so keys entered earlier keep working.)
+// Everything is kept in chrome.storage.local under `pro`:
+//   { key, activationId, okAt, triedAt, revoked }
 // okAt is the last time the provider confirmed the key, triedAt the last
 // attempt. A key the provider rejects is kept with revoked: true, so the user
-// can check it again or remove it. Only Pro features check isPro; blocking
-// never does.
+// can check it again or remove it. Only Plus features (the history page)
+// check isPro; blocking and link cleaning never do.
 // Expects LICENSE (src/license.js) to be loaded first.
 
 const PRO = (() => {
   const DAY = 864e5;
-  const TRIAL_DAYS = 30;
   const RECHECK_DAYS = 30;
   const GRACE_DAYS = 14;
   const RETRY_DAYS = 1;
@@ -29,10 +29,7 @@ const PRO = (() => {
   function status(pro = {}, now = Date.now()) {
     const hasKey = Boolean(pro.key && pro.activationId);
     const licensed = hasKey && !pro.revoked && now - (pro.okAt || 0) < (RECHECK_DAYS + GRACE_DAYS) * DAY;
-    // No start date means the trial never started properly: no trial.
-    const trialEnd = pro.trialStart ? pro.trialStart + TRIAL_DAYS * DAY : 0;
-    const trialDaysLeft = Math.max(0, Math.ceil((trialEnd - now) / DAY));
-    return { isPro: licensed || trialDaysLeft > 0, licensed, hasKey, trialDaysLeft, revoked: Boolean(pro.revoked) };
+    return { isPro: licensed, licensed, hasKey, revoked: Boolean(pro.revoked) };
   }
 
   const needsCheck = (pro, now) =>
@@ -40,14 +37,6 @@ const PRO = (() => {
     !pro.revoked &&
     now - (pro.okAt || 0) >= RECHECK_DAYS * DAY &&
     now - (pro.triedAt || 0) >= RETRY_DAYS * DAY;
-
-  // The trial starts the first time Unseen runs, including for people who
-  // installed before Pro existed. Reinstalling starts it again, by design.
-  async function startTrial(d) {
-    const { store, now } = deps(d);
-    const pro = await load(store);
-    if (!pro.trialStart) await store.set({ pro: { ...pro, trialStart: now } });
-  }
 
   async function isPro(d) {
     const { store, now } = deps(d);
@@ -62,20 +51,19 @@ const PRO = (() => {
     if (!key) return { ok: false, reason: 'not-found' };
     const res = await license.activate(key);
     if (!res.ok) return res;
-    const { trialStart = now } = await load(store);
-    await store.set({ pro: { trialStart, key, activationId: res.activationId, okAt: now, triedAt: now } });
+    await store.set({ pro: { key, activationId: res.activationId, okAt: now, triedAt: now } });
     return { ok: true };
   }
 
   async function removeKey(d) {
-    const { store, license, now } = deps(d);
+    const { store, license } = deps(d);
     const pro = await load(store);
     if (pro.key && pro.activationId) license.deactivate(pro.key, pro.activationId);
-    await store.set({ pro: { trialStart: pro.trialStart ?? now } });
+    await store.set({ pro: {} });
   }
 
   // Re-checks the key about once a month. Offline, the key keeps working for
-  // GRACE_DAYS after the check was due; a key the provider rejects turns Pro
+  // GRACE_DAYS after the check was due; a key the provider rejects turns Plus
   // off. `force` checks now, for the popup's "Check again".
   async function check(d, force = false) {
     const { store, license, now } = deps(d);
@@ -104,5 +92,5 @@ const PRO = (() => {
   // Throws LICENSE.OfflineError when the provider can't be reached.
   const recheck = (d) => check(d, true);
 
-  return { TRIAL_DAYS, load, status, startTrial, isPro, activate, removeKey, refresh, recheck };
+  return { load, status, isPro, activate, removeKey, refresh, recheck };
 })();

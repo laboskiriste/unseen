@@ -14,7 +14,7 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 
 ## Detailed description
 
-No lists of company names: Chrome Web Store rejected 0.2.0 on 2026-11-02 for keyword spam ("Yellow Argon") over the list of email services in the Pro line.
+No lists of company names: Chrome Web Store rejected 0.2.0 on 2026-11-02 for keyword spam ("Yellow Argon") over the list of email services in the Pro line. Keep the Plus text free of company names too.
 
 > Most newsletters and sales emails contain an invisible image, a "tracking pixel". When you open the email, it tells the sender that you read it, when, and how many times.
 >
@@ -23,6 +23,7 @@ No lists of company names: Chrome Web Store rejected 0.2.0 on 2026-11-02 for key
 > WHAT IT DOES
 > • Blocks 330+ known email trackers and hidden 1×1 images
 > • Shows a small note above each email that had trackers, with the tracking companies' names
+> • Opens links in emails at their real address, without the click tracker, when the address is inside the link
 > • "Load images anyway" button when you want to let one email through
 > • Weekly count of blocked trackers and the companies that track you most
 > • One switch to turn it off
@@ -30,13 +31,13 @@ No lists of company names: Chrome Web Store rejected 0.2.0 on 2026-11-02 for key
 > PRIVACY FIRST
 > • Runs only on mail.google.com and has no access to any other website
 > • Never reads, stores or sends your emails, contacts or address
-> • No servers, no analytics, no account. The only network request is checking an Unseen Pro license key with Polar, and only if you enter one
+> • No servers, no analytics, no account. The only network request is checking an Unseen Plus license key with Polar, and only if you enter one
 > • Open source (MIT): https://github.com/laboskiriste/unseen
 >
-> FREE AND PRO, SAID UP FRONT
-> • Free forever: tracker blocking, the note above each email, "Load images anyway" and the weekly count
-> • Unseen Pro: when you click a link in an email, Unseen opens the real address without the click tracker, if the address is inside the link, and removes tracking tags such as utm_ from it. The tracker is never contacted, and pages that warn before you leave a site are never skipped. Coming later: rules per sender, full history and export.
-> • Every new user gets 30 days of Pro free. After that, Pro costs $15 once, and the free features keep working.
+> FREE, WITH AN OPTIONAL PLUS
+> • Everything that protects you is free, forever: blocking trackers, the note above each email, cleaning links, "Load images anyway" and the weekly count. Nothing expires.
+> • Unseen Plus is for people who want to support Unseen. It adds your tracker history: trackers blocked per month, the companies that tracked you most, and an export as a spreadsheet. It all stays on your device.
+> • Pay what you want, from $5, once. No subscription.
 > • Nothing that is free today will ever become paid
 >
 > Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: Extension Guardian, which warns you when your browser extensions change owner or gain new permissions.
@@ -56,8 +57,8 @@ Chrome Web Store: **Privacy & Security** (fallback: Productivity / Communication
 | Permission | Justification |
 |---|---|
 | `declarativeNetRequest` | Blocks Gmail's image-proxy requests for tracking pixels. Static rules only; the extension can't read request contents. |
-| `storage` | Saves the on/off setting, a local count of blocked trackers, the Pro trial start date and, if entered, the Pro license key. |
-| Content script on `https://mail.google.com/*` | Looks at image addresses in opened emails to tell tracking pixels from normal images, and shows the "trackers blocked" note. With Pro, opens clicked email links at their real address without the click tracker. |
+| `storage` | Saves the on/off setting, a local count of blocked trackers (per day, kept up to a year, for the history page), the date of first use and, if entered, the Plus license key. |
+| Content script on `https://mail.google.com/*` | Looks at image addresses in opened emails to tell tracking pixels from normal images, and shows the "trackers blocked" note, and opens clicked email links at their real address without the click tracker. |
 
 The license check calls `api.polar.sh` with `fetch` from the background. Polar's customer-portal license endpoints answer `access-control-allow-origin: *` (checked 2026-11-01 with curl and with a live activation attempt from the Chrome extension), so no host permission is needed.
 
@@ -65,14 +66,14 @@ Remote code: **No.**
 
 ## Data usage disclosure (CWS) and data collection (AMO)
 
-- Collected data, CWS: tick only **Authentication information**. It is the Pro license key, sent to Polar (the seller) only if the user enters one, to check the purchase. Nothing about browsing or email is collected. Every other category: none.
+- Collected data, CWS: tick only **Authentication information**. It is the Plus license key, sent to Polar (the seller) only if the user enters one, to check the purchase. Nothing about browsing or email is collected. Every other category: none.
 - Firefox: `data_collection_permissions: { required: ["none"], optional: ["authenticationInfo"] }` (set in `dev/build-firefox.mjs`). The popup asks for `authenticationInfo` when the user enters a key, and sends nothing if they say no.
 - Certifications: no selling or transfer of user data, no use unrelated to the single purpose, no creditworthiness use.
 - Privacy policy URL: https://unseen.tinyward.org/privacy/ (source: `docs/privacy/index.html`, same content as [PRIVACY.md](../PRIVACY.md)).
 
 ## Assets
 
-- `screenshot-1.png`, `screenshot-2.png`, `screenshot-3.png` (Pro): 1280×800 (`npm run store-images`)
+- `screenshot-1.png`, `screenshot-2.png`, `screenshot-3.png` (3: clean links, free): 1280×800 (`npm run store-images`)
 - `promo-small.png`: 440×280
 - Icon: `icons/icon128.png`
 - Packages: `npm run package` → `unseen-<version>-chrome.zip` / `-firefox.zip`. The Firefox build passes `web-ext lint` with 0 errors and 0 warnings.
@@ -90,6 +91,7 @@ Name and short description come from `_locales/it/messages.json`. In the Chrome 
 > COSA FA
 > • Blocca più di 330 tracker noti e le immagini nascoste di 1×1 pixel
 > • Mostra una piccola nota sopra ogni email tracciata, con il nome delle aziende di tracciamento
+> • Apre i link delle email direttamente all'indirizzo reale, senza il tracker dei clic, quando l'indirizzo è contenuto nel link
 > • Pulsante "Carica comunque le immagini" per far passare una singola email
 > • Conteggio settimanale dei tracker bloccati
 > • Un interruttore per disattivarlo
@@ -97,13 +99,13 @@ Name and short description come from `_locales/it/messages.json`. In the Chrome 
 > PRIVACY PRIMA DI TUTTO
 > • Funziona solo su mail.google.com e non ha accesso ad altri siti
 > • Non legge, non salva e non invia le tue email, i tuoi contatti o il tuo indirizzo
-> • Niente server, niente statistiche, nessun account. L'unica richiesta di rete è il controllo della chiave di licenza Pro con Polar, e solo se ne inserisci una
+> • Niente server, niente statistiche, nessun account. L'unica richiesta di rete è il controllo della chiave di licenza Plus con Polar, e solo se ne inserisci una
 > • Open source (MIT): https://github.com/laboskiriste/unseen
 >
-> GRATIS E PRO, DETTO SUBITO
-> • Gratis per sempre: il blocco dei tracker, la nota sopra le email, "Carica comunque le immagini" e il conteggio settimanale
-> • Unseen Pro: quando fai clic su un link in un'email, Unseen apre l'indirizzo reale senza passare dal tracker dei clic, se l'indirizzo è contenuto nel link, e rimuove i parametri di tracciamento come utm_. Il tracker non viene mai contattato.
-> • Ogni nuovo utente ha 30 giorni di Pro gratis. Poi Pro costa 15 dollari una volta sola, e le funzioni gratuite continuano a funzionare.
+> GRATIS, CON UN PLUS FACOLTATIVO
+> • Tutto ciò che ti protegge è gratis per sempre: il blocco dei tracker, la nota sopra le email, la pulizia dei link, "Carica comunque le immagini" e il conteggio settimanale. Niente scade.
+> • Unseen Plus è per chi vuole sostenere Unseen. Aggiunge la cronologia dei tracker: i tracker bloccati ogni mese, le aziende che ti hanno tracciato di più e l'esportazione in un foglio di calcolo. Tutto resta sul tuo dispositivo.
+> • Paghi quanto vuoi, da 5 dollari, una volta sola. Nessun abbonamento.
 > • Niente di ciò che oggi è gratis diventerà a pagamento
 >
 > Dal 29 ottobre 2026, secondo le linee guida del Garante privacy, chi invia email in Italia deve di regola chiedere il consenso prima di usare i tracking pixel. Unseen ti permette di bloccarli comunque.
@@ -119,6 +121,7 @@ Name and short description come from `_locales/it/messages.json`. In the Chrome 
 > WAS ES MACHT
 > • Blockiert über 330 bekannte Tracker und versteckte 1×1-Bilder
 > • Zeigt über jeder getrackten E-Mail einen kleinen Hinweis mit den Namen der Tracking-Firmen
+> • Öffnet Links in E-Mails direkt unter ihrer echten Adresse, ohne den Klick-Tracker, sofern die Adresse im Link steckt
 > • Schaltfläche „Bilder trotzdem laden“, um eine einzelne E-Mail durchzulassen
 > • Wöchentliche Zahl der blockierten Tracker
 > • Ein Schalter zum Ausschalten
@@ -126,13 +129,13 @@ Name and short description come from `_locales/it/messages.json`. In the Chrome 
 > DATENSCHUTZ ZUERST
 > • Läuft nur auf mail.google.com und hat keinen Zugriff auf andere Websites
 > • Liest, speichert und sendet weder deine E-Mails noch deine Kontakte oder deine Adresse
-> • Keine Server, keine Statistiken, kein Konto. Die einzige Netzwerkanfrage ist die Prüfung eines Unseen-Pro-Lizenzschlüssels bei Polar, und nur, wenn du einen eingibst
+> • Keine Server, keine Statistiken, kein Konto. Die einzige Netzwerkanfrage ist die Prüfung eines Unseen-Plus-Lizenzschlüssels bei Polar, und nur, wenn du einen eingibst
 > • Open Source (MIT): https://github.com/laboskiriste/unseen
 >
-> KOSTENLOS UND PRO, GLEICH GESAGT
-> • Für immer kostenlos: das Blockieren, der Hinweis über den E-Mails, „Bilder trotzdem laden“ und die Wochenzahl
-> • Unseen Pro: Wenn du auf einen Link in einer E-Mail klickst, öffnet Unseen die echte Adresse ohne den Klick-Tracker, sofern die Adresse im Link steckt, und entfernt Tracking-Parameter wie utm_. Der Tracker wird nie kontaktiert.
-> • Jeder neue Nutzer bekommt 30 Tage Pro kostenlos. Danach kostet Pro einmalig 15 US-Dollar, und die kostenlosen Funktionen laufen weiter.
+> KOSTENLOS, MIT OPTIONALEM PLUS
+> • Alles, was dich schützt, ist für immer kostenlos: das Blockieren der Tracker, der Hinweis über den E-Mails, das Bereinigen von Links, „Bilder trotzdem laden“ und die Wochenzahl. Nichts läuft ab.
+> • Unseen Plus ist für alle, die Unseen unterstützen möchten. Es fügt deinen Tracker-Verlauf hinzu: pro Monat blockierte Tracker, die Firmen, die dich am meisten getrackt haben, und den Export als Tabelle. Alles bleibt auf deinem Gerät.
+> • Zahle, was du willst, ab 5 US-Dollar, einmalig. Kein Abo.
 > • Nichts, was heute kostenlos ist, wird kostenpflichtig
 >
 > Hinweis: Gmail verbirgt deine IP-Adresse bereits vor Absendern. Unseen blockiert das Signal, das bleibt: dass und wann du die E-Mail geöffnet hast.

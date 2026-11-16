@@ -52,3 +52,14 @@ Only after Polar payouts and identity verification are done, so Pro can be bough
 4. **Firefox:** the manifest already declares `authenticationInfo` as optional.
 5. **Notes to reviewer** (both stores): "Blocks Gmail image-proxy requests with static declarativeNetRequest rules. One dynamic allow rule lets through only the images the content script approved; it matches a random token made at install, so emails can't forge it. No remote code. Optional Pro: if the user enters a license key, the background sends only that key to api.polar.sh (the seller) to activate it and re-checks it about once a month. Nothing about browsing or email is sent. Source: https://github.com/laboskiriste/unseen. To test the free part, open any newsletter in Gmail; Pro starts with a 30-day trial, so no key is needed to try it."
 
+
+## Updating to 0.3.0 (Unseen Plus)
+
+Pro became **Unseen Plus**: no trial, link cleaning is free, and Plus is a pay-what-you-want history page. Do this together with the website going live (the site already says Plus), and after the Polar product is set to pay what you want (min $5).
+
+1. `npm run package`, then upload `store/unseen-0.3.0-chrome.zip` and `store/unseen-0.3.0-firefox.zip` as new versions of the existing items.
+2. Paste the detailed description from [listing.md](listing.md) on both stores, in English, Italian and German (the "Free, with an optional Plus" block).
+3. **Chrome, Privacy tab:** keep **Authentication information** only (the Plus license key). The new daily history stays on the device, so nothing new is collected. Update the `storage` and content-script justifications from listing.md.
+4. **Firefox:** nothing changes in the manifest; `authenticationInfo` stays optional. Release notes: "Everything that protects you is now free: link cleaning no longer needs Pro, and the 30-day trial is gone. New: optional Unseen Plus (pay what you want) adds a tracker history page with a monthly chart, top companies and CSV export, all kept on your device."
+5. **Notes to reviewer** (both stores): "Blocks Gmail image-proxy requests with static declarativeNetRequest rules. One dynamic allow rule lets through only the images the content script approved; it matches a random token made at install, so emails can't forge it. No remote code. New in 0.3.0: a history page (src/history/) that reads per-day counts the extension keeps in chrome.storage.local and can export them as a CSV file made in the page; nothing is uploaded. Optional Plus: if the user enters a license key, the background sends only that key to api.polar.sh (the seller) to activate it and re-checks it about once a month. Source: https://github.com/laboskiriste/unseen. To test: open any newsletter in Gmail; to see the history page without buying, open chrome-extension://<id>/src/history/history.html (it shows the explanation without a key)."
+6. Screenshots: `npm run store-images` makes the new set (screenshot 3 now shows free link cleaning).

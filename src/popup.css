@@ -158,8 +158,18 @@ button:disabled {
   opacity: 0.6;
   cursor: default;
 }
+#pro-key-box summary {
+  color: var(--accent);
+  cursor: pointer;
+}
+#pro-key-box[open] summary {
+  margin-bottom: 6px;
+}
 #pro-form {
-  margin: 10px 0 0;
+  margin: 6px 0 0;
+}
+#pro a:not(.button) {
+  color: var(--accent);
 }
 #pro-form label {
   display: block;

@@ -61,7 +61,7 @@ function renderFamily() {
   });
 }
 
-// The Pro section. Key actions run in the background (src/background.js),
+// The Plus section. Key actions run in the background (src/background.js),
 // which is the only place that talks to the license server.
 const $ = (id) => document.getElementById(id);
 const KEY_ERRORS = {
@@ -75,22 +75,21 @@ const KEY_ERRORS = {
 };
 
 function proStatusText(s) {
-  if (s.licensed) return 'Pro is active. Thank you for supporting Unseen!';
-  if (s.revoked) return 'Your license key is no longer valid (for example refunded), so Pro is off. Blocking trackers stays free.';
-  if (s.hasKey) return "Your license key hasn't been checked for a while. Pro turns back on once you're online.";
-  if (s.trialDaysLeft > 0) return `${s.trialDaysLeft} ${s.trialDaysLeft === 1 ? 'day' : 'days'} of Pro left in your free trial.`;
-  return 'Your Pro trial ended. Blocking trackers stays free.';
+  if (s.licensed) return 'Plus is active. Thank you for supporting Unseen!';
+  if (s.revoked) return 'Your license key is no longer valid (for example refunded), so Plus is off. Everything that protects you stays free.';
+  if (s.hasKey) return "Your license key hasn't been checked for a while. Plus turns back on once you're online.";
+  return '';
 }
 
 async function renderPro() {
   const pro = await PRO.load(chrome.storage.local);
   const s = PRO.status(pro);
   $('pro-status').textContent = proStatusText(s);
-  const { lifetime } = LICENSE.CHECKOUT;
-  $('buy-lifetime').href = lifetime ?? '';
-  $('buy-lifetime').hidden = !lifetime;
-  $('pro-buy').hidden = s.licensed || !lifetime;
-  $('pro-form').hidden = s.hasKey;
+  $('pro-status').hidden = !$('pro-status').textContent;
+  const { plus } = LICENSE.CHECKOUT;
+  $('buy-plus').href = plus ?? '';
+  $('pro-buy').hidden = s.licensed || !plus;
+  $('pro-key-box').hidden = s.hasKey;
   $('pro-owned').hidden = !s.hasKey;
   $('pro-recheck').hidden = !s.revoked;
   $('pro-key-shown').textContent = s.hasKey ? `…${pro.key.slice(-4)}` : '';
@@ -130,21 +129,16 @@ $('pro-form').addEventListener('submit', async (e) => {
 $('pro-remove').addEventListener('click', () => proAction({ type: 'pro-remove' }, $('pro-remove'), $('pro-owned-error')));
 $('pro-recheck').addEventListener('click', () => proAction({ type: 'pro-recheck' }, $('pro-recheck'), $('pro-owned-error')));
 
-async function initPro() {
-  await PRO.startTrial();
-  await renderPro();
-}
+const initPro = renderPro;
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.pro) renderPro();
 });
 
 // Asks once for a store rating, after a week and 20 blocked trackers.
 async function renderRate() {
-  const [{ ratePrompt, total = 0 }, pro] = await Promise.all([
-    chrome.storage.local.get(['ratePrompt', 'total']),
-    PRO.load(chrome.storage.local),
-  ]);
-  const ask = RATE.shouldAsk({ answered: ratePrompt, since: pro.trialStart, total });
+  const { ratePrompt, total = 0, installedAt, pro } = await chrome.storage.local.get(['ratePrompt', 'total', 'installedAt', 'pro']);
+  // Installs from before 0.3.0 may not have installedAt yet; their old trial date is the same day.
+  const ask = RATE.shouldAsk({ answered: ratePrompt, since: installedAt ?? pro?.trialStart, total });
   $('rate').hidden = !ask;
   if (!ask) return;
   const firefox = typeof browser !== 'undefined' && typeof browser.runtime?.getBrowserInfo === 'function';

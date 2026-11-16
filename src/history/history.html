@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your tracker history · Unseen</title>
+  <link rel="stylesheet" href="history.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../../icons/icon48.png" alt="" width="40" height="40">
+      <div>
+        <h1>Your tracker history</h1>
+        <p class="muted" id="since"></p>
+      </div>
+    </header>
+
+    <section id="locked" hidden>
+      <h2>Unseen Plus</h2>
+      <p>Everything that protects you is free, and stays free: blocking, the note in Gmail, and opening links without their click trackers. Plus adds your history, for people who want to support Unseen.</p>
+      <ul>
+        <li>Trackers blocked in each of the last 12 months</li>
+        <li>Which companies tracked you most, this month and ever</li>
+        <li>Export everything as a spreadsheet (CSV)</li>
+      </ul>
+      <p>Pay what you want, from $5, once. No subscription.</p>
+      <p><a id="buy" class="button" target="_blank" rel="noopener">Get Plus</a></p>
+      <p class="muted">Already have a license key? Open Unseen's toolbar menu, then <strong>I have a license key</strong>. Your history is already being kept on this device, so it will all be here when you unlock it.</p>
+    </section>
+
+    <section id="plus" hidden>
+      <div class="tiles">
+        <div class="tile"><strong id="t-month">0</strong><span>this month</span></div>
+        <div class="tile"><strong id="t-last">0</strong><span>last month</span></div>
+        <div class="tile"><strong id="t-all">0</strong><span id="t-all-label">in total</span></div>
+      </div>
+
+      <h2>Trackers blocked per month</h2>
+      <div id="months" class="months" role="img" aria-label="Bar chart of trackers blocked per month"></div>
+
+      <div class="two">
+        <div>
+          <h2>Top this month</h2>
+          <ol id="top-month" class="bars"></ol>
+        </div>
+        <div>
+          <h2>Top of all time</h2>
+          <ol id="top-all" class="bars"></ol>
+        </div>
+      </div>
+
+      <p class="actions">
+        <button id="export" class="button">Export as CSV</button>
+        <span class="muted">One row per day and company. The file is made on your computer.</span>
+      </p>
+    </section>
+
+    <section>
+      <h2>Your data</h2>
+      <p>Unseen keeps a count of trackers blocked per day and company, in this browser only. It never leaves your device and it is never sent anywhere.</p>
+      <p><button id="clear" class="danger">Delete my history</button> <span id="cleared" class="muted" hidden>Deleted.</span></p>
+    </section>
+  </main>
+  <script src="../license.js"></script>
+  <script src="../pro.js"></script>
+  <script src="../report.js"></script>
+  <script src="history.js"></script>
+</body>
+</html>
