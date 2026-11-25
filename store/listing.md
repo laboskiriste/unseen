@@ -91,7 +91,7 @@ Name and short description come from `_locales/it/messages.json`. In the Chrome 
 > Unseen blocca questi pixel in Gmail sul web e lascia caricare le immagini normali.
 >
 > COSA FA
-> • Blocca più di 330 tracker noti e le immagini nascoste di 1×1 pixel
+> • Blocca più di 330 tracker noti e le immagini minuscole o nascoste
 > • Mostra una piccola nota sopra ogni email tracciata, con il nome delle aziende di tracciamento
 > • Apre i link delle email direttamente all'indirizzo reale, senza il tracker dei clic, quando l'indirizzo è contenuto nel link
 > • Pulsante "Carica comunque le immagini" per far passare una singola email
@@ -121,7 +121,7 @@ Name and short description come from `_locales/it/messages.json`. In the Chrome 
 > Unseen blockiert diese Pixel in Gmail im Browser und lässt normale Bilder laden.
 >
 > WAS ES MACHT
-> • Blockiert über 330 bekannte Tracker und versteckte 1×1-Bilder
+> • Blockiert über 330 bekannte Tracker und winzige oder versteckte Bilder
 > • Zeigt über jeder getrackten E-Mail einen kleinen Hinweis mit den Namen der Tracking-Firmen
 > • Öffnet Links in E-Mails direkt unter ihrer echten Adresse, ohne den Klick-Tracker, sofern die Adresse im Link steckt
 > • Schaltfläche „Bilder trotzdem laden“, um eine einzelne E-Mail durchzulassen
