@@ -4,7 +4,7 @@
     "description": "Extension name in the store and browser (max 45 characters)."
   },
   "extDescription": {
-    "message": "Gmail のトラッキングピクセルをブロックし、メールを開いたことを送信者に知られないようにします。Gmail 専用です。",
+    "message": "Gmail のトラッキングピクセルをブロックし、メールを開いたタイミングを送信者に知られにくくします。Gmail 専用です。",
     "description": "Short store description (max 132 characters)."
   }
 }

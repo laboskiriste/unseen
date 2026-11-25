@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Unseen: block email tracking pixels in Gmail</title>
-  <meta name="description" content="Free, open-source extension that blocks email tracking pixels in Gmail, so senders can't see when or where you open their emails. Runs only on Gmail. No ads, no analytics.">
+  <meta name="description" content="Free, open-source extension that blocks email tracking pixels in Gmail, so senders learn less about when or where you open their emails. Runs only on Gmail. No ads, no analytics.">
   <link rel="canonical" href="https://unseen.tinyward.org/">
   <meta name="google-site-verification" content="LMJJ3_BMyzXjojWK__PlVN8QfcNmpfS0Lz_6okxBRP0">
   <meta property="og:type" content="website">
@@ -83,7 +83,7 @@
       <h2>How Unseen decides what to block</h2>
       <ol>
         <li>It checks each image's original address against a list of 332 tracking patterns from about 185 companies, built from the open-source Simplify and Trocker lists.</li>
-        <li>It also blocks hidden and 1×1 images, which have no purpose except tracking.</li>
+        <li>It also blocks tiny and hidden images (2 px or less, or hidden by style), which are almost always tracking.</li>
         <li>Everything else loads as usual. A small note above the email names the tracker, with a <strong>Load images anyway</strong> button for that one email.</li>
       </ol>
     </div>
@@ -97,7 +97,8 @@
   <div class="section-head"><h2>Questions</h2></div>
   <section class="faq">
     <div class="card"><h3>Can Unseen read my emails?</h3><p>It looks only at the image addresses inside the emails you open. It never reads, stores or sends the text of your emails, your contacts or your address. The code is open source, so anyone can check.</p></div>
-    <div class="card"><h3>Will senders know I blocked them?</h3><p>They see the same thing as when someone reads email with images turned off: no open is recorded.</p></div>
+    <div class="card"><h3>Will senders know I blocked them?</h3><p>For an email where the tracker was blocked, they see the same thing as when someone reads email with images turned off: no open is recorded.</p></div>
+    <div class="card"><h3>Can Unseen miss a tracker?</h3><p>Yes. It blocks 330+ known trackers and tiny or hidden images (2 px or less, or hidden by style). A tracker that uses a normal-sized image and is not on the list can get through. Links are cleaned only when the real address is written inside the link. If you find one that slipped through, <a href="https://github.com/laboskiriste/unseen/issues">tell us on GitHub</a>.</p></div>
     <div class="card"><h3>Does it work with the Gmail app on my phone?</h3><p>No. Unseen works in Gmail on the web, in a desktop browser.</p></div>
     <div class="card"><h3>Does it work in Outlook or Yahoo Mail?</h3><p>Not yet. Gmail on the web only, for now.</p></div>
     <div class="card"><h3>Is it really free?</h3><p>Yes. Blocking, the note in Gmail and opening links without click trackers are free forever, with no trial and no expiry. Nothing that is free today will become paid.</p></div>

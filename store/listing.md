@@ -10,7 +10,7 @@ Rejected: "Mail Guardian" (collides with MailGuardian and MailGuard), "NoPeek fo
 
 ## Short description (≤132 chars)
 
-> Blocks hidden email tracking pixels in Gmail, so senders can't see when you open their emails. Runs only on Gmail.
+> Blocks email tracking pixels in Gmail, so senders learn less about when you open their emails. Runs only on Gmail.
 
 ## Detailed description
 
@@ -21,7 +21,7 @@ No lists of company names: Chrome Web Store rejected 0.2.0 on 2026-11-02 for key
 > Unseen blocks those pixels in Gmail on the web and leaves normal images alone.
 >
 > WHAT IT DOES
-> • Blocks 330+ known email trackers and hidden 1×1 images
+> • Blocks 330+ known email trackers and tiny or hidden images
 > • Shows a small note above each email that had trackers, with the tracking companies' names
 > • Opens links in emails at their real address, without the click tracker, when the address is inside the link
 > • "Load images anyway" button when you want to let one email through
@@ -42,7 +42,9 @@ No lists of company names: Chrome Web Store rejected 0.2.0 on 2026-11-02 for key
 >
 > Unseen is part of Tinyward, small privacy tools with as few permissions as possible. Also from Tinyward: Extension Guardian, which warns you when your browser extensions change owner or gain new permissions.
 >
-> Note: Gmail already hides your IP address from senders. Unseen stops the remaining signal: the fact that, and when, you opened the email.
+> Note: Gmail already hides your IP address from senders. Unseen targets the remaining signal: the fact that, and when, you opened the email.
+>
+> Limits: Unseen blocks known trackers and tiny or hidden images. A tracker that uses a normal-sized image and is not on the list can get through. Links are cleaned only when the real address is written inside the link. It works in Gmail on the web only.
 
 ## Category
 

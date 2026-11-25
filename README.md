@@ -1,6 +1,6 @@
 # Unseen: Email Tracker Blocker
 
-Blocks email tracking pixels in Gmail on the web, so senders can't see when you open their emails. Chrome, Edge and Firefox.
+Blocks email tracking pixels in Gmail on the web, so senders learn less about when you open their emails. Chrome, Edge and Firefox.
 
 **Install:** [Chrome Web Store](https://chromewebstore.google.com/detail/unseen-email-tracker-bloc/fibpgcjlnnookmhclhpmhmajileledhd) (also works in Edge and Brave). Firefox Add-ons: submitted, waiting for review.
 
@@ -8,11 +8,22 @@ Part of **Tinyward**, small privacy tools with as few permissions as possible. A
 
 ## What it does
 
-- Blocks known tracking pixels (332 patterns from about 185 companies) and hidden 1×1 images in emails you open.
+- Blocks known tracking pixels (332 patterns from about 185 companies) and tiny or hidden images (2 px or less, or hidden by style) in emails you open.
 - Shows a chip above each email that had trackers ("Blocked 3 trackers: Mailchimp, …") with a **Load images anyway** button for that one email.
 - Popup: trackers blocked in the last 7 days, top tracking companies, trackers on the current page, and an on/off switch.
 - Badge with the number of trackers on the current Gmail tab.
 - **Clean tracking links:** when you click a link in an email, Unseen opens the real address without the click tracker, where the address is written inside the link ([src/links.js](src/links.js)). The tracker is never contacted; links it can't clean are left to Gmail.
+
+### Limits
+
+Unseen reduces tracking; it does not guarantee that no sender learns anything.
+
+- It blocks known trackers and tiny or hidden images. A tracker that uses a normal-sized image and is not on the list can get through.
+- Links are cleaned only when the real address is written inside the link. Other tracked links still record the click.
+- It works in Gmail on the web only, not in the Gmail app or other mail clients.
+- If you press **Load images anyway**, the sender can see the open.
+
+A missed tracker or a false alarm is the most useful report: please [open an issue](../../issues).
 
 ### Free, with an optional Unseen Plus
 

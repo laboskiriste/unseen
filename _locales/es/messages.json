@@ -4,7 +4,7 @@
     "description": "Extension name in the store and browser (max 45 characters)."
   },
   "extDescription": {
-    "message": "Bloquea los píxeles de rastreo en los emails de Gmail, para que los remitentes no sepan cuándo los abres. Solo funciona en Gmail.",
+    "message": "Bloquea los píxeles de rastreo en Gmail para que los remitentes sepan menos sobre cuándo abres sus emails. Solo funciona en Gmail.",
     "description": "Short store description (max 132 characters)."
   }
 }

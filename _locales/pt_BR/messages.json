@@ -4,7 +4,7 @@
     "description": "Extension name in the store and browser (max 45 characters)."
   },
   "extDescription": {
-    "message": "Bloqueia pixels de rastreamento no Gmail, para que os remetentes não saibam quando você abre os e-mails. Funciona só no Gmail.",
+    "message": "Bloqueia pixels de rastreamento no Gmail, para que os remetentes saibam menos sobre quando você abre e-mails. Funciona só no Gmail.",
     "description": "Short store description (max 132 characters)."
   }
 }

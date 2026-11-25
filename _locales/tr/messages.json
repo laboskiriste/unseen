@@ -4,7 +4,7 @@
     "description": "Extension name in the store and browser (max 45 characters)."
   },
   "extDescription": {
-    "message": "Gmail'deki takip piksellerini engeller, böylece gönderenler e-postalarını ne zaman açtığınızı göremez. Yalnızca Gmail'de çalışır.",
+    "message": "Gmail'deki takip piksellerini engeller, gönderenler e-postayı ne zaman açtığınızı daha az bilir. Yalnızca Gmail'de çalışır.",
     "description": "Short store description (max 132 characters)."
   }
 }
