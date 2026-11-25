@@ -95,3 +95,7 @@ Also planned:
 - Icons on inbox rows, before an email is opened.
 - Tracker-list updates without a new version of the extension.
 - A check that a normal Firefox install (not a temporary one) grants mail.google.com access.
+
+## Support
+
+Unseen is free, with no ads and no tracking. If it is useful to you, you can [sponsor the developer on GitHub](https://github.com/sponsors/laboskiriste). Nothing is locked behind it.
